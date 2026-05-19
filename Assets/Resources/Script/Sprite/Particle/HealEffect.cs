@@ -1,0 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class HealEffect : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+	public void OnHealBegin()
+	{
+		GetComponentInParent<Hero>().OnHealBegin();
+	}
+
+	public void OnHealEnd()
+	{
+		GetComponentInParent<Hero>().OnHealEnd();
+		Destroy(gameObject);
+	}
+}

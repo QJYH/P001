@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Sprite
+  - MapEdge
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Water
+    uniqueID: 3288381041
+    locked: 0
+  - name: Foam
+    uniqueID: 493922197
+    locked: 0
+  - name: Ground
+    uniqueID: 3769866463
+    locked: 0
+  - name: Hill
+    uniqueID: 160222587
+    locked: 0
+  - name: Mountain
+    uniqueID: 1067777719
+    locked: 0
+  - name: Road
+    uniqueID: 3191239385
+    locked: 0
+  - name: Sprite
+    uniqueID: 2096265675
+    locked: 0
+  - name: Particle
+    uniqueID: 1901408465
+    locked: 0
