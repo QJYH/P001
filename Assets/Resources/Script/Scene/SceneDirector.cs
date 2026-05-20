@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,15 +10,18 @@ using UnityEngine.UI;
 public class SceneDirector : MonoBehaviour
 {
 	protected GameObject mainCamera;
+	protected GameObject virtualCamera;
 	protected GameObject mainCanvas;
 	protected GameObject mainEventSystem;
 
 
 	protected virtual void Awake()
 	{
-		mainCamera = GameObject.FindAnyObjectByType<CameraScript>().gameObject;
+		InitCamera();
 		InitCanvas();
 	}
+
+	
 
 	// Start is called before the first frame update
 	protected virtual void Start()
@@ -30,6 +34,13 @@ public class SceneDirector : MonoBehaviour
     {
         
     }
+
+	private void InitCamera()
+	{
+		mainCamera = GameObject.FindAnyObjectByType<Camera>().gameObject;
+		virtualCamera = Instantiate(Resources.Load<GameObject>("Prefab/VirtualCamera"));
+		mainCamera.AddComponent<CinemachineBrain>();
+	}
 
 	private void InitCanvas()
 	{

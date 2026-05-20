@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ public class LevelDirector : SceneDirector
 	{
 		base.Awake();
 		AddHero();
+		SetCameraEdge();
 		SetCameraTarget();
 	}
 
@@ -30,10 +32,20 @@ public class LevelDirector : SceneDirector
 		currentHero.transform.position = entrancePos;
 
 	}
-
+	private void SetCameraEdge()
+	{
+		GameObject cameraEdge = GameObject.Find("CameraEdge");
+		if (cameraEdge != null)
+		{
+			CinemachineConfiner2D cinemachineConfiner2D = virtualCamera.GetComponent<CinemachineConfiner2D>();
+			cinemachineConfiner2D.m_BoundingShape2D = cameraEdge.GetComponent<PolygonCollider2D>();
+			cinemachineConfiner2D.InvalidateCache();
+		}
+	}
 	private void SetCameraTarget()
 	{
-		mainCamera.GetComponent<CameraScript>().SetTarget(currentHero, CameraScript.TargetType.Hero);
+		virtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = currentHero.transform;
+		virtualCamera.GetComponent<CinemachineCameraOffset>().m_Offset = new Vector3(0, -0.2f, 0);
 	}
 
 	protected override Vector2 GetRevealCenter()
