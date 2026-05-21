@@ -9,9 +9,12 @@ namespace BehaviorTree
 		private LinkedList<BehaviourNode> children = new LinkedList<BehaviourNode>();
 		private LinkedListNode<BehaviourNode> currentChild;
 
-		protected override BehaviorStatus OnUpdate()
+		protected override void OnInit()
 		{
 			currentChild = children.First;
+		}
+		protected override BehaviorStatus OnUpdate()
+		{
 			while (true)
 			{
 				BehaviorStatus status = currentChild.Value.Tick();

@@ -7,29 +7,20 @@ namespace BehaviorTree
 	public class Patrol : BehaviourNode
 	{
 		private Enemy enemy;
-		private LinkedList<Vector2> patrolPosList;
-		private LinkedListNode<Vector2> targetPatrolPos;
 		
-		public Patrol(Enemy enemy, LinkedList<Vector2> patrolPosList)
+		public Patrol(Enemy enemy)
 		{
 			this.enemy = enemy;
-			this.patrolPosList = patrolPosList;
-			this.targetPatrolPos = this.patrolPosList.First;
 		}
 
+		protected override void OnInit()
+		{
+			enemy.SetStatus(Enemy.EnemyStatus.Patrol);
+		}
 		protected override BehaviorStatus OnUpdate()
 		{
-			float distance = Vector2.Distance(enemy.transform.position, targetPatrolPos.Value);
-			if (distance < 0.1f)
-			{
-				targetPatrolPos = targetPatrolPos.Next;
-				if (targetPatrolPos == null)
-				{
-					targetPatrolPos = patrolPosList.First;
-				}
-			}
+			if (enemy.HaveTarget()) return BehaviorStatus.Success;
 
-			enemy.GoToPos(targetPatrolPos.Value);
 			return BehaviorStatus.Running;
 		}
 	}

@@ -13,17 +13,15 @@ namespace BehaviorTree
 			this.enemy = enemy;
 		}
 
+		protected override void OnInit()
+		{
+			enemy.SetStatus(Enemy.EnemyStatus.Attack);
+		}
 		protected override BehaviorStatus OnUpdate()
-		{	
-			if (enemy.IsTargetInAttackArea())
-			{
-				enemy.TryAttack();
-				return BehaviorStatus.Running;
-			}
-			else
-			{
-				return BehaviorStatus.Failure;
-			}
+		{
+			if (!enemy.IsAttacking()) return BehaviorStatus.Success;
+
+			return BehaviorStatus.Running;
 		}
 	}
 }

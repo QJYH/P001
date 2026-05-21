@@ -13,18 +13,15 @@ namespace BehaviorTree
 			this.enemy = enemy;
 		}
 
+		protected override void OnInit()
+		{
+			enemy.SetStatus(Enemy.EnemyStatus.Chase);
+		}
 		protected override BehaviorStatus OnUpdate()
-		{	
-			if (enemy.Target != null)
-			{
-				enemy.GoToPos(enemy.Target.transform.position);
-				return BehaviorStatus.Running;
-			}
-			else
-			{
-				
-				return BehaviorStatus.Failure;
-			}
+		{
+			if (enemy.HaveTargetInAttackArea()) return BehaviorStatus.Success;
+
+			return BehaviorStatus.Running;
 		}
 	}
 }

@@ -12,7 +12,7 @@ namespace BehaviorTree
 		Success
 	}
 
-	public abstract class BehaviourNode
+	public class BehaviourNode
 	{
 		protected BehaviorStatus status;
 		public bool IsFailure()
@@ -31,14 +31,14 @@ namespace BehaviorTree
 
 		public BehaviorStatus Tick()
 		{
-			if (!IsRunning()) OnBegin();
+			if (!IsRunning()) OnInit();
 			status = OnUpdate();
 			if (!IsRunning()) OnEnd();
 			return status;
 		}
 
-		protected virtual void OnBegin() { }
-		protected abstract BehaviorStatus OnUpdate();
+		protected virtual void OnInit() { }
+		protected virtual BehaviorStatus OnUpdate() { return BehaviorStatus.Failure; }
 		protected virtual void OnEnd() { }
 		public virtual void AddChild(BehaviourNode node) { }
 	}

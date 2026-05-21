@@ -9,7 +9,7 @@ namespace BehaviorTree
 		private LinkedList<BehaviourNode> children = new LinkedList<BehaviourNode>();
 		private LinkedListNode<BehaviourNode> currentChild;
 
-		protected override void OnBegin()
+		protected override void OnInit()
 		{
 			currentChild = children.First;
 		}

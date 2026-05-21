@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 936dce04e07b19b438cd5b41b5ddc23d
+guid: 0465065b2096e854486e67c8a025dbe5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Dead_0
+      name: SpearGoblinAttack_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 192
-        height: 192
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d824cfe26f289049adc309ee638cbd5
-      internalID: -1801036862
+      spriteID: e5b4ea63314240843bd22497c1693e81
+      internalID: -1621343386
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dead_1
+      name: SpearGoblinAttack_1
       rect:
         serializedVersion: 2
-        x: 192
+        x: 256
         y: 0
-        width: 192
-        height: 192
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 293cfba30f64cb8449a83b7df1924256
-      internalID: 227492497
+      spriteID: acbe9389f0159244f88fbcc4207441b9
+      internalID: 1946828716
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dead_2
+      name: SpearGoblinAttack_2
       rect:
         serializedVersion: 2
-        x: 384
+        x: 512
         y: 0
-        width: 192
-        height: 192
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,41 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3f49aea432224e54da7cf9ad9ba5e031
-      internalID: -377468916
+      spriteID: 124e272b593ff8e4cbdf7eab2050a43c
+      internalID: 1945266326
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dead_3
-      rect:
-        serializedVersion: 2
-        x: 576
-        y: 0
-        width: 192
-        height: 192
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5ac3eaf6f65e5fa44af595d94236c334
-      internalID: 645154894
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dead_4
+      name: SpearGoblinAttack_3
       rect:
         serializedVersion: 2
         x: 768
         y: 0
-        width: 192
-        height: 192
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 48ffce09f8bbca44c84b0ddde58bcde7
-      internalID: 750571401
+      spriteID: 213724f8e9757d643ae0fa8dafa27885
+      internalID: 983689953
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dead_5
+      name: SpearGoblinAttack_4
       rect:
         serializedVersion: 2
-        x: 960
+        x: 1024
         y: 0
-        width: 192
-        height: 192
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -216,20 +195,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5a3d626de726d64882d6d0c9213dd1f
-      internalID: -2146541441
+      spriteID: d5444473016d3de4bb04b48b15bb9b97
+      internalID: 1423894279
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dead_6
+      name: SpearGoblinAttack_5
       rect:
         serializedVersion: 2
-        x: 1152
+        x: 1280
         y: 0
-        width: 192
-        height: 192
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -237,41 +216,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1ab954554d614054095424f23cb86d1b
-      internalID: -218284558
+      spriteID: da492c5c4a46997438c20790c19e2012
+      internalID: -340169826
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dead_7
-      rect:
-        serializedVersion: 2
-        x: 1344
-        y: 0
-        width: 192
-        height: 192
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1035fc4192105f944ba443a16422adcc
-      internalID: -96054746
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dead_8
+      name: SpearGoblinAttack_6
       rect:
         serializedVersion: 2
         x: 1536
         y: 0
-        width: 192
-        height: 192
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -279,20 +237,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ec9fbd94a6271e044ae372267a270c0c
-      internalID: 944747407
+      spriteID: 1ad690a06b901fe4fb31f949393a43e0
+      internalID: 1697636467
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dead_9
+      name: SpearGoblinAttack_7
       rect:
         serializedVersion: 2
-        x: 1728
+        x: 1792
         y: 0
-        width: 192
-        height: 192
+        width: 256
+        height: 256
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -300,8 +258,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 83e482f5d3dfcb84d95824d964055503
-      internalID: 652645578
+      spriteID: acd422c8a5bd5924899c962f061b23fe
+      internalID: -1360384448
       vertices: []
       indices: 
       edges: []
@@ -317,16 +275,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Dead_0: -1801036862
-      Dead_1: 227492497
-      Dead_2: -377468916
-      Dead_3: 645154894
-      Dead_4: 750571401
-      Dead_5: -2146541441
-      Dead_6: -218284558
-      Dead_7: -96054746
-      Dead_8: 944747407
-      Dead_9: 652645578
+      SpearGoblinAttack_0: -1621343386
+      SpearGoblinAttack_1: 1946828716
+      SpearGoblinAttack_2: 1945266326
+      SpearGoblinAttack_3: 983689953
+      SpearGoblinAttack_4: 1423894279
+      SpearGoblinAttack_5: -340169826
+      SpearGoblinAttack_6: 1697636467
+      SpearGoblinAttack_7: -1360384448
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
