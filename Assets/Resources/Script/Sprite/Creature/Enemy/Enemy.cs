@@ -1,6 +1,8 @@
+using BehaviorTree;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
@@ -18,24 +20,75 @@ public class Enemy : MonoBehaviour
 	private Hero target;
 	private EnemyStatus enemyStatus;
 	private bool isDetectAreaActive;
-	private readonly float maxMoveSpeed = 8f;
+	private float attackCoolDownTime = 0f;
+	private float attackCoolDownMaxTime = 2f;
+	private readonly float maxMoveSpeed = 6f;
 	private LinkedList<Vector2> patrolPosList;
 	private LinkedListNode<Vector2> currentPatrolPos;
+	private Selector behaviorTree;
 
-	private void Awake()
+	private void Start()
 	{
 		initPatrolPosList();
-		SetStatus(EnemyStatus.Patrol);
+		AddBehaviorTree();
+	}
+
+	private void AddBehaviorTree()
+	{
+		behaviorTree = new Selector();
+
+		Sequence attackSeq = new Sequence();
+		attackSeq.AddChild(new AttackCondition(this));
+		attackSeq.AddChild(new Chase(this));
+		attackSeq.AddChild(new Attack(this));
+		behaviorTree.AddChild(attackSeq);
+
+		Sequence restSeq = new Sequence();
+		restSeq.AddChild(new RestCondition(this));
+		restSeq.AddChild(new Rest(this));
+		behaviorTree.AddChild(restSeq);
+
+		Sequence patrolSeq = new Sequence();
+		patrolSeq.AddChild(new PatrolCondition(this));
+		patrolSeq.AddChild(new Patrol(this));
+		behaviorTree.AddChild(patrolSeq);
+
+		behaviorTree.Tick();
 	}
 
 	private void initPatrolPosList()
 	{
+		patrolPosList = new LinkedList<Vector2>();
 		Vector2 currentPos = transform.position;
-		Vector2 patrolPos1 = new Vector2(currentPos.x - 1, currentPos.y);
-		Vector2 patrolPos2 = new Vector2(currentPos.x + 1, currentPos.y);
+		Vector2 patrolPos1 = new Vector2(currentPos.x - 2, currentPos.y);
+		Vector2 patrolPos2 = new Vector2(currentPos.x + 2, currentPos.y);
 		patrolPosList.AddLast(patrolPos1);
 		patrolPosList.AddLast(patrolPos2);
 		currentPatrolPos = patrolPosList.First;
+	}
+
+	private void Update()
+	{
+		AttackCoolDown();
+		UpdateBehaviorTree();
+	}
+
+	private void UpdateBehaviorTree()
+	{
+		behaviorTree.Tick();
+	}
+
+	private void AttackCoolDown()
+	{
+		if (attackCoolDownTime > 0)
+		{
+			attackCoolDownTime -= Time.deltaTime;
+		}
+	}
+
+	public bool IsAttackInCoolDown()
+	{
+		return attackCoolDownTime > 0;
 	}
 
 	private void FixedUpdate()
@@ -65,6 +118,9 @@ public class Enemy : MonoBehaviour
 		{
 			isMoving = true;
 			Vector2 heroPos = target.transform.position;
+			BoxCollider2D heroCollider = target.GetComponent<BoxCollider2D>();
+			heroPos.x += heroCollider.offset.x;
+			heroPos.y += heroCollider.offset.y;
 			GameObject enemyDetectArea = transform.Find("EnemyDetectArea").gameObject;
 			PolygonCollider2D detectArea = enemyDetectArea.GetComponent<PolygonCollider2D>();
 			Vector2 targetPos1 = new Vector2(heroPos.x - detectArea.offset.x, heroPos.y - detectArea.offset.y);
@@ -72,6 +128,7 @@ public class Enemy : MonoBehaviour
 			float distance1 = Vector2.Distance(targetPos1, transform.position);
 			float distance2 = Vector2.Distance(targetPos2, transform.position);
 			targetPos = (distance1 < distance2) ? targetPos1 : targetPos2;
+			print(targetPos);
 		}
 		else
 		{
@@ -80,14 +137,17 @@ public class Enemy : MonoBehaviour
 		}
 
 		Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
+		Animator animator = GetComponent<Animator>();
 		if (isMoving)
 		{
 			rigidbody.velocity = (targetPos - (Vector2)transform.position).normalized * maxMoveSpeed;
 			SetForward(rigidbody.velocity.x < 0);
+			animator.SetBool("IsMoving", true);
 		}
 		else
 		{
 			rigidbody.velocity = Vector2.zero;
+			animator.SetBool("IsMoving", false);
 		}
 	}
 
@@ -112,6 +172,7 @@ public class Enemy : MonoBehaviour
 	private void FlipChildX(String childName, bool needFlipX)
 	{
 		Transform childTrans = transform.Find(childName);
+		if (childTrans == null) return;
 		Vector3 localScale = childTrans.localScale;
 		float scaleX = needFlipX ? -MathF.Abs(localScale.x) : MathF.Abs(localScale.x);
 		childTrans.localScale = new Vector3(scaleX, localScale.y, localScale.z);
@@ -142,18 +203,6 @@ public class Enemy : MonoBehaviour
 		return enemyStatus == EnemyStatus.Dead;
 	}
 
-	public void GoToPos(Vector2 value)
-	{
-		throw new NotImplementedException();
-	}
-
-	
-
-	public bool IsAttackInCoolDown()
-	{
-		throw new NotImplementedException();
-	}
-
 	public void SetTarget(Hero hero)
 	{
 		target = hero;
@@ -173,13 +222,25 @@ public class Enemy : MonoBehaviour
 		return HaveTarget() && isDetectAreaActive;
 	}
 
-	public void TryAttack()
+	public void Attack()
 	{
-		throw new NotImplementedException();
+		bool isTargetInLeft = (target.transform.position.x - transform.position.x) < 0;
+		SetForward(isTargetInLeft);
+		Animator animator = GetComponent<Animator>();
+		animator.SetTrigger("Attack");
+		attackCoolDownTime = attackCoolDownMaxTime;
 	}
+
+	public void EnableAttackCollider(int status)
+	{
+		Transform attackAreaTrans = transform.Find("EnemyAttackArea");
+		if (attackAreaTrans == null) return;
+		attackAreaTrans.GetComponent<PolygonCollider2D>().enabled = (status == 1) ? true : false;
+	}
+
 
 	public void DoHarm(Hero hero)
 	{
-		throw new NotImplementedException();
+		Debug.Log("to do do harm");
 	}
 }

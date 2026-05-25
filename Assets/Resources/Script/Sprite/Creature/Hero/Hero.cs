@@ -6,9 +6,6 @@ using UnityEngine.InputSystem;
 
 public class Hero : MonoBehaviour
 {
-	private PlayerInput heroInput;
-	private Animator animator;
-
 	private Vector2 moveInput;
 	private readonly float maxMoveSpeed = 8f;
 	private readonly float acceleration = 800f;
@@ -19,18 +16,18 @@ public class Hero : MonoBehaviour
 
 	private void Awake()
 	{
-		heroInput = GetComponent<PlayerInput>();
-		animator = GetComponent<Animator>();
 		InitAttackModule();
 	}
 
 	private void OnEnable()
 	{
+		PlayerInput heroInput = GetComponent<PlayerInput>();
 		heroInput.onActionTriggered += OnActionTriggered;
 	}
 
 	private void OnDisable()
 	{
+		PlayerInput heroInput = GetComponent<PlayerInput>();
 		heroInput.onActionTriggered -= OnActionTriggered;
 	}
 
@@ -95,6 +92,7 @@ public class Hero : MonoBehaviour
 			GetComponent<SpriteRenderer>().flipX = false;
 		}
 
+		Animator animator = GetComponent<Animator>();
 		if ((horizontalInput != 0) || (verticalInput != 0))
 		{
 			animator.SetBool("IsMoving", true);

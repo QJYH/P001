@@ -15,7 +15,7 @@ namespace BehaviorTree
 
 		protected override void OnInit()
 		{
-			enemy.SetStatus(Enemy.EnemyStatus.Attack);
+			enemy.Attack();
 		}
 		protected override BehaviorStatus OnUpdate()
 		{
