@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3507685687067203271}
   - component: {fileID: 4632130953938535194}
   - component: {fileID: 2307638410892501185}
-  m_Layer: 6
-  m_Name: EnemyAttackArea
+  m_Layer: 10
+  m_Name: EnemyAttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

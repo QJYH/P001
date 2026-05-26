@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDetectArea : MonoBehaviour
+public class EnemyDetectRange : MonoBehaviour
 {
 	private void OnTriggerEnter2D(Collider2D collision)
 	{

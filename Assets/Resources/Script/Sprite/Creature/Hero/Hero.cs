@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Hero : MonoBehaviour
+public class Hero : Creature
 {
 	private Vector2 moveInput;
-	private readonly float maxMoveSpeed = 8f;
-	private readonly float acceleration = 800f;
+	private readonly float maxMoveSpeed = 6f;
 
 	private bool isHealing;
 	private bool isLightAttacking;
 	private bool isHeavyAttacking;
 
-	private void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
 		InitAttackModule();
 	}
 
@@ -103,19 +103,7 @@ public class Hero : MonoBehaviour
 		}
 
 		Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
-		Vector2 currentVelocity = rigidbody.velocity;
-		Vector2 targetVelocity = currentMoveInput * maxMoveSpeed;
-		Vector2 force = (targetVelocity - currentVelocity) * acceleration * Time.fixedDeltaTime;
-		rigidbody.AddForce(force, ForceMode2D.Force);
-
-		if (rigidbody.velocity.magnitude > maxMoveSpeed)
-		{
-			rigidbody.velocity = rigidbody.velocity.normalized * maxMoveSpeed;
-		}
-		else if (rigidbody.velocity.magnitude < 0.1f)
-		{
-			rigidbody.velocity = Vector2.zero;
-		}
+		rigidbody.velocity = currentMoveInput * maxMoveSpeed;
 	}
 
 	public bool IsDoingAction()
@@ -133,22 +121,22 @@ public class Hero : MonoBehaviour
 		isHealing = false;
 	}
 
-	public void OnLightAttackBegin()
+	public virtual void OnLightAttackBegin()
 	{
 		isLightAttacking = true;
 	}
 
-	public void OnLightAttackEnd()
+	public virtual void OnLightAttackEnd()
 	{
 		isLightAttacking = false;
 	}
 
-	public void OnHeavyAttackBegin()
+	public virtual void OnHeavyAttackBegin()
 	{
 		isHeavyAttacking = true;
 	}
 
-	public void OnHeavyAttackEnd()
+	public virtual void OnHeavyAttackEnd()
 	{
 		isHeavyAttacking = false;
 	}

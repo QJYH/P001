@@ -7,7 +7,7 @@ using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Creature
 {
 	public enum EnemyStatus
 	{
@@ -22,15 +22,27 @@ public class Enemy : MonoBehaviour
 	private bool isDetectAreaActive;
 	private float attackCoolDownTime = 0f;
 	private float attackCoolDownMaxTime = 2f;
-	private readonly float maxMoveSpeed = 6f;
+	private readonly float maxMoveSpeed = 5f;
 	private LinkedList<Vector2> patrolPosList;
 	private LinkedListNode<Vector2> currentPatrolPos;
 	private Selector behaviorTree;
+	protected float attackHarmValue;
 
-	private void Start()
+	protected override void Awake()
 	{
+		base.Awake();
+		InitAttackHarm();
 		initPatrolPosList();
 		AddBehaviorTree();
+	}
+	private void Update()
+	{
+		UpdateAttackCoolDown();
+		UpdateBehaviorTree();
+	}
+	private void FixedUpdate()
+	{
+		Move();
 	}
 
 	private void AddBehaviorTree()
@@ -67,18 +79,12 @@ public class Enemy : MonoBehaviour
 		currentPatrolPos = patrolPosList.First;
 	}
 
-	private void Update()
-	{
-		AttackCoolDown();
-		UpdateBehaviorTree();
-	}
-
 	private void UpdateBehaviorTree()
 	{
 		behaviorTree.Tick();
 	}
 
-	private void AttackCoolDown()
+	private void UpdateAttackCoolDown()
 	{
 		if (attackCoolDownTime > 0)
 		{
@@ -89,11 +95,6 @@ public class Enemy : MonoBehaviour
 	public bool IsAttackInCoolDown()
 	{
 		return attackCoolDownTime > 0;
-	}
-
-	private void FixedUpdate()
-	{
-		Move();
 	}
 
 	private void Move()
@@ -121,14 +122,13 @@ public class Enemy : MonoBehaviour
 			BoxCollider2D heroCollider = target.GetComponent<BoxCollider2D>();
 			heroPos.x += heroCollider.offset.x;
 			heroPos.y += heroCollider.offset.y;
-			GameObject enemyDetectArea = transform.Find("EnemyDetectArea").gameObject;
+			GameObject enemyDetectArea = transform.Find("EnemyDetectRange").gameObject;
 			PolygonCollider2D detectArea = enemyDetectArea.GetComponent<PolygonCollider2D>();
 			Vector2 targetPos1 = new Vector2(heroPos.x - detectArea.offset.x, heroPos.y - detectArea.offset.y);
 			Vector2 targetPos2 = new Vector2(heroPos.x + detectArea.offset.x, heroPos.y - detectArea.offset.y);
 			float distance1 = Vector2.Distance(targetPos1, transform.position);
 			float distance2 = Vector2.Distance(targetPos2, transform.position);
 			targetPos = (distance1 < distance2) ? targetPos1 : targetPos2;
-			print(targetPos);
 		}
 		else
 		{
@@ -157,16 +157,16 @@ public class Enemy : MonoBehaviour
 		if (isFacingLeft)
 		{
 			GetComponent<SpriteRenderer>().flipX = true;
-			FlipChildX("EnemyVisionArea", true);
-			FlipChildX("EnemyDetectArea", true);
-			FlipChildX("EnemyAttackArea", true);
+			FlipChildX("EnemyVisionRange", true);
+			FlipChildX("EnemyDetectRange", true);
+			FlipChildX("EnemyAttackRange", true);
 		}
 		else
 		{
 			GetComponent<SpriteRenderer>().flipX = false;
-			FlipChildX("EnemyVisionArea", false);
-			FlipChildX("EnemyDetectArea", false);
-			FlipChildX("EnemyAttackArea", false);
+			FlipChildX("EnemyVisionRange", false);
+			FlipChildX("EnemyDetectRange", false);
+			FlipChildX("EnemyAttackRange", false);
 		}
 	}
 	private void FlipChildX(String childName, bool needFlipX)
@@ -233,14 +233,18 @@ public class Enemy : MonoBehaviour
 
 	public void EnableAttackCollider(int status)
 	{
-		Transform attackAreaTrans = transform.Find("EnemyAttackArea");
+		Transform attackAreaTrans = transform.Find("EnemyAttackRange");
 		if (attackAreaTrans == null) return;
 		attackAreaTrans.GetComponent<PolygonCollider2D>().enabled = (status == 1) ? true : false;
 	}
 
-
-	public void DoHarm(Hero hero)
+	protected virtual void InitAttackHarm()
 	{
-		Debug.Log("to do do harm");
+
+	}
+
+	public float GetAttackHarmValue()
+	{
+		return attackHarmValue;
 	}
 }

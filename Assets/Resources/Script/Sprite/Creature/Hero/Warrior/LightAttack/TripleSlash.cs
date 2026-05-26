@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 
 public class TripleSlash : WarriorLightAttack
 {
-	private Warrior warrior;
 	private readonly float comboLimitTime = 1f;
 	private int slashCount = 0;
 	private float lastSlashTime = 0;
@@ -30,7 +29,7 @@ public class TripleSlash : WarriorLightAttack
 
 			if (slashCount == 3)
 			{
-				DoFinisher();
+				DoFinisher(false);
 			}
 			else
 			{
@@ -40,11 +39,12 @@ public class TripleSlash : WarriorLightAttack
 		}
 	}
 
-	public override void DoFinisher()
+	public override void DoFinisher(bool withDefend)
 	{
 		warrior.GetComponent<Animator>().SetBool("IsLightAttackFinisher", true);
 		warrior.GetComponent<Animator>().SetTrigger("LightAttack");
 		lastSlashTime = 0;
 		slashCount = 0;
+		base.DoFinisher(withDefend);
 	}
 }

@@ -8,7 +8,6 @@ using UnityEngine.InputSystem;
 
 public class ChargeSlash : WarriorLightAttack
 {
-	private Warrior warrior;
 	private readonly float chargeNeedTime = 1f;
 	private float chargeBeginTime = 0;
 	private bool isCharging = false;
@@ -32,7 +31,7 @@ public class ChargeSlash : WarriorLightAttack
 			float chargeDuration = Time.time - chargeBeginTime;
 			if (isCharging && (chargeDuration > chargeNeedTime))
 			{
-				DoFinisher();
+				DoFinisher(false);
 			}
 			else
 			{
@@ -44,12 +43,13 @@ public class ChargeSlash : WarriorLightAttack
 		}
 	}
 
-	public override void DoFinisher()
+	public override void DoFinisher(bool withDefend)
 	{
 		warrior.GetComponent<Animator>().SetBool("IsLightAttackFinisher", true);
 		warrior.GetComponent<Animator>().SetTrigger("LightAttack");
 		chargeBeginTime = 0;
 		isCharging = false;
+		base.DoFinisher(withDefend);
 	}
 
 	

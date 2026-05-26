@@ -28,7 +28,7 @@ public class LevelDirector : SceneDirector
 	{
 		GameObject entrance = GameObject.Find("Entrance1");
 		Vector3 entrancePos = entrance.transform.position;
-		currentHero = Instantiate(Resources.Load<GameObject>("Prefab/Sprite/Creature/Hero/Warrior"));
+		currentHero = Instantiate(Resources.Load<GameObject>("Prefab/Sprite/Creature/Hero/Warrior/Warrior"));
 		currentHero.transform.position = entrancePos;
 
 	}

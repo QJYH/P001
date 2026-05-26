@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttackArea : MonoBehaviour
+public class EnemyVisionRange : MonoBehaviour
 {
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		Hero hero = collision.GetComponent<Hero>();
 		if (hero != null)
 		{
-			GetComponentInParent<Enemy>().DoHarm(hero);
+			GetComponentInParent<Enemy>().SetTarget(hero);
 		}
 	}
 }

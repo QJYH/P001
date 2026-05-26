@@ -25,4 +25,19 @@ public class NormalGuard : WarriorHeavyAttack
 			warrior.GetComponent<Animator>().SetTrigger("HeavyAttack");
 		}
 	}
+	public override void OnAttackBegin()
+	{
+		warrior.SetDefendStatus(true);
+		warrior.SetStrikeBackStatus(true);
+		TimerManager.Instance.DelayCall(0.2f, () =>
+		{
+			if (warrior == null) return;
+			warrior.SetStrikeBackStatus(false);
+		});
+	}
+
+	public override void OnAttackEnd()
+	{
+		warrior.SetDefendStatus(false);
+	}
 }
