@@ -12,6 +12,8 @@ public class Hero : Creature
 	private bool isHealing;
 	private bool isLightAttacking;
 	private bool isHeavyAttacking;
+	protected GameObject lightAttack;
+	protected GameObject heavyAttack;
 
 	protected override void Awake()
 	{
@@ -86,10 +88,14 @@ public class Hero : Creature
 		if (horizontalInput < 0)
 		{
 			GetComponent<SpriteRenderer>().flipX = true;
+			FlipAttackX(lightAttack, true);
+			FlipAttackX(heavyAttack, true);
 		}
 		else if (horizontalInput > 0)
 		{
 			GetComponent<SpriteRenderer>().flipX = false;
+			FlipAttackX(lightAttack, false);
+			FlipAttackX(heavyAttack, false);
 		}
 
 		Animator animator = GetComponent<Animator>();
@@ -104,6 +110,13 @@ public class Hero : Creature
 
 		Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
 		rigidbody.velocity = currentMoveInput * maxMoveSpeed;
+	}
+
+	private void FlipAttackX(GameObject attack, bool needFlipX)
+	{
+		Vector3 localScale = attack.transform.localScale;
+		float scaleX = needFlipX ? -MathF.Abs(localScale.x) : MathF.Abs(localScale.x);
+		attack.transform.localScale = new Vector3(scaleX, localScale.y, localScale.z);
 	}
 
 	public bool IsDoingAction()
@@ -121,33 +134,37 @@ public class Hero : Creature
 		isHealing = false;
 	}
 
-	public virtual void OnLightAttackBegin()
+	public void OnLightAttackBegin()
 	{
 		isLightAttacking = true;
+		lightAttack.GetComponent<HeroLightAttack>().OnAttackBegin();
 	}
 
-	public virtual void OnLightAttackEnd()
+	public void OnLightAttackEnd()
 	{
 		isLightAttacking = false;
+		lightAttack.GetComponent<HeroLightAttack>().OnAttackEnd();
 	}
 
-	public virtual void OnHeavyAttackBegin()
+	public void OnHeavyAttackBegin()
 	{
 		isHeavyAttacking = true;
+		heavyAttack.GetComponent<HeroHeavyAttack>().OnAttackBegin();
 	}
 
-	public virtual void OnHeavyAttackEnd()
+	public void OnHeavyAttackEnd()
 	{
 		isHeavyAttacking = false;
+		heavyAttack.GetComponent<HeroHeavyAttack>().OnAttackEnd();
 	}
 
-	protected virtual void HandleLightAttackInput(InputAction.CallbackContext context)
+	private void HandleLightAttackInput(InputAction.CallbackContext context)
 	{
-
+		lightAttack.GetComponent<HeroLightAttack>().HandleLightAttackInput(context);
 	}
 
-	protected virtual void HandleHeavyAttackInput(InputAction.CallbackContext context)
+	private void HandleHeavyAttackInput(InputAction.CallbackContext context)
 	{
-
+		heavyAttack.GetComponent<HeroHeavyAttack>().HandleHeavyAttackInput(context);
 	}
 }

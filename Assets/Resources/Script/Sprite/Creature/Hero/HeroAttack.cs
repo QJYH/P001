@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class HeroAttack : Object
+public class HeroAttack : MonoBehaviour
 {
 	public virtual void OnAttackBegin()
 	{

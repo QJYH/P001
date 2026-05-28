@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Enemy : Creature
 {
@@ -233,9 +234,9 @@ public class Enemy : Creature
 
 	public void EnableAttackCollider(int status)
 	{
-		Transform attackAreaTrans = transform.Find("EnemyAttackRange");
-		if (attackAreaTrans == null) return;
-		attackAreaTrans.GetComponent<PolygonCollider2D>().enabled = (status == 1) ? true : false;
+		EnemyAttackRange range = GetComponentInChildren<EnemyAttackRange>();
+		if (range == null) return;
+		range.GetComponent<PolygonCollider2D>().enabled = (status == 1) ? true : false;
 	}
 
 	protected virtual void InitAttackHarm()
@@ -243,8 +244,8 @@ public class Enemy : Creature
 
 	}
 
-	public float GetAttackHarmValue()
+	internal void OnAttackHitHero(Hero hero)
 	{
-		return attackHarmValue;
+		Creature.HandleAttack(this, hero, attackHarmValue);
 	}
 }

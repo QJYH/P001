@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,15 +6,12 @@ using UnityEngine;
 public class WarriorLightAttack : HeroLightAttack
 {
 	protected Warrior warrior;
-	public static WarriorLightAttack Create(string attackName, Warrior warrior)
+	protected float normalHarmValue;
+	protected float finisherHarmValue;
+
+	protected virtual void Start()
 	{
-		switch (attackName)
-		{
-			case nameof(TripleSlash): return new TripleSlash(warrior);
-			case nameof(ChargeSlash): return new ChargeSlash(warrior);
-			default:
-				throw new System.Exception("Unknown Attack Type!!!");
-		}
+		warrior = GetComponentInParent<Warrior>();
 	}
 
 	public virtual void DoFinisher(bool withDefend)
@@ -27,5 +25,10 @@ public class WarriorLightAttack : HeroLightAttack
 	public override void OnAttackEnd()
 	{
 		warrior.SetDefendStatus(false);
+	}
+
+	public float GetHarmValue(bool isFinisher)
+	{
+		return (isFinisher) ? finisherHarmValue : normalHarmValue;
 	}
 }

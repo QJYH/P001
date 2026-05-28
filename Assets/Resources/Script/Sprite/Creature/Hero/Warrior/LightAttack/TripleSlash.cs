@@ -7,13 +7,16 @@ using UnityEngine.InputSystem;
 
 public class TripleSlash : WarriorLightAttack
 {
+	
 	private readonly float comboLimitTime = 1f;
 	private int slashCount = 0;
 	private float lastSlashTime = 0;
 
-	public TripleSlash(Warrior warrior)
+	protected override void Start()
 	{
-		this.warrior = warrior;
+		base.Start();
+		normalHarmValue = 1f;
+		finisherHarmValue = 2f;
 	}
 
 	public override void HandleLightAttackInput(InputAction.CallbackContext context)

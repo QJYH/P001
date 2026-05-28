@@ -12,9 +12,11 @@ public class ChargeSlash : WarriorLightAttack
 	private float chargeBeginTime = 0;
 	private bool isCharging = false;
 
-	public ChargeSlash(Warrior warrior)
+	protected override void Start()
 	{
-		this.warrior = warrior;
+		base.Start();
+		normalHarmValue = 1f;
+		finisherHarmValue = 2f;
 	}
 
 	public override void HandleLightAttackInput(InputAction.CallbackContext context)

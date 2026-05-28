@@ -7,8 +7,6 @@ using UnityEngine.InputSystem;
 public class Warrior : Hero
 {
 	private readonly float warriorHp = 5f;
-	private WarriorLightAttack lightAttack;
-	private WarriorHeavyAttack heavyAttack;
 	private bool isDefending;
 	private bool canStrikeBack;
 	
@@ -20,49 +18,10 @@ public class Warrior : Hero
 
 	protected override void InitAttackModule()
 	{
-		lightAttack = WarriorLightAttack.Create(nameof(TripleSlash), this);
-		heavyAttack = WarriorHeavyAttack.Create(nameof(NormalGuard), this);
-		
-	}
-
-	protected override void HandleLightAttackInput(InputAction.CallbackContext context)
-	{
-		lightAttack.HandleLightAttackInput(context);
-	}
-
-	protected override void HandleHeavyAttackInput(InputAction.CallbackContext context)
-	{
-		heavyAttack.HandleHeavyAttackInput(context);
-	}
-
-	private void OnDestroy()
-	{
-		Destroy(this.lightAttack);
-		Destroy(this.heavyAttack);
-	}
-
-	public override void OnHeavyAttackBegin()
-	{
-		heavyAttack.OnAttackBegin();
-		base.OnHeavyAttackBegin();
-	}
-
-	public override void OnHeavyAttackEnd()
-	{
-		heavyAttack.OnAttackEnd();
-		base.OnHeavyAttackEnd();
-	}
-
-	public override void OnLightAttackBegin()
-	{
-		lightAttack.OnAttackBegin();
-		base.OnLightAttackBegin();
-	}
-
-	public override void OnLightAttackEnd()
-	{
-		lightAttack.OnAttackEnd();
-		base.OnLightAttackEnd();
+		lightAttack = Instantiate(Resources.Load<GameObject>("Prefab/Sprite/Creature/Hero/Warrior/LightAttack/TripleSlash"));
+		heavyAttack = Instantiate(Resources.Load<GameObject>("Prefab/Sprite/Creature/Hero/Warrior/HeavyAttack/NormalGuard"));
+		lightAttack.transform.SetParent(gameObject.transform, false);
+		heavyAttack.transform.SetParent(gameObject.transform, false);
 	}
 
 	public void SetDefendStatus(bool value)
@@ -80,7 +39,7 @@ public class Warrior : Hero
 		if (canStrikeBack)
 		{
 			SetStrikeBackStatus(false);
-			lightAttack.DoFinisher(true);
+			lightAttack.GetComponent<WarriorLightAttack>().DoFinisher(true);
 		}
 		else if (isDefending)
 		{
@@ -92,5 +51,21 @@ public class Warrior : Hero
 		}
 	}
 
-	
+	public void OnLightAttackHitEnemy(Enemy enemy, bool isFinisher)
+	{
+		float harmValue = lightAttack.GetComponent<WarriorLightAttack>().GetHarmValue(isFinisher);
+		Creature.HandleAttack(this, enemy, harmValue);
+	}
+
+	public void EnableLightAttackCollider(int status)
+	{
+		WarriorLightAttackRange range = lightAttack.GetComponentInChildren<WarriorLightAttackRange>();
+		range.GetComponent<PolygonCollider2D>().enabled = (status == 1) ? true : false;
+	}
+
+	public void EnableLightAttackFinisherCollider(int status)
+	{
+		WarriorLightAttackFinisherRange range = lightAttack.GetComponentInChildren<WarriorLightAttackFinisherRange>();
+		range.GetComponent<PolygonCollider2D>().enabled = (status == 1) ? true : false;
+	}
 }   

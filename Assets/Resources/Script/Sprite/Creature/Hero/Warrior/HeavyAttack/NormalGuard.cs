@@ -9,13 +9,6 @@ using UnityEngine.InputSystem;
 
 public class NormalGuard : WarriorHeavyAttack
 {
-	private Warrior warrior;
-
-	public NormalGuard(Warrior warrior)
-	{
-		this.warrior = warrior;
-	}
-
 	public override void HandleHeavyAttackInput(InputAction.CallbackContext context)
 	{
 		if (warrior.IsDoingAction()) return;

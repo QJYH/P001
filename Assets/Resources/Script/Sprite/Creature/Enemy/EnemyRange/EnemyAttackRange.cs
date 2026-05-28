@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttackRange : MonoBehaviour
+public class EnemyAttackRange : CreatureRange
 {
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
@@ -11,7 +11,7 @@ public class EnemyAttackRange : MonoBehaviour
 		if (hero != null)
 		{
 			Enemy enemy = GetComponentInParent<Enemy>();
-			Creature.HandleAttack(enemy, hero, enemy.GetAttackHarmValue());
+			enemy.OnAttackHitHero(hero);
 		}
 	}
 }
