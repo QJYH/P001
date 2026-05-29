@@ -21,7 +21,7 @@ namespace BehaviorTree
 		protected override BehaviorStatus OnUpdate()
 		{
 			if (enemy.HaveTarget()) return BehaviorStatus.Success;
-
+			
 			return BehaviorStatus.Running;
 		}
 	}

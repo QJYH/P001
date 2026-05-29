@@ -18,10 +18,10 @@ public class Warrior : Hero
 
 	protected override void InitAttackModule()
 	{
-		lightAttack = Instantiate(Resources.Load<GameObject>("Prefab/Sprite/Creature/Hero/Warrior/LightAttack/TripleSlash"));
-		heavyAttack = Instantiate(Resources.Load<GameObject>("Prefab/Sprite/Creature/Hero/Warrior/HeavyAttack/NormalGuard"));
-		lightAttack.transform.SetParent(gameObject.transform, false);
-		heavyAttack.transform.SetParent(gameObject.transform, false);
+		string lightAttackDir = string.Format("Prefab/Sprite/Creature/Hero/Warrior/LightAttack/{0}", "TripleSlash");
+		string heavyAttackDir = string.Format("Prefab/Sprite/Creature/Hero/Warrior/HeavyAttack/{0}", "NormalGuard");
+		lightAttack = Instantiate(Resources.Load<GameObject>(lightAttackDir), gameObject.transform);
+		heavyAttack = Instantiate(Resources.Load<GameObject>(heavyAttackDir), gameObject.transform);
 	}
 
 	public void SetDefendStatus(bool value)

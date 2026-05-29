@@ -6,7 +6,7 @@ public class WarriorHeavyAttack : HeroHeavyAttack
 {
 	protected Warrior warrior;
 
-	private void Start()
+	private void Awake()
 	{
 		warrior = GetComponentInParent<Warrior>();
 	}

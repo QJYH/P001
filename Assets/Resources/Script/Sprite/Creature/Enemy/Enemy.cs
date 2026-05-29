@@ -12,11 +12,11 @@ public class Enemy : Creature
 {
 	public enum EnemyStatus
 	{
+		None,
 		Patrol,
 		Rest,
 		Chase,
 		Attack,
-		Dead
 	}
 	private Hero target;
 	private EnemyStatus enemyStatus;
@@ -38,9 +38,11 @@ public class Enemy : Creature
 	}
 	private void Update()
 	{
+		UpdateTarget();
 		UpdateAttackCoolDown();
 		UpdateBehaviorTree();
 	}
+
 	private void FixedUpdate()
 	{
 		Move();
@@ -93,6 +95,15 @@ public class Enemy : Creature
 		}
 	}
 
+	private void UpdateTarget()
+	{
+		if (target == null) return;
+
+		if (target.IsDead())
+		{
+			SetTarget(null);
+		}
+	}
 	public bool IsAttackInCoolDown()
 	{
 		return attackCoolDownTime > 0;
@@ -199,14 +210,17 @@ public class Enemy : Creature
 	{
 		return enemyStatus == EnemyStatus.Attack;
 	}
-	public bool IsDead()
-	{
-		return enemyStatus == EnemyStatus.Dead;
-	}
 
 	public void SetTarget(Hero hero)
 	{
-		target = hero;
+		if ((hero) && (!hero.IsDead()))
+		{
+			target = hero;
+		}
+		else
+		{
+			target = null;
+		}
 	}
 
 	public void SetDetectAreaActive(bool v)
@@ -218,6 +232,11 @@ public class Enemy : Creature
 		return target != null;
 	}
 
+	public Hero GetTarget()
+	{
+		return target;
+	}
+
 	public bool HaveTargetInAttackArea()
 	{
 		return HaveTarget() && isDetectAreaActive;
@@ -225,6 +244,7 @@ public class Enemy : Creature
 
 	public void Attack()
 	{
+		SetStatus(EnemyStatus.Attack);
 		bool isTargetInLeft = (target.transform.position.x - transform.position.x) < 0;
 		SetForward(isTargetInLeft);
 		Animator animator = GetComponent<Animator>();

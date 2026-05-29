@@ -12,9 +12,9 @@ public class TripleSlash : WarriorLightAttack
 	private int slashCount = 0;
 	private float lastSlashTime = 0;
 
-	protected override void Start()
+	protected override void Awake()
 	{
-		base.Start();
+		base.Awake();
 		normalHarmValue = 1f;
 		finisherHarmValue = 2f;
 	}

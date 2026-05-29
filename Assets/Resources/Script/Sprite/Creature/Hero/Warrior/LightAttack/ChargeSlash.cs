@@ -12,9 +12,9 @@ public class ChargeSlash : WarriorLightAttack
 	private float chargeBeginTime = 0;
 	private bool isCharging = false;
 
-	protected override void Start()
+	protected override void Awake()
 	{
-		base.Start();
+		base.Awake();
 		normalHarmValue = 1f;
 		finisherHarmValue = 2f;
 	}

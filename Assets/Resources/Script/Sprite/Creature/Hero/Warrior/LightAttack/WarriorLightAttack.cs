@@ -9,7 +9,7 @@ public class WarriorLightAttack : HeroLightAttack
 	protected float normalHarmValue;
 	protected float finisherHarmValue;
 
-	protected virtual void Start()
+	protected virtual void Awake()
 	{
 		warrior = GetComponentInParent<Warrior>();
 	}
