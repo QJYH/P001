@@ -33,25 +33,31 @@ public class ChargeSlash : WarriorLightAttack
 			float chargeDuration = Time.time - chargeBeginTime;
 			if (isCharging && (chargeDuration > chargeNeedTime))
 			{
-				DoFinisher(false);
+				DoFinisher();
 			}
 			else
 			{
-				warrior.GetComponent<Animator>().SetBool("IsLightAttackFinisher", false);
-				warrior.GetComponent<Animator>().SetTrigger("LightAttack");
-				chargeBeginTime = 0;
-				isCharging = false;
+				DoNormal();
 			}
 		}
 	}
 
-	public override void DoFinisher(bool withDefend)
+	private void DoNormal()
 	{
-		warrior.GetComponent<Animator>().SetBool("IsLightAttackFinisher", true);
+		currentPhase = LightAttackPhase.Normal;
+		warrior.GetComponent<Animator>().SetInteger("LightAttackPhase", 1);
 		warrior.GetComponent<Animator>().SetTrigger("LightAttack");
 		chargeBeginTime = 0;
 		isCharging = false;
-		base.DoFinisher(withDefend);
+	}
+
+	public override void DoFinisher()
+	{
+		currentPhase = LightAttackPhase.Finisher;
+		warrior.GetComponent<Animator>().SetInteger("LightAttackPhase", 2);
+		warrior.GetComponent<Animator>().SetTrigger("LightAttack");
+		chargeBeginTime = 0;
+		isCharging = false;
 	}
 
 	

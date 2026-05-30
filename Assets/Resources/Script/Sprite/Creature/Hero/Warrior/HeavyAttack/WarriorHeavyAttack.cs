@@ -10,4 +10,15 @@ public class WarriorHeavyAttack : HeroHeavyAttack
 	{
 		warrior = GetComponentInParent<Warrior>();
 	}
+
+	public override void OnAttackBegin()
+	{
+		warrior.SetDefendHalfEnable(1);
+	}
+
+	public override void OnAttackEnd()
+	{
+		warrior.SetDefendHalfEnable(0);
+		warrior.SetStrikeBackEnable(0);
+	}
 }

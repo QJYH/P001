@@ -2,29 +2,46 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 public class WarriorLightAttack : HeroLightAttack
 {
 	protected Warrior warrior;
 	protected float normalHarmValue;
 	protected float finisherHarmValue;
+	public enum LightAttackPhase
+	{
+		None,
+		Normal,
+		Finisher
+	}
+	protected LightAttackPhase currentPhase;
 
 	protected virtual void Awake()
 	{
 		warrior = GetComponentInParent<Warrior>();
+		currentPhase = LightAttackPhase.None;
 	}
 
-	public virtual void DoFinisher(bool withDefend)
+	public virtual void DoFinisher()
 	{
-		if (withDefend)
+		
+	}
+
+	public override void OnAttackBegin()
+	{
+		if (currentPhase == LightAttackPhase.Finisher)
 		{
-			warrior.SetDefendStatus(true);
+			warrior.SetDefendAllEnable(1);
 		}
 	}
 
 	public override void OnAttackEnd()
 	{
-		warrior.SetDefendStatus(false);
+		currentPhase = LightAttackPhase.None;
+		warrior.SetLightAttackNormalColliderEnable(0);
+		warrior.SetLightAttackFinisherColliderEnable(0);
+		warrior.SetDefendAllEnable(0);
 	}
 
 	public float GetHarmValue(bool isFinisher)

@@ -1,31 +1,7 @@
 fileFormatVersion: 2
-guid: 1a4bb483943d54c1d99bfdddf89fcb3a
+guid: 9ca188bb0175b2842a4269d4a53d2b4c
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -3424596684861233237
-    second: Warrior_Attack2_0
-  - first:
-      213: 2678504405838677843
-    second: Warrior_Attack2_1
-  - first:
-      213: 3934996648058365938
-    second: Warrior_Attack2_2
-  - first:
-      213: 747109334637763536
-    second: Warrior_Attack2_3
-  - first:
-      213: 5440784272028235850
-    second: Warrior_Attack2_4
-  - first:
-      213: 7963802146419352279
-    second: Warrior_Attack2_5
-  - first:
-      213: -5823742362103486559
-    second: Warrior_Attack2_6
-  - first:
-      213: 580873088880598253
-    second: Warrior_Attack2_7
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -58,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -96,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -121,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WarriorLightAttackFinisher_0
+      name: ChargeSlashNormal_0
       rect:
         serializedVersion: 2
         x: 0
@@ -135,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 66c4f4c7b29271b42b5a05f8de4a3dc7
-      internalID: 954938810
+      spriteID: 2e3b68608357b0944901447a115f1655
+      internalID: 958810215
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WarriorLightAttackFinisher_1
+      name: ChargeSlashNormal_1
       rect:
         serializedVersion: 2
         x: 192
@@ -156,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 79b7cf428994f8047becbfa74333023c
-      internalID: 1345389460
+      spriteID: 3b8ba12d9b7cb8e4f9989138fd818f17
+      internalID: -1374613654
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WarriorLightAttackFinisher_2
+      name: ChargeSlashNormal_2
       rect:
         serializedVersion: 2
         x: 384
@@ -177,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3c7693ca73679904bb993bd7813a9922
-      internalID: 6292535
+      spriteID: 0479aa9157f03d943b39dca0c2f76005
+      internalID: -149071178
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WarriorLightAttackFinisher_3
+      name: ChargeSlashNormal_3
       rect:
         serializedVersion: 2
         x: 576
@@ -198,8 +174,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dd72de377525dd54baa380cc0871c948
-      internalID: -228636519
+      spriteID: 023bb7fda67541d449a2c7b68100a2d0
+      internalID: -685835834
       vertices: []
       indices: 
       edges: []
@@ -207,7 +183,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: ccd4ff47c171c40fd9b99c3f3b44f2ab
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -215,10 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      WarriorLightAttackFinisher_0: 954938810
-      WarriorLightAttackFinisher_1: 1345389460
-      WarriorLightAttackFinisher_2: 6292535
-      WarriorLightAttackFinisher_3: -228636519
+      ChargeSlashNormal_0: 958810215
+      ChargeSlashNormal_1: -1374613654
+      ChargeSlashNormal_2: -149071178
+      ChargeSlashNormal_3: -685835834
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

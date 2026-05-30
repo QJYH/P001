@@ -32,22 +32,28 @@ public class TripleSlash : WarriorLightAttack
 
 			if (slashCount == 3)
 			{
-				DoFinisher(false);
+				DoFinisher();
 			}
 			else
 			{
-				warrior.GetComponent<Animator>().SetBool("IsLightAttackFinisher", false);
-				warrior.GetComponent<Animator>().SetTrigger("LightAttack");
+				DoNormal();
 			}
 		}
 	}
 
-	public override void DoFinisher(bool withDefend)
+	private void DoNormal()
 	{
-		warrior.GetComponent<Animator>().SetBool("IsLightAttackFinisher", true);
+		currentPhase = LightAttackPhase.Normal;
+		warrior.GetComponent<Animator>().SetInteger("LightAttackPhase", 1);
+		warrior.GetComponent<Animator>().SetTrigger("LightAttack");
+	}
+
+	public override void DoFinisher()
+	{
+		currentPhase = LightAttackPhase.Finisher;
+		warrior.GetComponent<Animator>().SetInteger("LightAttackPhase", 2);
 		warrior.GetComponent<Animator>().SetTrigger("LightAttack");
 		lastSlashTime = 0;
 		slashCount = 0;
-		base.DoFinisher(withDefend);
 	}
 }

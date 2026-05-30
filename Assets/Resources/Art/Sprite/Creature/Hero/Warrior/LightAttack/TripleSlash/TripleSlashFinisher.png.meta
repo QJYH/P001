@@ -1,37 +1,7 @@
 fileFormatVersion: 2
-guid: 7476f60a6f46a4dd0a8657b2d8780e3e
+guid: 8974a6a52e5ff134f9882769ac182f11
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -3464697531994304634
-    second: Warrior_Attack1_0
-  - first:
-      213: 8738852634765236386
-    second: Warrior_Attack1_1
-  - first:
-      213: 1435813858662126931
-    second: Warrior_Attack1_2
-  - first:
-      213: 2647078634671427691
-    second: Warrior_Attack1_3
-  - first:
-      213: 7513856361725465591
-    second: Warrior_Attack1_4
-  - first:
-      213: -8056235884627991497
-    second: Warrior_Attack1_5
-  - first:
-      213: 3074494340152884240
-    second: Warrior_Attack1_6
-  - first:
-      213: 3224341164437929707
-    second: Warrior_Attack1_7
-  - first:
-      213: -205774181883186201
-    second: Warrior_Attack1_8
-  - first:
-      213: -8164135769183853208
-    second: Warrior_Attack1_9
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -64,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -102,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -127,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WarriorLightAttack_0
+      name: TripleSlashFinisher_0
       rect:
         serializedVersion: 2
         x: 0
@@ -141,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d7954cd94dd745347b500030523e3e69
-      internalID: 1920266275
+      spriteID: eb5a9b65721dc424ebbf3924cbeb8a88
+      internalID: 1875046443
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WarriorLightAttack_1
+      name: TripleSlashFinisher_1
       rect:
         serializedVersion: 2
         x: 192
@@ -162,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc8a8a0c75af5454db041340d6593761
-      internalID: 1637061192
+      spriteID: cdef1c2220aa9bd4491905817d48b384
+      internalID: 1034180877
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WarriorLightAttack_2
+      name: TripleSlashFinisher_2
       rect:
         serializedVersion: 2
         x: 384
@@ -183,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2340d116c187bee4282d67b6bc9d1c73
-      internalID: -522770521
+      spriteID: 9ad2706fdd18f544fb6b9cc95bca9dd9
+      internalID: 761073822
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WarriorLightAttack_3
+      name: TripleSlashFinisher_3
       rect:
         serializedVersion: 2
         x: 576
@@ -204,8 +174,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3934211daf9b59244a878a56f441d8dd
-      internalID: -1649261082
+      spriteID: 1876f1ed0f8467941a3ecf5754015ac2
+      internalID: -1723812643
       vertices: []
       indices: 
       edges: []
@@ -213,7 +183,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 0fed573e0f1ea40d29e2a352ed4ec793
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -221,10 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      WarriorLightAttack_0: 1920266275
-      WarriorLightAttack_1: 1637061192
-      WarriorLightAttack_2: -522770521
-      WarriorLightAttack_3: -1649261082
+      TripleSlashFinisher_0: 1875046443
+      TripleSlashFinisher_1: 1034180877
+      TripleSlashFinisher_2: 761073822
+      TripleSlashFinisher_3: -1723812643
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

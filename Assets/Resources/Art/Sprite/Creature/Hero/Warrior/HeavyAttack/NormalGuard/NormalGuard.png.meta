@@ -1,25 +1,7 @@
 fileFormatVersion: 2
-guid: b67ea81b372ff482480f6b94db552857
+guid: 540634cdfb3d5124585ed8b442db9554
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -3014082438352978858
-    second: Warrior_Guard_0
-  - first:
-      213: -8379219403140719787
-    second: Warrior_Guard_1
-  - first:
-      213: 9082096816701911304
-    second: Warrior_Guard_2
-  - first:
-      213: -3415142777385630793
-    second: Warrior_Guard_3
-  - first:
-      213: -5672506429785410100
-    second: Warrior_Guard_4
-  - first:
-      213: 2401901321164802203
-    second: Warrior_Guard_5
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -90,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -115,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WarriorHeavyAttack_0
+      name: NormalGuard_0
       rect:
         serializedVersion: 2
         x: 0
@@ -129,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f6442ba0a739e754bb9488c3f6bff910
-      internalID: -638741047
+      spriteID: 6ce74870a8484db4e8859976468086f4
+      internalID: -473179498
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WarriorHeavyAttack_1
+      name: NormalGuard_1
       rect:
         serializedVersion: 2
         x: 192
@@ -150,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a4ca331a4d0bd19489f63cd6bafe647a
-      internalID: -1306851995
+      spriteID: 334d5a33d4da5b449945ad0c221c4c60
+      internalID: 448295725
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WarriorHeavyAttack_2
+      name: NormalGuard_2
       rect:
         serializedVersion: 2
         x: 384
@@ -171,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df2542f6b36262b488e40b72e4b38cdc
-      internalID: -1555252604
+      spriteID: 87aeb8780310a364fa22434dd82b308d
+      internalID: -1925144202
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WarriorHeavyAttack_3
+      name: NormalGuard_3
       rect:
         serializedVersion: 2
         x: 576
@@ -192,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eb9ad27680338364381a4804e667909d
-      internalID: -2115030593
+      spriteID: dfb27b4b9333ae84e83d25e10ef10881
+      internalID: 505124470
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WarriorHeavyAttack_4
+      name: NormalGuard_4
       rect:
         serializedVersion: 2
         x: 768
@@ -213,14 +195,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca909d6ac4c337f49b50c1f85348dfc1
-      internalID: -1616011712
+      spriteID: 87e8e6d47c48f1c41af351540bdf8f92
+      internalID: 885667706
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WarriorHeavyAttack_5
+      name: NormalGuard_5
       rect:
         serializedVersion: 2
         x: 960
@@ -234,8 +216,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d441464f1abd6b4589b759fb22a2f9f
-      internalID: 34581952
+      spriteID: bd59e8c38c1979340bcf4802bd645d11
+      internalID: -1331930428
       vertices: []
       indices: 
       edges: []
@@ -243,7 +225,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 72265d252427d4f5381108e28ab1962a
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -251,12 +233,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      WarriorHeavyAttack_0: -638741047
-      WarriorHeavyAttack_1: -1306851995
-      WarriorHeavyAttack_2: -1555252604
-      WarriorHeavyAttack_3: -2115030593
-      WarriorHeavyAttack_4: -1616011712
-      WarriorHeavyAttack_5: 34581952
+      NormalGuard_0: -473179498
+      NormalGuard_1: 448295725
+      NormalGuard_2: -1925144202
+      NormalGuard_3: 505124470
+      NormalGuard_4: 885667706
+      NormalGuard_5: -1331930428
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

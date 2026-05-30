@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WarriorHeavyAttack
+  m_Name: ChargeSlashFinisher
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,23 +21,19 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -638741047, guid: b67ea81b372ff482480f6b94db552857, type: 3}
-    - time: 0.1
-      value: {fileID: -1306851995, guid: b67ea81b372ff482480f6b94db552857, type: 3}
-    - time: 0.2
-      value: {fileID: -1555252604, guid: b67ea81b372ff482480f6b94db552857, type: 3}
-    - time: 0.3
-      value: {fileID: -2115030593, guid: b67ea81b372ff482480f6b94db552857, type: 3}
-    - time: 0.4
-      value: {fileID: -1616011712, guid: b67ea81b372ff482480f6b94db552857, type: 3}
-    - time: 0.5
-      value: {fileID: 34581952, guid: b67ea81b372ff482480f6b94db552857, type: 3}
+      value: {fileID: 1389729276, guid: 1d6af6c5fa210944ca0a28a9da74c9a0, type: 3}
+    - time: 0.083333336
+      value: {fileID: -1080110660, guid: 1d6af6c5fa210944ca0a28a9da74c9a0, type: 3}
+    - time: 0.16666667
+      value: {fileID: -1264495956, guid: 1d6af6c5fa210944ca0a28a9da74c9a0, type: 3}
+    - time: 0.25
+      value: {fileID: -470563069, guid: 1d6af6c5fa210944ca0a28a9da74c9a0, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
-  m_SampleRate: 10
+  m_SampleRate: 12
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -54,18 +50,16 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -638741047, guid: b67ea81b372ff482480f6b94db552857, type: 3}
-    - {fileID: -1306851995, guid: b67ea81b372ff482480f6b94db552857, type: 3}
-    - {fileID: -1555252604, guid: b67ea81b372ff482480f6b94db552857, type: 3}
-    - {fileID: -2115030593, guid: b67ea81b372ff482480f6b94db552857, type: 3}
-    - {fileID: -1616011712, guid: b67ea81b372ff482480f6b94db552857, type: 3}
-    - {fileID: 34581952, guid: b67ea81b372ff482480f6b94db552857, type: 3}
+    - {fileID: 1389729276, guid: 1d6af6c5fa210944ca0a28a9da74c9a0, type: 3}
+    - {fileID: -1080110660, guid: 1d6af6c5fa210944ca0a28a9da74c9a0, type: 3}
+    - {fileID: -1264495956, guid: 1d6af6c5fa210944ca0a28a9da74c9a0, type: 3}
+    - {fileID: -470563069, guid: 1d6af6c5fa210944ca0a28a9da74c9a0, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.6
+    m_StopTime: 0.33333334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -84,4 +78,18 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.16666667
+    functionName: SetLightAttackFinisherColliderEnable
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 1
+    messageOptions: 0
+  - time: 0.25
+    functionName: SetLightAttackFinisherColliderEnable
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
