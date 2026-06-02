@@ -15,14 +15,15 @@ public class Creature : MonoBehaviour
 
 	protected virtual void InitHp()
 	{
-
+		throw new NotImplementedException();
 	}
 
-	public static void HandleAttack(Creature attacker, Creature receiver, float harmValue)
+	public static void HandleAttack(Creature attacker, Creature receiver, HarmInfo harmInfo)
 	{
 		if (receiver.IsDead()) return;
 
-		receiver.ReceiveHarm(harmValue);
+		float finalHarm = harmInfo.CalFinalHarm();
+		receiver.ReceiveHarm(finalHarm);
 	}
 
 	protected virtual void ReceiveHarm(float harmValue)

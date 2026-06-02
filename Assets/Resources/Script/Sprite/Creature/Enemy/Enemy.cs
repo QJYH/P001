@@ -19,7 +19,7 @@ public class Enemy : Creature
 		Attack,
 	}
 	private Hero target;
-	private EnemyStatus enemyStatus;
+	private EnemyStatus currentStatus;
 	private bool isDetectAreaActive;
 	private float attackCoolDownTime = 0f;
 	private float attackCoolDownMaxTime = 2f;
@@ -192,23 +192,23 @@ public class Enemy : Creature
 
 	public void SetStatus(EnemyStatus enemyStatus)
 	{
-		this.enemyStatus = enemyStatus;
+		currentStatus = enemyStatus;
 	}
 	public bool IsPatroling()
 	{
-		return enemyStatus == EnemyStatus.Patrol;
+		return currentStatus == EnemyStatus.Patrol;
 	}
 	public bool IsResting()
 	{
-		return enemyStatus == EnemyStatus.Rest;
+		return currentStatus == EnemyStatus.Rest;
 	}
 	public bool IsChasing()
 	{
-		return enemyStatus == EnemyStatus.Chase;
+		return currentStatus == EnemyStatus.Chase;
 	}
 	public bool IsAttacking()
 	{
-		return enemyStatus == EnemyStatus.Attack;
+		return currentStatus == EnemyStatus.Attack;
 	}
 
 	public void SetTarget(Hero hero)
@@ -261,11 +261,13 @@ public class Enemy : Creature
 
 	protected virtual void InitAttackHarm()
 	{
-
+		throw new NotImplementedException();
 	}
 
 	internal void OnAttackHitHero(Hero hero)
 	{
-		Creature.HandleAttack(this, hero, attackHarmValue);
+		HarmInfo harmInfo = new HarmInfo();
+		harmInfo.SetBaseHarm(attackHarmValue);
+		Creature.HandleAttack(this, hero, harmInfo);
 	}
 }

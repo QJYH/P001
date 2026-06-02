@@ -3,15 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static Enemy;
 
 public class Hero : Creature
 {
 	private Vector2 moveInput;
 	private readonly float maxMoveSpeed = 6f;
 
-	private bool isHealing;
-	private bool isLightAttacking;
-	private bool isHeavyAttacking;
+	public enum HeroStatus
+	{
+		None,
+		Idle,
+		Run,
+		LightAttack,
+		HeavyAttack,
+		Heal
+
+	}
+	private HeroStatus currentStatus;
 	protected GameObject lightAttack;
 	protected GameObject heavyAttack;
 
@@ -45,7 +54,7 @@ public class Hero : Creature
 
 	protected virtual void InitAttackModule()
 	{
-		
+		throw new NotImplementedException();
 	}
 
 	private void OnActionTriggered(InputAction.CallbackContext context)
@@ -119,52 +128,93 @@ public class Hero : Creature
 		attack.transform.localScale = new Vector3(scaleX, localScale.y, localScale.z);
 	}
 
+	public void SetStatus(HeroStatus heroStatus)
+	{
+		currentStatus = heroStatus;
+	}
+
+	public bool IsIdling()
+	{
+		return currentStatus == HeroStatus.Idle;
+	}
+
+	public bool isRunning()
+	{
+		return currentStatus == HeroStatus.Run;
+	}
+
+	public bool isLightAttacking()
+	{
+		return currentStatus == HeroStatus.LightAttack;
+	}
+
+	public bool isHeavyAttacking()
+	{
+		return currentStatus == HeroStatus.HeavyAttack;
+	}
+
+	public bool isHealing()
+	{
+		return currentStatus == HeroStatus.Heal;
+	}
+
 	public bool IsDoingAction()
 	{
-		return isLightAttacking || isHeavyAttacking || isHealing;
+		return isLightAttacking() || isHeavyAttacking() || isHealing();
 	}
 
+	public void OnIdleBegin()
+	{
+		currentStatus = HeroStatus.Idle;
+	}
+	public void OnIdleEnd()
+	{
+		currentStatus = HeroStatus.None;
+	}
+	public void OnRunEnd()
+	{
+		currentStatus = HeroStatus.Run;
+	}
+	public void OnRunBegin()
+	{
+		currentStatus = HeroStatus.None;
+	}
 	public void OnHealBegin()
 	{
-		isHealing = true;
+		SetStatus(HeroStatus.Heal);
 	}
-
 	public void OnHealEnd()
 	{
-		isHealing = false;
+		SetStatus(HeroStatus.None);
 	}
-
 	public void OnLightAttackBegin()
 	{
-		isLightAttacking = true;
+		SetStatus(HeroStatus.LightAttack);
 		lightAttack.GetComponent<HeroLightAttack>().OnAttackBegin();
 	}
-
 	public void OnLightAttackEnd()
 	{
-		isLightAttacking = false;
+		SetStatus(HeroStatus.None);
 		lightAttack.GetComponent<HeroLightAttack>().OnAttackEnd();
 	}
-
 	public void OnHeavyAttackBegin()
 	{
-		isHeavyAttacking = true;
+		SetStatus(HeroStatus.HeavyAttack);
 		heavyAttack.GetComponent<HeroHeavyAttack>().OnAttackBegin();
 	}
-
 	public void OnHeavyAttackEnd()
 	{
-		isHeavyAttacking = false;
+		SetStatus(HeroStatus.None);
 		heavyAttack.GetComponent<HeroHeavyAttack>().OnAttackEnd();
 	}
-
 	private void HandleLightAttackInput(InputAction.CallbackContext context)
 	{
 		lightAttack.GetComponent<HeroLightAttack>().HandleLightAttackInput(context);
 	}
-
 	private void HandleHeavyAttackInput(InputAction.CallbackContext context)
 	{
 		heavyAttack.GetComponent<HeroHeavyAttack>().HandleHeavyAttackInput(context);
 	}
+
+	
 }

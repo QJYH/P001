@@ -37,10 +37,22 @@ namespace BehaviorTree
 			return status;
 		}
 
-		protected virtual void OnInit() { }
-		protected virtual BehaviorStatus OnUpdate() { return BehaviorStatus.Failure; }
-		protected virtual void OnEnd() { }
-		public virtual void AddChild(BehaviourNode node) { }
+		protected virtual void OnInit()
+		{
+
+		}
+		protected virtual BehaviorStatus OnUpdate()
+		{
+			return BehaviorStatus.Failure;
+		}
+		protected virtual void OnEnd()
+		{
+
+		}
+		public virtual void AddChild(BehaviourNode node)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
 

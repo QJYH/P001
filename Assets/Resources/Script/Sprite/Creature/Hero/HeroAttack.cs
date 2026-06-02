@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class HeroAttack : MonoBehaviour
 {
+	protected HarmInfo currentHarmInfo = new HarmInfo();
 	public virtual void OnAttackBegin()
 	{
 
@@ -13,5 +14,10 @@ public class HeroAttack : MonoBehaviour
 	public virtual void OnAttackEnd()
 	{
 
+	}
+
+	public HarmInfo GetCurrentHarmInfo()
+	{
+		return currentHarmInfo;
 	}
 }

@@ -32,7 +32,7 @@ public class TripleSlash : WarriorLightAttack
 
 			if (slashCount == 3)
 			{
-				DoFinisher();
+				DoFinisher(1);
 			}
 			else
 			{
@@ -41,19 +41,15 @@ public class TripleSlash : WarriorLightAttack
 		}
 	}
 
-	private void DoNormal()
+	public override void DoNormal()
 	{
-		currentPhase = LightAttackPhase.Normal;
-		warrior.GetComponent<Animator>().SetInteger("LightAttackPhase", 1);
-		warrior.GetComponent<Animator>().SetTrigger("LightAttack");
+		base.DoNormal();
 	}
 
-	public override void DoFinisher()
+	public override void DoFinisher(float harmRate)
 	{
-		currentPhase = LightAttackPhase.Finisher;
-		warrior.GetComponent<Animator>().SetInteger("LightAttackPhase", 2);
-		warrior.GetComponent<Animator>().SetTrigger("LightAttack");
 		lastSlashTime = 0;
 		slashCount = 0;
+		base.DoFinisher(harmRate);
 	}
 }

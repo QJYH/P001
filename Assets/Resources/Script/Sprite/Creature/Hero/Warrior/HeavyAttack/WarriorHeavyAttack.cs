@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,5 +21,10 @@ public class WarriorHeavyAttack : HeroHeavyAttack
 	{
 		warrior.SetDefendHalfEnable(0);
 		warrior.SetStrikeBackEnable(0);
+	}
+
+	public virtual void StrikeBack(WarriorLightAttack lightAttack)
+	{
+		throw new NotImplementedException();
 	}
 }

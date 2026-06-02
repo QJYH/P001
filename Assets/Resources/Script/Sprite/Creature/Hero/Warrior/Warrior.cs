@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class Warrior : Hero
 {
 	private readonly float warriorHp = 5f;
-	private bool defend;
 	private bool strikeBack;
 	private bool defendAll;
 	private bool defendHalf;
@@ -32,7 +31,7 @@ public class Warrior : Hero
 	{
 		if (isStrikeBackEnable())
 		{
-			lightAttack.GetComponent<WarriorLightAttack>().DoFinisher();
+			heavyAttack.GetComponent<WarriorHeavyAttack>().StrikeBack(lightAttack.GetComponent<WarriorLightAttack>());
 		}
 		else if (IsDefendAllEnable())
 		{
@@ -48,27 +47,22 @@ public class Warrior : Hero
 		}
 	}
 
-	public void OnLightAttackHitEnemy(Enemy enemy, bool isFinisher)
+	public void OnLightAttackHitEnemy(Enemy enemy)
 	{
-		float harmValue = lightAttack.GetComponent<WarriorLightAttack>().GetHarmValue(isFinisher);
-		Creature.HandleAttack(this, enemy, harmValue);
+		HarmInfo harmInfo = lightAttack.GetComponent<WarriorLightAttack>().GetCurrentHarmInfo();
+		Creature.HandleAttack(this, enemy, harmInfo);
 	}
 
 	public void SetLightAttackNormalColliderEnable(int status)
 	{
-		WarriorLightAttackRange range = lightAttack.GetComponentInChildren<WarriorLightAttackRange>();
+		Transform range = lightAttack.transform.Find("WarriorLightAttackRange");
 		range.GetComponent<PolygonCollider2D>().enabled = (status == 1) ? true : false;
 	}
 
 	public void SetLightAttackFinisherColliderEnable(int status)
 	{
-		WarriorLightAttackFinisherRange range = lightAttack.GetComponentInChildren<WarriorLightAttackFinisherRange>();
+		Transform range = lightAttack.transform.Find("WarriorLightAttackFinisherRange");
 		range.GetComponent<PolygonCollider2D>().enabled = (status == 1) ? true : false;
-	}
-
-	public void SetDefendEnable(int status)
-	{
-		defend = (status == 1) ? true : false;
 	}
 
 	public void SetStrikeBackEnable(int status)

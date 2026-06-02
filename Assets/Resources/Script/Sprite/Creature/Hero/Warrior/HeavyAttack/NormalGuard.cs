@@ -18,4 +18,9 @@ public class NormalGuard : WarriorHeavyAttack
 			warrior.GetComponent<Animator>().SetTrigger("HeavyAttack");
 		}
 	}
+
+	public override void StrikeBack(WarriorLightAttack lightAttack)
+	{
+		lightAttack.DoFinisher(1);
+	}
 }

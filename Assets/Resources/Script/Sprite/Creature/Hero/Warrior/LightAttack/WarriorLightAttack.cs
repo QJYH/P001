@@ -23,9 +23,23 @@ public class WarriorLightAttack : HeroLightAttack
 		currentPhase = LightAttackPhase.None;
 	}
 
-	public virtual void DoFinisher()
+	public virtual void DoNormal()
 	{
-		
+		currentHarmInfo.Rsset();
+		currentHarmInfo.SetBaseHarm(normalHarmValue);
+		currentPhase = LightAttackPhase.Normal;
+		warrior.GetComponent<Animator>().SetInteger("LightAttackPhase", 1);
+		warrior.GetComponent<Animator>().SetTrigger("LightAttack");
+	}
+
+	public virtual void DoFinisher(float harmRate)
+	{
+		currentHarmInfo.Rsset();
+		currentHarmInfo.SetBaseHarm(finisherHarmValue);
+		currentHarmInfo.AddHarmRate(harmRate);
+		currentPhase = LightAttackPhase.Finisher;
+		warrior.GetComponent<Animator>().SetInteger("LightAttackPhase", 2);
+		warrior.GetComponent<Animator>().SetTrigger("LightAttack");
 	}
 
 	public override void OnAttackBegin()
@@ -42,10 +56,5 @@ public class WarriorLightAttack : HeroLightAttack
 		warrior.SetLightAttackNormalColliderEnable(0);
 		warrior.SetLightAttackFinisherColliderEnable(0);
 		warrior.SetDefendAllEnable(0);
-	}
-
-	public float GetHarmValue(bool isFinisher)
-	{
-		return (isFinisher) ? finisherHarmValue : normalHarmValue;
 	}
 }
