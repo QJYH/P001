@@ -42,9 +42,9 @@ public class Hero : Creature
 		heroInput.onActionTriggered -= OnActionTriggered;
 	}
 
-	private void Update()
+	protected override void Update()
     {
-		
+		base.Update();
 	}
 
 	private void FixedUpdate()

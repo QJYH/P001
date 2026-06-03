@@ -36,8 +36,9 @@ public class Enemy : Creature
 		initPatrolPosList();
 		AddBehaviorTree();
 	}
-	private void Update()
+	protected override void Update()
 	{
+		base.Update();
 		UpdateTarget();
 		UpdateAttackCoolDown();
 		UpdateBehaviorTree();
