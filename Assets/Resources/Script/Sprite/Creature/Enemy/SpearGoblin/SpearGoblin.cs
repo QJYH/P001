@@ -9,6 +9,7 @@ public class SpearGoblin : Enemy
 	protected override void InitHp()
 	{
 		hp = spearGoblinHp;
+		maxHp = spearGoblinHp;
 	}
 
 	protected override void InitAttackHarm()

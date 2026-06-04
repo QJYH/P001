@@ -14,6 +14,7 @@ public class Warrior : Hero
 	protected override void InitHp()
 	{
 		hp = warriorHp;
+		maxHp = warriorHp;
 	}
 
 	protected override void InitAttackModule()

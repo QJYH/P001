@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
+using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class Enemy : Creature
@@ -19,6 +20,7 @@ public class Enemy : Creature
 		Attack,
 	}
 	private Hero target;
+	private GameObject enemyHpBar;
 	private EnemyStatus currentStatus;
 	private bool isDetectAreaActive;
 	private float attackCoolDownTime = 0f;
@@ -32,6 +34,7 @@ public class Enemy : Creature
 	protected override void Awake()
 	{
 		base.Awake();
+		InitHpBar();
 		InitAttackHarm();
 		initPatrolPosList();
 		AddBehaviorTree();
@@ -47,6 +50,16 @@ public class Enemy : Creature
 	private void FixedUpdate()
 	{
 		Move();
+	}
+
+	private void InitHpBar()
+	{
+		enemyHpBar = Instantiate(Resources.Load<GameObject>("Prefab/UI/EnemyHpBar"));
+		RectTransform rectTransform = enemyHpBar.GetComponent<RectTransform>();
+		rectTransform.SetParent(creatureCanvas.GetComponent<RectTransform>());
+		rectTransform.anchoredPosition = new Vector2(0, 0);
+		enemyHpBar.GetComponent<Slider>().maxValue = maxHp;
+		enemyHpBar.GetComponent<Slider>().value = hp;
 	}
 
 	private void AddBehaviorTree()
@@ -72,6 +85,11 @@ public class Enemy : Creature
 		behaviorTree.Tick();
 	}
 
+	private void UpdateBehaviorTree()
+	{
+		behaviorTree.Tick();
+	}
+
 	private void initPatrolPosList()
 	{
 		patrolPosList = new LinkedList<Vector2>();
@@ -81,11 +99,6 @@ public class Enemy : Creature
 		patrolPosList.AddLast(patrolPos1);
 		patrolPosList.AddLast(patrolPos2);
 		currentPatrolPos = patrolPosList.First;
-	}
-
-	private void UpdateBehaviorTree()
-	{
-		behaviorTree.Tick();
 	}
 
 	private void UpdateAttackCoolDown()
@@ -265,10 +278,20 @@ public class Enemy : Creature
 		throw new NotImplementedException();
 	}
 
-	internal void OnAttackHitHero(Hero hero)
+	public void OnAttackHitHero(Hero hero)
 	{
 		HarmInfo harmInfo = new HarmInfo();
 		harmInfo.SetBaseHarm(attackHarmValue);
 		Creature.HandleAttack(this, hero, harmInfo);
+	}
+
+	protected override void OnHpChange()
+	{
+		enemyHpBar.GetComponent<Slider>().value = hp;
+	}
+
+	protected override void OnDie()
+	{
+		enemyHpBar.SetActive(false);
 	}
 }
