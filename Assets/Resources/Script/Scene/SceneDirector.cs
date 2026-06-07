@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class SceneDirector : MonoBehaviour
 {
+	public static SceneDirector sceneInstance;
 	protected GameObject mainCamera;
 	protected GameObject virtualCamera;
 	protected GameObject mainCanvas;
@@ -17,6 +18,7 @@ public class SceneDirector : MonoBehaviour
 
 	protected virtual void Awake()
 	{
+		sceneInstance = this;
 		Application.targetFrameRate = 60;
 		InitCamera();
 		InitCanvas();
@@ -67,5 +69,13 @@ public class SceneDirector : MonoBehaviour
 	protected virtual Vector2 GetRevealCenter()
 	{
 		return new Vector2(Screen.width / 2, Screen.height / 2);
+	}
+
+	public static GameObject GetMainCanvas()
+	{
+		if (sceneInstance == null) return null;
+
+		return sceneInstance.mainCanvas;
+
 	}
 }

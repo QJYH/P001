@@ -48,12 +48,6 @@ public class Warrior : Hero
 		}
 	}
 
-	public void OnLightAttackHitEnemy(Enemy enemy)
-	{
-		HarmInfo harmInfo = lightAttack.GetComponent<WarriorLightAttack>().GetCurrentHarmInfo();
-		Creature.HandleAttack(this, enemy, harmInfo);
-	}
-
 	public void SetLightAttackNormalColliderEnable(int status)
 	{
 		Transform range = lightAttack.transform.Find("WarriorLightAttackRange");

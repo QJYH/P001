@@ -10,8 +10,8 @@ public class WarriorLightAttackRange : CreatureRange
 
 		if (enemy != null)
 		{
-			Warrior warrior = GetComponentInParent<Warrior>();
-			warrior.OnLightAttackHitEnemy(enemy);
+			WarriorLightAttack warriorLightAttack = GetComponentInParent<WarriorLightAttack>();
+			warriorLightAttack.OnHitEnemy(enemy);
 		}
 	}
 }

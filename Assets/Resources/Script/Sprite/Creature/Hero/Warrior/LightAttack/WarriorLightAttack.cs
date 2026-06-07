@@ -57,4 +57,10 @@ public class WarriorLightAttack : HeroLightAttack
 		warrior.SetLightAttackFinisherColliderEnable(0);
 		warrior.SetDefendAllEnable(0);
 	}
+
+	public void OnHitEnemy(Enemy enemy)
+	{
+		HarmInfo harmInfo = GetCurrentHarmInfo();
+		Creature.HandleAttack(warrior, enemy, harmInfo);
+	}
 }

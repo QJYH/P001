@@ -6,18 +6,20 @@ using UnityEngine;
 
 public class LevelDirector : SceneDirector
 {
-	protected GameObject currentHero;
+	public static LevelDirector levelInstance;
 
+	protected GameObject currentHero;
+	private GameObject levelHUD;
 
 	protected override void Awake()
 	{
 		base.Awake();
+		levelInstance = this;
 		AddHero();
 		SetCameraEdge();
 		SetCameraTarget();
+		CreateHUD();
 	}
-
-	
 
 	protected override void Start()
 	{
@@ -52,5 +54,22 @@ public class LevelDirector : SceneDirector
 	{
 		Vector3 heroScreenPos = mainCamera.GetComponent<Camera>().WorldToScreenPoint(currentHero.transform.position);
 		return new Vector2(heroScreenPos.x, heroScreenPos.y);
+	}
+
+	private void CreateHUD()
+	{
+		levelHUD = UICommonFunc.CreatePanel("PanelLevelHUD", null);
+	}
+
+	public static void OnHeroHpChange(float hpRate)
+	{
+		if (levelInstance == null) return;
+
+		levelInstance.levelHUD.GetComponent<PanelLevelHUD>().OnHeroHpChange(hpRate);
+	}
+
+	internal static void OnHeroDie()
+	{
+		
 	}
 }

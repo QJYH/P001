@@ -216,5 +216,13 @@ public class Hero : Creature
 		heavyAttack.GetComponent<HeroHeavyAttack>().HandleHeavyAttackInput(context);
 	}
 
-	
+	protected override void OnHpChange()
+	{
+		LevelDirector.OnHeroHpChange(hp/maxHp);
+	}
+
+	protected override void OnDie()
+	{
+		LevelDirector.OnHeroDie();
+	}
 }
