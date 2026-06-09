@@ -115,7 +115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 893537128382118883}
   - component: {fileID: 7251111680607439854}
-  - component: {fileID: 8271235876727546157}
+  - component: {fileID: 2905095054585464787}
   m_Layer: 5
   m_Name: ImageBlur
   m_TagString: Untagged
@@ -150,7 +150,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3746355543494931159}
   m_CullTransparentMesh: 1
---- !u!114 &8271235876727546157
+--- !u!114 &2905095054585464787
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.3137255}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

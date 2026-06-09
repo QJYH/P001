@@ -16,14 +16,14 @@ public class HealEffect : MonoBehaviour
         
     }
 
-	public void OnHealBegin()
+	public void OnHealAnimationBegin()
 	{
-		GetComponentInParent<Hero>().OnHealBegin();
+		GetComponentInParent<Hero>().OnHealAnimationBegin();
 	}
 
-	public void OnHealEnd()
+	public void OnHealAnimationEnd()
 	{
-		GetComponentInParent<Hero>().OnHealEnd();
+		GetComponentInParent<Hero>().OnHealAnimationEnd();
 		Destroy(gameObject);
 	}
 }

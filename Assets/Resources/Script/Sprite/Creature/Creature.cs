@@ -89,13 +89,7 @@ public class Creature : MonoBehaviour
 		GetComponent<Animator>().SetTrigger("Die");
 		GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 
-		OnDie();
 		enabled = false;
-	}
-
-	protected virtual void OnDie()
-	{
-		 
 	}
 
 	public bool IsDead()

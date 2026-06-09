@@ -68,8 +68,16 @@ public class LevelDirector : SceneDirector
 		levelInstance.levelHUD.GetComponent<PanelLevelHUD>().OnHeroHpChange(hpRate);
 	}
 
-	internal static void OnHeroDie()
+	public static void OnHeroDie()
 	{
-		
+		if (levelInstance == null) return;
+
+		levelInstance.StartCoroutine(levelInstance.DelayCreatePanelHeroDie());
+	}
+
+	private IEnumerator DelayCreatePanelHeroDie()
+	{
+		yield return new WaitForSeconds(1.1f);
+		UICommonFunc.CreatePanel("PanelHeroDie", null);
 	}
 }

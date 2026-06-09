@@ -7,6 +7,7 @@ using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.UI;
+using static Hero;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class Enemy : Creature
@@ -224,7 +225,39 @@ public class Enemy : Creature
 	{
 		return currentStatus == EnemyStatus.Attack;
 	}
+	public void OnIdleAnimationBegin()
+	{
 
+	}
+	public void OnIdleAnimationEnd()
+	{
+
+	}
+	public void OnRunAnimationBegin()
+	{
+
+	}
+	public void OnRunAnimationEnd()
+	{
+
+	}
+	public void OnAttackAnimationBegin()
+	{
+		
+	}
+	public void OnAttackAnimationEnd()
+	{
+		SetStatus(EnemyStatus.None);
+	}
+	public void OnDieAnimationBegin()
+	{
+		enemyHpBar.SetActive(false);
+	}
+
+	public void OnDieAnimationEnd()
+	{
+		
+	}
 	public void SetTarget(Hero hero)
 	{
 		if ((hero) && (!hero.IsDead()))
@@ -288,10 +321,5 @@ public class Enemy : Creature
 	protected override void OnHpChange()
 	{
 		enemyHpBar.GetComponent<Slider>().value = hp;
-	}
-
-	protected override void OnDie()
-	{
-		enemyHpBar.SetActive(false);
 	}
 }

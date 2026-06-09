@@ -128,7 +128,7 @@ public class Hero : Creature
 		attack.transform.localScale = new Vector3(scaleX, localScale.y, localScale.z);
 	}
 
-	public void SetStatus(HeroStatus heroStatus)
+	private void SetStatus(HeroStatus heroStatus)
 	{
 		currentStatus = heroStatus;
 	}
@@ -163,49 +163,58 @@ public class Hero : Creature
 		return isLightAttacking() || isHeavyAttacking() || isHealing();
 	}
 
-	public void OnIdleBegin()
+	public void OnIdleAnimationBegin()
 	{
-		currentStatus = HeroStatus.Idle;
+		SetStatus(HeroStatus.Idle);
 	}
-	public void OnIdleEnd()
-	{
-		currentStatus = HeroStatus.None;
-	}
-	public void OnRunEnd()
-	{
-		currentStatus = HeroStatus.Run;
-	}
-	public void OnRunBegin()
-	{
-		currentStatus = HeroStatus.None;
-	}
-	public void OnHealBegin()
-	{
-		SetStatus(HeroStatus.Heal);
-	}
-	public void OnHealEnd()
+	public void OnIdleAnimationEnd()
 	{
 		SetStatus(HeroStatus.None);
 	}
-	public void OnLightAttackBegin()
+	public void OnRunAnimationBegin()
+	{
+		SetStatus(HeroStatus.Run);
+	}
+	public void OnRunAnimationEnd()
+	{
+		SetStatus(HeroStatus.None);
+	}
+	public void OnHealAnimationBegin()
+	{
+		SetStatus(HeroStatus.Heal);
+	}
+	public void OnHealAnimationEnd()
+	{
+		SetStatus(HeroStatus.None);
+	}
+	public void OnLightAttackAnimationBegin()
 	{
 		SetStatus(HeroStatus.LightAttack);
 		lightAttack.GetComponent<HeroLightAttack>().OnAttackBegin();
 	}
-	public void OnLightAttackEnd()
+	public void OnLightAttackAnimationEnd()
 	{
 		SetStatus(HeroStatus.None);
 		lightAttack.GetComponent<HeroLightAttack>().OnAttackEnd();
 	}
-	public void OnHeavyAttackBegin()
+	public void OnHeavyAttackAnimationBegin()
 	{
 		SetStatus(HeroStatus.HeavyAttack);
 		heavyAttack.GetComponent<HeroHeavyAttack>().OnAttackBegin();
 	}
-	public void OnHeavyAttackEnd()
+	public void OnHeavyAttackAnimationEnd()
 	{
 		SetStatus(HeroStatus.None);
 		heavyAttack.GetComponent<HeroHeavyAttack>().OnAttackEnd();
+	}
+	public void OnDieAnimationBegin()
+	{
+		LevelDirector.OnHeroDie();
+	}
+
+	public void OnDieAnimationEnd()
+	{
+		
 	}
 	private void HandleLightAttackInput(InputAction.CallbackContext context)
 	{
@@ -219,10 +228,5 @@ public class Hero : Creature
 	protected override void OnHpChange()
 	{
 		LevelDirector.OnHeroHpChange(hp/maxHp);
-	}
-
-	protected override void OnDie()
-	{
-		LevelDirector.OnHeroDie();
 	}
 }
