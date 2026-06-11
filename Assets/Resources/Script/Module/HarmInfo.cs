@@ -1,12 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class HarmInfo : Object
 {
-	private float baseHarm = 0;
-	private List<float> harmRateList = new List<float>();
-	private List<float> extraHarmList = new List<float>();
+	public float baseHarm;
+	private List<float> harmRateList;
+	private List<float> extraHarmList;
+
+	public HarmInfo()
+	{
+		baseHarm = 0;
+		harmRateList = new List<float>();
+		extraHarmList = new List<float>();
+	}
+
+	public HarmInfo(HarmInfo original)
+	{
+		baseHarm = original.baseHarm;
+		harmRateList = new List<float>();
+		foreach (float value in original.harmRateList)
+		{
+			harmRateList.Add(value);
+		}
+		extraHarmList = new List<float>();
+		foreach (float value in original.extraHarmList)
+		{
+			extraHarmList.Add(value);
+		}
+	}
 
 	public void Rsset()
 	{

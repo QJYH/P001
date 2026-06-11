@@ -7,15 +7,17 @@ namespace BehaviorTree
 	public class Attack : BehaviourNode
 	{
 		private Enemy enemy;
-		
-		public Attack(Enemy enemy)
+		private EnemyAttack enemyAttack;
+
+		public Attack(Enemy enemy, EnemyAttack enemyAttack)
 		{
 			this.enemy = enemy;
+			this.enemyAttack = enemyAttack;
 		}
 
 		protected override void OnInit()
 		{
-			enemy.Attack();
+			enemyAttack.Attack();
 		}
 		protected override BehaviorStatus OnUpdate()
 		{

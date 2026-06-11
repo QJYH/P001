@@ -8,17 +8,20 @@ namespace BehaviorTree
 	public class AttackCondition : BehaviourNode
 	{
 		private Enemy enemy;
+		private EnemyAttack enemyAttack;
 		
-		public AttackCondition(Enemy enemy)
+		public AttackCondition(Enemy enemy, EnemyAttack enemyAttack)
 		{
 			this.enemy = enemy;
+			this.enemyAttack = enemyAttack;
 		}
 
 		protected override BehaviorStatus OnUpdate()
 		{
 			if (!enemy.HaveTarget()) return BehaviorStatus.Failure;
-			if (enemy.IsAttackInCoolDown()) return BehaviorStatus.Failure;
+			if (enemyAttack.IsAttackInCoolDown()) return BehaviorStatus.Failure;
 
+			enemy.SetRunningAttack(enemyAttack.gameObject);
 			return BehaviorStatus.Success;
 		}
 	}

@@ -7,10 +7,12 @@ namespace BehaviorTree
 	public class Chase : BehaviourNode
 	{
 		private Enemy enemy;
-		
-		public Chase(Enemy enemy)
+		private EnemyAttack enemyAttack;
+
+		public Chase(Enemy enemy, EnemyAttack enemyAttack)
 		{
 			this.enemy = enemy;
+			this.enemyAttack = enemyAttack;
 		}
 
 		protected override void OnInit()
@@ -19,7 +21,7 @@ namespace BehaviorTree
 		}
 		protected override BehaviorStatus OnUpdate()
 		{
-			if (enemy.HaveTargetInAttackArea()) return BehaviorStatus.Success;
+			if (enemyAttack.CanLaunchAttack()) return BehaviorStatus.Success;
 
 			return BehaviorStatus.Running;
 		}

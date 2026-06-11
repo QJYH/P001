@@ -14,8 +14,8 @@ TagManager:
   - Hero
   - Enemy
   - Decoration
-  - HeroRange
-  - EnemyRange
+  - Projectile
+  - Range
   - CameraEdge
   - MapEdge
   - 

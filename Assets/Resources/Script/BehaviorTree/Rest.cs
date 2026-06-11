@@ -8,10 +8,12 @@ namespace BehaviorTree
 	public class Rest : BehaviourNode
 	{
 		private Enemy enemy;
-		
-		public Rest(Enemy enemy)
+		private EnemyAttack enemyAttack;
+
+		public Rest(Enemy enemy, EnemyAttack enemyAttack)
 		{
 			this.enemy = enemy;
+			this.enemyAttack = enemyAttack;
 		}
 
 		protected override void OnInit()
@@ -20,11 +22,9 @@ namespace BehaviorTree
 		}
 		protected override BehaviorStatus OnUpdate()
 		{
-			if (!enemy.HaveTarget()) return BehaviorStatus.Failure;
-			if (!enemy.IsAttackInCoolDown()) return BehaviorStatus.Failure;
-				
+			if (enemyAttack.IsAttackInCoolDown()) return BehaviorStatus.Running;
 
-			return BehaviorStatus.Running;
+			return BehaviorStatus.Success;
 		}
 	}
 }

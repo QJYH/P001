@@ -23,28 +23,26 @@ public class Enemy : Creature
 	private Hero target;
 	private GameObject enemyHpBar;
 	private EnemyStatus currentStatus;
-	private bool isDetectAreaActive;
-	private float attackCoolDownTime = 0f;
-	private float attackCoolDownMaxTime = 2f;
+	protected List<GameObject> attackList = new List<GameObject>();
+	private GameObject runningAttack;
 	private readonly float maxMoveSpeed = 5f;
 	private LinkedList<Vector2> patrolPosList;
 	private LinkedListNode<Vector2> currentPatrolPos;
 	private Selector behaviorTree;
-	protected float attackHarmValue;
 
 	protected override void Awake()
 	{
 		base.Awake();
 		InitHpBar();
-		InitAttackHarm();
-		initPatrolPosList();
+		InitAttackList();
+		InitPatrolPosList();
 		AddBehaviorTree();
 	}
+
 	protected override void Update()
 	{
 		base.Update();
 		UpdateTarget();
-		UpdateAttackCoolDown();
 		UpdateBehaviorTree();
 	}
 
@@ -53,6 +51,14 @@ public class Enemy : Creature
 		Move();
 	}
 
+	protected virtual void InitAttackList()
+	{
+		throw new NotImplementedException();
+	}
+	public void SetRunningAttack(GameObject gameObject)
+	{
+		runningAttack = gameObject;
+	}
 	private void InitHpBar()
 	{
 		enemyHpBar = Instantiate(Resources.Load<GameObject>("Prefab/UI/EnemyHpBar"));
@@ -67,16 +73,16 @@ public class Enemy : Creature
 	{
 		behaviorTree = new Selector();
 
-		Sequence attackSeq = new Sequence();
-		attackSeq.AddChild(new AttackCondition(this));
-		attackSeq.AddChild(new Chase(this));
-		attackSeq.AddChild(new Attack(this));
-		behaviorTree.AddChild(attackSeq);
-
-		Sequence restSeq = new Sequence();
-		restSeq.AddChild(new RestCondition(this));
-		restSeq.AddChild(new Rest(this));
-		behaviorTree.AddChild(restSeq);
+		foreach (GameObject attackObject in attackList)
+		{
+			EnemyAttack enemyAttack = attackObject.GetComponent<EnemyAttack>();
+			Sequence attackSeq = new Sequence();
+			attackSeq.AddChild(new AttackCondition(this, enemyAttack));
+			attackSeq.AddChild(new Chase(this, enemyAttack));
+			attackSeq.AddChild(new Attack(this, enemyAttack));
+			attackSeq.AddChild(new Rest(this, enemyAttack));
+			behaviorTree.AddChild(attackSeq);
+		}
 
 		Sequence patrolSeq = new Sequence();
 		patrolSeq.AddChild(new PatrolCondition(this));
@@ -91,7 +97,7 @@ public class Enemy : Creature
 		behaviorTree.Tick();
 	}
 
-	private void initPatrolPosList()
+	private void InitPatrolPosList()
 	{
 		patrolPosList = new LinkedList<Vector2>();
 		Vector2 currentPos = transform.position;
@@ -102,14 +108,6 @@ public class Enemy : Creature
 		currentPatrolPos = patrolPosList.First;
 	}
 
-	private void UpdateAttackCoolDown()
-	{
-		if (attackCoolDownTime > 0)
-		{
-			attackCoolDownTime -= Time.deltaTime;
-		}
-	}
-
 	private void UpdateTarget()
 	{
 		if (target == null) return;
@@ -118,10 +116,6 @@ public class Enemy : Creature
 		{
 			SetTarget(null);
 		}
-	}
-	public bool IsAttackInCoolDown()
-	{
-		return attackCoolDownTime > 0;
 	}
 
 	private void Move()
@@ -149,10 +143,10 @@ public class Enemy : Creature
 			BoxCollider2D heroCollider = target.GetComponent<BoxCollider2D>();
 			heroPos.x += heroCollider.offset.x;
 			heroPos.y += heroCollider.offset.y;
-			GameObject enemyDetectArea = transform.Find("EnemyDetectRange").gameObject;
-			PolygonCollider2D detectArea = enemyDetectArea.GetComponent<PolygonCollider2D>();
-			Vector2 targetPos1 = new Vector2(heroPos.x - detectArea.offset.x, heroPos.y - detectArea.offset.y);
-			Vector2 targetPos2 = new Vector2(heroPos.x + detectArea.offset.x, heroPos.y - detectArea.offset.y);
+			GameObject detectRangeObject = runningAttack.transform.Find("DetectRange").gameObject;
+			PolygonCollider2D detectRange = detectRangeObject.GetComponent<PolygonCollider2D>();
+			Vector2 targetPos1 = new Vector2(heroPos.x - detectRange.offset.x, heroPos.y - detectRange.offset.y);
+			Vector2 targetPos2 = new Vector2(heroPos.x + detectRange.offset.x, heroPos.y - detectRange.offset.y);
 			float distance1 = Vector2.Distance(targetPos1, transform.position);
 			float distance2 = Vector2.Distance(targetPos2, transform.position);
 			targetPos = (distance1 < distance2) ? targetPos1 : targetPos2;
@@ -180,20 +174,11 @@ public class Enemy : Creature
 
 	private void SetForward(bool isFacingLeft)
 	{
-
-		if (isFacingLeft)
+		GetComponent<SpriteRenderer>().flipX = isFacingLeft;
+		FlipChildX("VisionRange", isFacingLeft);
+		foreach (GameObject attackObject in attackList)
 		{
-			GetComponent<SpriteRenderer>().flipX = true;
-			FlipChildX("EnemyVisionRange", true);
-			FlipChildX("EnemyDetectRange", true);
-			FlipChildX("EnemyAttackRange", true);
-		}
-		else
-		{
-			GetComponent<SpriteRenderer>().flipX = false;
-			FlipChildX("EnemyVisionRange", false);
-			FlipChildX("EnemyDetectRange", false);
-			FlipChildX("EnemyAttackRange", false);
+			FlipChildX(attackObject.name, isFacingLeft);
 		}
 	}
 	private void FlipChildX(String childName, bool needFlipX)
@@ -243,11 +228,13 @@ public class Enemy : Creature
 	}
 	public void OnAttackAnimationBegin()
 	{
-		
+		runningAttack.GetComponent<EnemyAttack>().OnAttackBegin();
 	}
 	public void OnAttackAnimationEnd()
 	{
 		SetStatus(EnemyStatus.None);
+		runningAttack.GetComponent<EnemyAttack>().OnAttackEnd();
+		runningAttack = null;
 	}
 	public void OnDieAnimationBegin()
 	{
@@ -270,23 +257,9 @@ public class Enemy : Creature
 		}
 	}
 
-	public void SetDetectAreaActive(bool v)
-	{
-		isDetectAreaActive = v;
-	}
 	public bool HaveTarget()
 	{
 		return target != null;
-	}
-
-	public Hero GetTarget()
-	{
-		return target;
-	}
-
-	public bool HaveTargetInAttackArea()
-	{
-		return HaveTarget() && isDetectAreaActive;
 	}
 
 	public void Attack()
@@ -296,30 +269,18 @@ public class Enemy : Creature
 		SetForward(isTargetInLeft);
 		Animator animator = GetComponent<Animator>();
 		animator.SetTrigger("Attack");
-		attackCoolDownTime = attackCoolDownMaxTime;
 	}
 
-	public void EnableAttackCollider(int status)
+	public void SetAttackRangeEnable(int status)
 	{
-		EnemyAttackRange range = GetComponentInChildren<EnemyAttackRange>();
-		if (range == null) return;
-		range.GetComponent<PolygonCollider2D>().enabled = (status == 1) ? true : false;
-	}
-
-	protected virtual void InitAttackHarm()
-	{
-		throw new NotImplementedException();
-	}
-
-	public void OnAttackHitHero(Hero hero)
-	{
-		HarmInfo harmInfo = new HarmInfo();
-		harmInfo.SetBaseHarm(attackHarmValue);
-		Creature.HandleAttack(this, hero, harmInfo);
+		bool enable = (status == 1) ? true : false;
+		runningAttack.GetComponent<EnemyAttack>().SetAttackRangeEnable("AttackRange", enable);
 	}
 
 	protected override void OnHpChange()
 	{
 		enemyHpBar.GetComponent<Slider>().value = hp;
 	}
+
+	
 }

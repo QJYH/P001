@@ -48,16 +48,16 @@ public class Warrior : Hero
 		}
 	}
 
-	public void SetLightAttackNormalColliderEnable(int status)
+	public void SetLightAttackNormalRangeEnable(int status)
 	{
-		Transform range = lightAttack.transform.Find("WarriorLightAttackRange");
-		range.GetComponent<PolygonCollider2D>().enabled = (status == 1) ? true : false;
+		bool enable = (status == 1) ? true : false;
+		lightAttack.GetComponent<WarriorLightAttack>().SetAttackRangeEnable("NormalAttackRange", enable);
 	}
 
-	public void SetLightAttackFinisherColliderEnable(int status)
+	public void SetLightAttackFinisherRangeEnable(int status)
 	{
-		Transform range = lightAttack.transform.Find("WarriorLightAttackFinisherRange");
-		range.GetComponent<PolygonCollider2D>().enabled = (status == 1) ? true : false;
+		bool enable = (status == 1) ? true : false;
+		lightAttack.GetComponent<WarriorLightAttack>().SetAttackRangeEnable("FinisherAttackRange", enable);
 	}
 
 	public void SetStrikeBackEnable(int status)

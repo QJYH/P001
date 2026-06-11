@@ -21,6 +21,8 @@ public class WarriorLightAttack : HeroLightAttack
 	{
 		warrior = GetComponentInParent<Warrior>();
 		currentPhase = LightAttackPhase.None;
+		transform.Find("NormalAttackRange").GetComponent<AttackRange>().SetTargetType(AttackRange.TargetType.Enemy);
+		transform.Find("FinisherAttackRange").GetComponent<AttackRange>().SetTargetType(AttackRange.TargetType.Enemy);
 	}
 
 	public virtual void DoNormal()
@@ -53,14 +55,8 @@ public class WarriorLightAttack : HeroLightAttack
 	public override void OnAttackEnd()
 	{
 		currentPhase = LightAttackPhase.None;
-		warrior.SetLightAttackNormalColliderEnable(0);
-		warrior.SetLightAttackFinisherColliderEnable(0);
+		SetAttackRangeEnable("NormalAttackRange", false);
+		SetAttackRangeEnable("FinisherAttackRange", false);
 		warrior.SetDefendAllEnable(0);
-	}
-
-	public void OnHitEnemy(Enemy enemy)
-	{
-		HarmInfo harmInfo = GetCurrentHarmInfo();
-		Creature.HandleAttack(warrior, enemy, harmInfo);
 	}
 }

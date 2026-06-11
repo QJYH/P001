@@ -7,7 +7,8 @@ using UnityEngine.InputSystem;
 
 public class TripleSlash : WarriorLightAttack
 {
-	
+	private readonly float tripleSlashNormalHarmValue = 1f;
+	private readonly float tripleSlashFinisherHarmValue = 2f;
 	private readonly float comboLimitTime = 1f;
 	private int slashCount = 0;
 	private float lastSlashTime = 0;
@@ -15,8 +16,8 @@ public class TripleSlash : WarriorLightAttack
 	protected override void Awake()
 	{
 		base.Awake();
-		normalHarmValue = 1f;
-		finisherHarmValue = 2f;
+		normalHarmValue = tripleSlashNormalHarmValue;
+		finisherHarmValue = tripleSlashFinisherHarmValue;
 	}
 
 	public override void HandleLightAttackInput(InputAction.CallbackContext context)

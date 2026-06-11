@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 
 public class ChargeSlash : WarriorLightAttack
 {
+	private readonly float chargeSlashNormalHarmValue = 1f;
+	private readonly float chargeSlashFinisherHarmValue = 2f;
 	private readonly float chargeNeedTime = 1f;
 	private float chargeBeginTime = 0;
 	private bool isCharging = false;
@@ -15,8 +17,8 @@ public class ChargeSlash : WarriorLightAttack
 	protected override void Awake()
 	{
 		base.Awake();
-		normalHarmValue = 1f;
-		finisherHarmValue = 2f;
+		normalHarmValue = chargeSlashNormalHarmValue;
+		finisherHarmValue = chargeSlashFinisherHarmValue;
 	}
 
 	public override void HandleLightAttackInput(InputAction.CallbackContext context)

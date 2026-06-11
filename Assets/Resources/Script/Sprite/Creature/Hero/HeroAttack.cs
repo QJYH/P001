@@ -3,21 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class HeroAttack : MonoBehaviour
+public class HeroAttack : CreatureAttack
 {
-	protected HarmInfo currentHarmInfo = new HarmInfo();
-	public virtual void OnAttackBegin()
-	{
-
-	}
-
-	public virtual void OnAttackEnd()
-	{
-
-	}
-
-	public HarmInfo GetCurrentHarmInfo()
-	{
-		return currentHarmInfo;
-	}
+	
 }

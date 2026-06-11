@@ -5,15 +5,15 @@ using UnityEngine;
 public class SpearGoblin : Enemy
 {
 	private readonly float spearGoblinHp = 5f;
-	private readonly float spearGoblinAttackHarm = 1f;
 	protected override void InitHp()
 	{
 		hp = spearGoblinHp;
 		maxHp = spearGoblinHp;
 	}
 
-	protected override void InitAttackHarm()
+	protected override void InitAttackList()
 	{
-		attackHarmValue = spearGoblinAttackHarm;
+		GameObject spearAttack = transform.Find("SpearAttack").gameObject;
+		attackList.Add(spearAttack);
 	}
 }
