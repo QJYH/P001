@@ -58,5 +58,23 @@ public class ChargeSlash : WarriorLightAttack
 		base.DoFinisher(harmRate);
 	}
 
-	
+	protected override string GetFinisherAttackRangeObjectDirName()
+	{
+		return "Prefab/Sprite/Creature/Hero/Warrior/LightAttack/ChargeSlash/FinisherAttackRange";
+	}
+
+	protected override string GetNormalAttackRangeObjectDirName()
+	{
+		return "Prefab/Sprite/Creature/Hero/Warrior/LightAttack/ChargeSlash/NormalAttackRange";
+	}
+
+	protected override float GetFinisherAttackRangeDurationTime()
+	{
+		return 0.1f;
+	}
+
+	protected override float GetNormalAttackRangeDurationTime()
+	{
+		return 0.1f;
+	}
 }

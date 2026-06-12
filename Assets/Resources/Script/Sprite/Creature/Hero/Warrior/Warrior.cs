@@ -19,8 +19,8 @@ public class Warrior : Hero
 
 	protected override void InitAttackModule()
 	{
-		string lightAttackDir = string.Format("Prefab/Sprite/Creature/Hero/Warrior/LightAttack/{0}", "TripleSlash");
-		string heavyAttackDir = string.Format("Prefab/Sprite/Creature/Hero/Warrior/HeavyAttack/{0}", "NormalGuard");
+		string lightAttackDir = string.Format("Prefab/Sprite/Creature/Hero/Warrior/LightAttack/{0}/{0}", "TripleSlash");
+		string heavyAttackDir = string.Format("Prefab/Sprite/Creature/Hero/Warrior/HeavyAttack/{0}/{0}", "NormalGuard");
 		lightAttack = Instantiate(Resources.Load<GameObject>(lightAttackDir), gameObject.transform);
 		heavyAttack = Instantiate(Resources.Load<GameObject>(heavyAttackDir), gameObject.transform);
 		GetComponent<Animator>().SetInteger("LightAttackCode", 101101);
@@ -46,18 +46,6 @@ public class Warrior : Hero
 		{
 			base.ReceiveHarm(harmValue);
 		}
-	}
-
-	public void SetLightAttackNormalRangeEnable(int status)
-	{
-		bool enable = (status == 1) ? true : false;
-		lightAttack.GetComponent<WarriorLightAttack>().SetAttackRangeEnable("NormalAttackRange", enable);
-	}
-
-	public void SetLightAttackFinisherRangeEnable(int status)
-	{
-		bool enable = (status == 1) ? true : false;
-		lightAttack.GetComponent<WarriorLightAttack>().SetAttackRangeEnable("FinisherAttackRange", enable);
 	}
 
 	public void SetStrikeBackEnable(int status)

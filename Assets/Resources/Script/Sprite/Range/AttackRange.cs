@@ -9,17 +9,37 @@ public class AttackRange : Range
 		Hero,
 		Enemy
 	}
-	private TargetType targetType;
+	private Creature attacker;
 	private HarmInfo harmInfo;
+	private TargetType targetType;
+	private float durationTime;
 
-	public void SetTargetType(TargetType targetType)
+	private void SetAttacker(Creature attacker)
+	{
+		this.attacker = attacker;
+	}
+	private void SetHarmInfo(HarmInfo harmInfo)
+	{
+		this.harmInfo = harmInfo;
+	}
+	private void SetTargetType(TargetType targetType)
 	{
 		this.targetType = targetType;
 	}
-
-	public void SetHarmInfo(HarmInfo harmInfo)
+	private void SetDurationTime(float durationTime)
 	{
-		this.harmInfo = harmInfo;
+		this.durationTime = durationTime;
+		if (durationTime > 0)
+		{
+			StartCoroutine(DelayDestory(durationTime));
+		}
+	}
+
+	private IEnumerator DelayDestory(float durationTime)
+	{
+		yield return new WaitForSeconds(durationTime);
+
+		GameObject.Destroy(gameObject);
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -28,24 +48,26 @@ public class AttackRange : Range
 		{
 			Hero receiver = collision.GetComponent<Hero>();
 			if (receiver == null) return;
-			Creature.HandleAttack(receiver, harmInfo);
+			Creature.HandleAttack(attacker, receiver, harmInfo);
 		}
 		else if (targetType == TargetType.Enemy)
 		{
 			Enemy receiver = collision.GetComponent<Enemy>();
 			if (receiver == null) return;
-			Creature.HandleAttack(receiver, harmInfo);
+			Creature.HandleAttack(attacker, receiver, harmInfo);
 		}
 	}
 
-	public void EnableAttackRange(HarmInfo harmInfo)
+	public static GameObject CreateAttackRangeObject(string attackRangeDirName, Transform parentTransform, Creature attacker, HarmInfo harmInfo, TargetType targetType, float durationTime)
 	{
-		this.harmInfo = harmInfo;
-		GetComponent<PolygonCollider2D>().enabled = true;
+		GameObject attackRangeObject = Instantiate(Resources.Load<GameObject>(attackRangeDirName), parentTransform);
+		attackRangeObject.GetComponent<AttackRange>().SetAttacker(attacker);
+		attackRangeObject.GetComponent<AttackRange>().SetHarmInfo(harmInfo);
+		attackRangeObject.GetComponent<AttackRange>().SetTargetType(targetType);
+		attackRangeObject.GetComponent<AttackRange>().SetDurationTime(durationTime);
+
+		return attackRangeObject;
 	}
 
-	public void DisableAttackRange()
-	{
-		GetComponent<PolygonCollider2D>().enabled = false;
-	}
+
 }

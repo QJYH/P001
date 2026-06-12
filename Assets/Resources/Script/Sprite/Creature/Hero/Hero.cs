@@ -229,4 +229,10 @@ public class Hero : Creature
 	{
 		LevelDirector.OnHeroHpChange(hp/maxHp);
 	}
+
+	public void CreateLightAttackRange()
+	{
+		//called by animation event
+		lightAttack.GetComponent<HeroLightAttack>().CreateAttackRange(null);
+	}
 }

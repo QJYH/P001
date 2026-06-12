@@ -9,27 +9,25 @@ public class WarriorLightAttack : HeroLightAttack
 	protected Warrior warrior;
 	protected float normalHarmValue;
 	protected float finisherHarmValue;
-	public enum LightAttackPhase
+	public enum WarriorLightAttackPhase
 	{
 		None,
 		Normal,
 		Finisher
 	}
-	protected LightAttackPhase currentPhase;
+	protected WarriorLightAttackPhase currentPhase;
 
 	protected virtual void Awake()
 	{
 		warrior = GetComponentInParent<Warrior>();
-		currentPhase = LightAttackPhase.None;
-		transform.Find("NormalAttackRange").GetComponent<AttackRange>().SetTargetType(AttackRange.TargetType.Enemy);
-		transform.Find("FinisherAttackRange").GetComponent<AttackRange>().SetTargetType(AttackRange.TargetType.Enemy);
+		currentPhase = WarriorLightAttackPhase.None;
 	}
 
 	public virtual void DoNormal()
 	{
 		currentHarmInfo.Rsset();
 		currentHarmInfo.SetBaseHarm(normalHarmValue);
-		currentPhase = LightAttackPhase.Normal;
+		currentPhase = WarriorLightAttackPhase.Normal;
 		warrior.GetComponent<Animator>().SetInteger("LightAttackPhase", 1);
 		warrior.GetComponent<Animator>().SetTrigger("LightAttack");
 	}
@@ -39,14 +37,14 @@ public class WarriorLightAttack : HeroLightAttack
 		currentHarmInfo.Rsset();
 		currentHarmInfo.SetBaseHarm(finisherHarmValue);
 		currentHarmInfo.AddHarmRate(harmRate);
-		currentPhase = LightAttackPhase.Finisher;
+		currentPhase = WarriorLightAttackPhase.Finisher;
 		warrior.GetComponent<Animator>().SetInteger("LightAttackPhase", 2);
 		warrior.GetComponent<Animator>().SetTrigger("LightAttack");
 	}
 
 	public override void OnAttackBegin()
 	{
-		if (currentPhase == LightAttackPhase.Finisher)
+		if (currentPhase == WarriorLightAttackPhase.Finisher)
 		{
 			warrior.SetDefendAllEnable(1);
 		}
@@ -54,9 +52,64 @@ public class WarriorLightAttack : HeroLightAttack
 
 	public override void OnAttackEnd()
 	{
-		currentPhase = LightAttackPhase.None;
-		SetAttackRangeEnable("NormalAttackRange", false);
-		SetAttackRangeEnable("FinisherAttackRange", false);
+		currentPhase = WarriorLightAttackPhase.None;
 		warrior.SetDefendAllEnable(0);
+	}
+
+	protected override string GetAttackRangeObjectDirName()
+	{
+		if (currentPhase == WarriorLightAttackPhase.Normal)
+		{
+			return GetNormalAttackRangeObjectDirName();
+		}
+		else if (currentPhase == WarriorLightAttackPhase.Finisher)
+		{
+			return GetFinisherAttackRangeObjectDirName();
+		}
+		else
+		{
+			throw new Exception("Error Light Attack Phase!");
+		}
+	}
+
+	protected virtual string GetFinisherAttackRangeObjectDirName()
+	{
+		throw new NotImplementedException();
+	}
+
+	protected virtual string GetNormalAttackRangeObjectDirName()
+	{
+		throw new NotImplementedException();
+	}
+
+	protected override float GetAttackRangeDurationTime()
+	{
+		if (currentPhase == WarriorLightAttackPhase.Normal)
+		{
+			return GetNormalAttackRangeDurationTime();
+		}
+		else if (currentPhase == WarriorLightAttackPhase.Finisher)
+		{
+			return GetFinisherAttackRangeDurationTime();
+		}
+		else
+		{
+			throw new Exception("Error Light Attack Phase!");
+		}
+	}
+
+	protected virtual float GetFinisherAttackRangeDurationTime()
+	{
+		throw new NotImplementedException();
+	}
+
+	protected virtual float GetNormalAttackRangeDurationTime()
+	{
+		throw new NotImplementedException();
+	}
+
+	protected override Creature GetAttacker()
+	{
+		return warrior;
 	}
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -52,5 +53,25 @@ public class TripleSlash : WarriorLightAttack
 		lastSlashTime = 0;
 		slashCount = 0;
 		base.DoFinisher(harmRate);
+	}
+
+	protected override string GetFinisherAttackRangeObjectDirName()
+	{
+		return "Prefab/Sprite/Creature/Hero/Warrior/LightAttack/TripleSlash/FinisherAttackRange";
+	}
+
+	protected override string GetNormalAttackRangeObjectDirName()
+	{
+		return "Prefab/Sprite/Creature/Hero/Warrior/LightAttack/TripleSlash/NormalAttackRange";
+	}
+
+	protected override float GetFinisherAttackRangeDurationTime()
+	{
+		return 0.1f;
+	}
+
+	protected override float GetNormalAttackRangeDurationTime()
+	{
+		return 0.1f;
 	}
 }

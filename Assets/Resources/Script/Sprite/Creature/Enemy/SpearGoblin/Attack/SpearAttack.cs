@@ -14,4 +14,14 @@ public class SpearAttack : EnemyAttack
 	{
 		attackCoolDownMaxTime = 2f;
 	}
+
+	protected override string GetAttackRangeObjectDirName()
+	{
+		return "Prefab/Sprite/Creature/Enemy/SpearGoblin/SpearAttackRange";
+	}
+
+	protected override float GetAttackRangeDurationTime()
+	{
+		return 0.2f;
+	}
 }

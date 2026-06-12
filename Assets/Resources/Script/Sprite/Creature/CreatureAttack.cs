@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static AttackRange;
 
 public class CreatureAttack : MonoBehaviour
 {
@@ -21,16 +23,39 @@ public class CreatureAttack : MonoBehaviour
 
 	}
 
-	public void SetAttackRangeEnable(string rangeName, bool enable)
+	public virtual GameObject CreateAttackRange(Transform parent)
 	{
-		if (enable)
-		{
-			HarmInfo harmInfo = new HarmInfo(currentHarmInfo);
-			transform.Find(rangeName).GetComponent<AttackRange>().EnableAttackRange(harmInfo);
-		}
-		else
-		{
-			transform.Find(rangeName).GetComponent<AttackRange>().DisableAttackRange();
-		}
+		string attackRangeDirName = GetAttackRangeObjectDirName();
+		Transform parentTransform = (parent != null) ? parent : transform;
+		Creature attacker = GetAttacker();
+		HarmInfo harmInfo = new HarmInfo(currentHarmInfo);
+		AttackRange.TargetType targetType = GetAttackRangeTargetType();
+		float attackRangeDurationTime = GetAttackRangeDurationTime();
+		
+		return AttackRange.CreateAttackRangeObject(attackRangeDirName, parentTransform, attacker, harmInfo, targetType, attackRangeDurationTime);
 	}
+
+	protected virtual string GetAttackRangeObjectDirName()
+	{
+		throw new NotImplementedException();
+	}
+
+	protected virtual Creature GetAttacker()
+	{
+		throw new NotImplementedException();
+	}
+
+	protected virtual AttackRange.TargetType GetAttackRangeTargetType()
+	{
+		throw new NotImplementedException();
+	}
+
+	protected virtual float GetAttackRangeDurationTime()
+	{
+		throw new NotImplementedException();
+	}
+
+	
+
+	
 }

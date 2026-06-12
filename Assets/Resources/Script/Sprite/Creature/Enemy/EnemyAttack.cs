@@ -17,12 +17,6 @@ public class EnemyAttack : CreatureAttack
 		enemy = GetComponentInParent<Enemy>();
 		InitAttackCoolDownMaxTime();
 		InitAttackHarmValue();
-		SetAttackRangeTarget();
-	}
-
-	private void SetAttackRangeTarget()
-	{
-		transform.Find("AttackRange").GetComponent<AttackRange>().SetTargetType(AttackRange.TargetType.Hero);
 	}
 
 	private void Update()
@@ -85,6 +79,16 @@ public class EnemyAttack : CreatureAttack
 
 	public override void OnAttackEnd()
 	{
-		SetAttackRangeEnable("AttackRange", false);
+
+	}
+
+	protected override AttackRange.TargetType GetAttackRangeTargetType()
+	{
+		return AttackRange.TargetType.Hero;
+	}
+
+	protected override Creature GetAttacker()
+	{
+		return enemy;
 	}
 }

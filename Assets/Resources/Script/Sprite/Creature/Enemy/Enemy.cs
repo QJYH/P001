@@ -271,10 +271,10 @@ public class Enemy : Creature
 		animator.SetTrigger("Attack");
 	}
 
-	public void SetAttackRangeEnable(int status)
+	public void CreateRunningAttackRange()
 	{
-		bool enable = (status == 1) ? true : false;
-		runningAttack.GetComponent<EnemyAttack>().SetAttackRangeEnable("AttackRange", enable);
+		//called by animation event
+		runningAttack.GetComponent<EnemyAttack>().CreateAttackRange(null);
 	}
 
 	protected override void OnHpChange()

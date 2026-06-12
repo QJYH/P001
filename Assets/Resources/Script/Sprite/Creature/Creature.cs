@@ -54,7 +54,7 @@ public class Creature : MonoBehaviour
 		throw new NotImplementedException();
 	}
 
-	public static void HandleAttack(Creature receiver, HarmInfo harmInfo)
+	public static void HandleAttack(Creature attacker, Creature receiver, HarmInfo harmInfo)
 	{
 		if (receiver.IsDead()) return;
 
