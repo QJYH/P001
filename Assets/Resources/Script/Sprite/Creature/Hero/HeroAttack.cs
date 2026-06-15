@@ -6,8 +6,5 @@ using UnityEngine.InputSystem;
 
 public class HeroAttack : CreatureAttack
 {
-	protected override AttackRange.TargetType GetAttackRangeTargetType()
-	{
-		return AttackRange.TargetType.Enemy;
-	}
+	
 }

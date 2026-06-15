@@ -5,6 +5,7 @@ using System.Threading;
 using System.Timers;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class TripleSlash : WarriorLightAttack
 {

@@ -12,34 +12,43 @@ public class AttackRange : Range
 	private Creature attacker;
 	private HarmInfo harmInfo;
 	private TargetType targetType;
-	private float durationTime;
+	private float durationTime = 0;
 
-	private void SetAttacker(Creature attacker)
+	private void Start()
 	{
-		this.attacker = attacker;
+		TryDestory();
 	}
-	private void SetHarmInfo(HarmInfo harmInfo)
+
+	private void TryDestory()
 	{
-		this.harmInfo = harmInfo;
-	}
-	private void SetTargetType(TargetType targetType)
-	{
-		this.targetType = targetType;
-	}
-	private void SetDurationTime(float durationTime)
-	{
-		this.durationTime = durationTime;
 		if (durationTime > 0)
 		{
 			StartCoroutine(DelayDestory(durationTime));
 		}
 	}
-
 	private IEnumerator DelayDestory(float durationTime)
 	{
 		yield return new WaitForSeconds(durationTime);
 
 		GameObject.Destroy(gameObject);
+	}
+
+	public void SetAttacker(Creature attacker)
+	{
+		this.attacker = attacker;
+	}
+	public void SetHarmInfo(HarmInfo harmInfo)
+	{
+		this.harmInfo = harmInfo;
+	}
+	public void SetTargetType(TargetType targetType)
+	{
+		this.targetType = targetType;
+	}
+	public void SetDurationTime(float durationTime)
+	{
+		this.durationTime = durationTime;
+		
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)

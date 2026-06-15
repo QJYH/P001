@@ -274,7 +274,7 @@ public class Enemy : Creature
 	public void CreateRunningAttackRange()
 	{
 		//called by animation event
-		runningAttack.GetComponent<EnemyAttack>().CreateAttackRange(null);
+		runningAttack.GetComponent<EnemyAttack>().CreateAttackRange();
 	}
 
 	protected override void OnHpChange()

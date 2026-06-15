@@ -56,21 +56,34 @@ public class WarriorLightAttack : HeroLightAttack
 		warrior.SetDefendAllEnable(0);
 	}
 
-	protected override string GetAttackRangeObjectDirName()
+	public override GameObject CreateAttackRange()
 	{
+		string attackRangeDirName;
+		float attackRangeDurationTime;
+		Transform parentTransform = transform;
+		Creature attacker = warrior;
+		HarmInfo harmInfo = new HarmInfo(currentHarmInfo);
+		AttackRange.TargetType targetType = AttackRange.TargetType.Enemy;
+
+
 		if (currentPhase == WarriorLightAttackPhase.Normal)
 		{
-			return GetNormalAttackRangeObjectDirName();
+			attackRangeDirName = GetNormalAttackRangeObjectDirName();
+			attackRangeDurationTime = GetNormalAttackRangeDurationTime();
 		}
 		else if (currentPhase == WarriorLightAttackPhase.Finisher)
 		{
-			return GetFinisherAttackRangeObjectDirName();
+			attackRangeDirName = GetFinisherAttackRangeObjectDirName();
+			attackRangeDurationTime = GetFinisherAttackRangeDurationTime();
 		}
 		else
 		{
 			throw new Exception("Error Light Attack Phase!");
 		}
+		return AttackRange.CreateAttackRangeObject(attackRangeDirName, parentTransform, attacker, harmInfo, targetType, attackRangeDurationTime);
 	}
+
+	
 
 	protected virtual string GetFinisherAttackRangeObjectDirName()
 	{
@@ -82,22 +95,6 @@ public class WarriorLightAttack : HeroLightAttack
 		throw new NotImplementedException();
 	}
 
-	protected override float GetAttackRangeDurationTime()
-	{
-		if (currentPhase == WarriorLightAttackPhase.Normal)
-		{
-			return GetNormalAttackRangeDurationTime();
-		}
-		else if (currentPhase == WarriorLightAttackPhase.Finisher)
-		{
-			return GetFinisherAttackRangeDurationTime();
-		}
-		else
-		{
-			throw new Exception("Error Light Attack Phase!");
-		}
-	}
-
 	protected virtual float GetFinisherAttackRangeDurationTime()
 	{
 		throw new NotImplementedException();
@@ -106,10 +103,5 @@ public class WarriorLightAttack : HeroLightAttack
 	protected virtual float GetNormalAttackRangeDurationTime()
 	{
 		throw new NotImplementedException();
-	}
-
-	protected override Creature GetAttacker()
-	{
-		return warrior;
 	}
 }

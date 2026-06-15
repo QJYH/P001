@@ -7,7 +7,7 @@ using static WarriorLightAttack;
 
 public class EnemyAttack : CreatureAttack
 {
-	private Enemy enemy;
+	protected Enemy enemy;
 	private bool isTargetInDectectRange = false;
 	private float attackCoolDownTime = 0;
 	protected float attackCoolDownMaxTime;
@@ -82,13 +82,4 @@ public class EnemyAttack : CreatureAttack
 
 	}
 
-	protected override AttackRange.TargetType GetAttackRangeTargetType()
-	{
-		return AttackRange.TargetType.Hero;
-	}
-
-	protected override Creature GetAttacker()
-	{
-		return enemy;
-	}
 }

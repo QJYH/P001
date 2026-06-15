@@ -5,23 +5,28 @@ using UnityEngine;
 
 public class SpearAttack : EnemyAttack
 {
+	private readonly float spearAttackHarmValue = 1f;
+	private readonly float spearAttackCoolDownMaxTime = 2f;
+	private readonly float spearAttackRangeDurationTime = 0.2f;
+	private readonly string spearAttackRangeDirName = "Prefab/Sprite/Creature/Enemy/SpearGoblin/SpearAttackRange";
 	protected override void InitAttackHarmValue()
 	{
-		attackHarmValue = 1f;
+		attackHarmValue = spearAttackHarmValue;
 	}
 
 	protected override void InitAttackCoolDownMaxTime()
 	{
-		attackCoolDownMaxTime = 2f;
+		attackCoolDownMaxTime = spearAttackCoolDownMaxTime;
 	}
-
-	protected override string GetAttackRangeObjectDirName()
+	public override GameObject CreateAttackRange()
 	{
-		return "Prefab/Sprite/Creature/Enemy/SpearGoblin/SpearAttackRange";
-	}
+		string attackRangeDirName = spearAttackRangeDirName;
+		Transform parentTransform = transform;
+		Creature attacker = enemy;
+		HarmInfo harmInfo = new HarmInfo(currentHarmInfo);
+		AttackRange.TargetType targetType = AttackRange.TargetType.Hero;
+		float attackRangeDurationTime = spearAttackRangeDurationTime;
 
-	protected override float GetAttackRangeDurationTime()
-	{
-		return 0.2f;
+		return AttackRange.CreateAttackRangeObject(attackRangeDirName, parentTransform, attacker, harmInfo, targetType, attackRangeDurationTime);
 	}
 }

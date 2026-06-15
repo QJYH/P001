@@ -23,39 +23,8 @@ public class CreatureAttack : MonoBehaviour
 
 	}
 
-	public virtual GameObject CreateAttackRange(Transform parent)
-	{
-		string attackRangeDirName = GetAttackRangeObjectDirName();
-		Transform parentTransform = (parent != null) ? parent : transform;
-		Creature attacker = GetAttacker();
-		HarmInfo harmInfo = new HarmInfo(currentHarmInfo);
-		AttackRange.TargetType targetType = GetAttackRangeTargetType();
-		float attackRangeDurationTime = GetAttackRangeDurationTime();
-		
-		return AttackRange.CreateAttackRangeObject(attackRangeDirName, parentTransform, attacker, harmInfo, targetType, attackRangeDurationTime);
-	}
-
-	protected virtual string GetAttackRangeObjectDirName()
+	public virtual GameObject CreateAttackRange()
 	{
 		throw new NotImplementedException();
 	}
-
-	protected virtual Creature GetAttacker()
-	{
-		throw new NotImplementedException();
-	}
-
-	protected virtual AttackRange.TargetType GetAttackRangeTargetType()
-	{
-		throw new NotImplementedException();
-	}
-
-	protected virtual float GetAttackRangeDurationTime()
-	{
-		throw new NotImplementedException();
-	}
-
-	
-
-	
 }

@@ -233,6 +233,6 @@ public class Hero : Creature
 	public void CreateLightAttackRange()
 	{
 		//called by animation event
-		lightAttack.GetComponent<HeroLightAttack>().CreateAttackRange(null);
+		lightAttack.GetComponent<HeroLightAttack>().CreateAttackRange();
 	}
 }
