@@ -11,4 +11,9 @@ public class Gnoll : Enemy
 		maxHp = gnollHp;
 	}
 
+	protected override void InitAttackList()
+	{
+		GameObject spearAttack = transform.Find("ThrowBone").gameObject;
+		attackList.Add(spearAttack);
+	}
 }

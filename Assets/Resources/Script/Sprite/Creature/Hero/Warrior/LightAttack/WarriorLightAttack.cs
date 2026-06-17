@@ -56,7 +56,7 @@ public class WarriorLightAttack : HeroLightAttack
 		warrior.SetDefendAllEnable(0);
 	}
 
-	public override GameObject CreateAttackRange()
+	public override GameObject CreateMeleeAttackRange()
 	{
 		string attackRangeDirName;
 		float attackRangeDurationTime;

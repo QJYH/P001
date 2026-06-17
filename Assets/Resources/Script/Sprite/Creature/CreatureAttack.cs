@@ -23,7 +23,12 @@ public class CreatureAttack : MonoBehaviour
 
 	}
 
-	public virtual GameObject CreateAttackRange()
+	public virtual GameObject CreateMeleeAttackRange()
+	{
+		throw new NotImplementedException();
+	}
+
+	public virtual GameObject CreateRangedProjectile()
 	{
 		throw new NotImplementedException();
 	}

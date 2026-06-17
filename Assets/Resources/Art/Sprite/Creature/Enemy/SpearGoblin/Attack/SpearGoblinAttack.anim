@@ -92,7 +92,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.4
-    functionName: CreateRunningAttackRange
+    functionName: CreateMeleeAttackRange
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

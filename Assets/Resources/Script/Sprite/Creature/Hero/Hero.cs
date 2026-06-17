@@ -230,9 +230,29 @@ public class Hero : Creature
 		LevelDirector.OnHeroHpChange(hp/maxHp);
 	}
 
-	public void CreateLightAttackRange()
+	public void CreateMeleeAttackRange()
 	{
 		//called by animation event
-		lightAttack.GetComponent<HeroLightAttack>().CreateAttackRange();
+		if (isLightAttacking())
+		{
+			lightAttack.GetComponent<HeroLightAttack>().CreateMeleeAttackRange();
+		}
+		else if (isHeavyAttacking())
+		{
+			heavyAttack.GetComponent<HeroHeavyAttack>().CreateMeleeAttackRange();
+		}
+	}
+
+	public void CreateRangedProjectile()
+	{
+		//called by animation event
+		if (isLightAttacking())
+		{
+			lightAttack.GetComponent<HeroLightAttack>().CreateRangedProjectile();
+		}
+		else if (isHeavyAttacking())
+		{
+			heavyAttack.GetComponent<HeroHeavyAttack>().CreateRangedProjectile();
+		}
 	}
 }

@@ -262,6 +262,11 @@ public class Enemy : Creature
 		return target != null;
 	}
 
+	protected override void OnHpChange()
+	{
+		enemyHpBar.GetComponent<Slider>().value = hp;
+	}
+
 	public void Attack()
 	{
 		SetStatus(EnemyStatus.Attack);
@@ -271,16 +276,15 @@ public class Enemy : Creature
 		animator.SetTrigger("Attack");
 	}
 
-	public void CreateRunningAttackRange()
+	public void CreateMeleeAttackRange()
 	{
 		//called by animation event
-		runningAttack.GetComponent<EnemyAttack>().CreateAttackRange();
+		runningAttack.GetComponent<EnemyAttack>().CreateMeleeAttackRange();
 	}
 
-	protected override void OnHpChange()
+	public void CreateRangedProjectile()
 	{
-		enemyHpBar.GetComponent<Slider>().value = hp;
+		//called by animation event
+		runningAttack.GetComponent<EnemyAttack>().CreateRangedProjectile();
 	}
-
-	
 }

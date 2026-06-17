@@ -18,7 +18,8 @@ public class SpearAttack : EnemyAttack
 	{
 		attackCoolDownMaxTime = spearAttackCoolDownMaxTime;
 	}
-	public override GameObject CreateAttackRange()
+
+	public override GameObject CreateMeleeAttackRange()
 	{
 		string attackRangeDirName = spearAttackRangeDirName;
 		Transform parentTransform = transform;

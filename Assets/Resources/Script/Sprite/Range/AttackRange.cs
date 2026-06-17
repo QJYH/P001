@@ -53,18 +53,18 @@ public class AttackRange : Range
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
+		Creature receiver = null;
 		if (targetType == TargetType.Hero)
 		{
-			Hero receiver = collision.GetComponent<Hero>();
+			receiver = collision.GetComponent<Hero>();
 			if (receiver == null) return;
-			Creature.HandleAttack(attacker, receiver, harmInfo);
 		}
 		else if (targetType == TargetType.Enemy)
 		{
-			Enemy receiver = collision.GetComponent<Enemy>();
+			receiver = collision.GetComponent<Enemy>();
 			if (receiver == null) return;
-			Creature.HandleAttack(attacker, receiver, harmInfo);
 		}
+		Creature.HandleAttack(attacker, receiver, harmInfo);
 	}
 
 	public static GameObject CreateAttackRangeObject(string attackRangeDirName, Transform parentTransform, Creature attacker, HarmInfo harmInfo, TargetType targetType, float durationTime)
