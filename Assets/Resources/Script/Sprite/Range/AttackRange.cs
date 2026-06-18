@@ -67,9 +67,9 @@ public class AttackRange : Range
 		Creature.HandleAttack(attacker, receiver, harmInfo);
 	}
 
-	public static GameObject CreateAttackRangeObject(string attackRangeDirName, Transform parentTransform, Creature attacker, HarmInfo harmInfo, TargetType targetType, float durationTime)
+	public static GameObject CreateAttackRangeObject(string attackRangeDirName, Creature attacker, HarmInfo harmInfo, TargetType targetType, float durationTime)
 	{
-		GameObject attackRangeObject = Instantiate(Resources.Load<GameObject>(attackRangeDirName), parentTransform);
+		GameObject attackRangeObject = Instantiate(Resources.Load<GameObject>(attackRangeDirName));
 		attackRangeObject.GetComponent<AttackRange>().SetAttacker(attacker);
 		attackRangeObject.GetComponent<AttackRange>().SetHarmInfo(harmInfo);
 		attackRangeObject.GetComponent<AttackRange>().SetTargetType(targetType);

@@ -16,4 +16,8 @@ public class Gnoll : Enemy
 		GameObject spearAttack = transform.Find("ThrowBone").gameObject;
 		attackList.Add(spearAttack);
 	}
+	protected override void AdjustHpBarPos(RectTransform rectTransform)
+	{
+		rectTransform.anchoredPosition = new Vector2(0, -0.3f);
+	}
 }

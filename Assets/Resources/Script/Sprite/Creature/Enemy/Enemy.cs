@@ -64,9 +64,14 @@ public class Enemy : Creature
 		enemyHpBar = Instantiate(Resources.Load<GameObject>("Prefab/UI/EnemyHpBar"));
 		RectTransform rectTransform = enemyHpBar.GetComponent<RectTransform>();
 		rectTransform.SetParent(creatureCanvas.GetComponent<RectTransform>());
-		rectTransform.anchoredPosition = new Vector2(0, 0);
+		AdjustHpBarPos(rectTransform);
 		enemyHpBar.GetComponent<Slider>().maxValue = maxHp;
 		enemyHpBar.GetComponent<Slider>().value = hp;
+	}
+
+	protected virtual void AdjustHpBarPos(RectTransform rectTransform)
+	{
+		rectTransform.anchoredPosition = new Vector2(0, 0);
 	}
 
 	private void AddBehaviorTree()

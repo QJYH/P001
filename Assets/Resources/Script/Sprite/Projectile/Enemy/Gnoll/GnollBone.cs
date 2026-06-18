@@ -7,19 +7,19 @@ public class GnollBone : Projectile
 {
 	private readonly float gnollBoneMaxSpeed = 5f;
 	private readonly string gnollBoneAttackRangeDirName = "Prefab/Sprite/Projectile/Enemy/Gnoll/GnollBoneAttackRange";
-	private readonly float gnollBoneAttackRangeDurationTime = 0;
+	private readonly float gnollBoneAttackRangeDurationTime = 0.1f;
 	protected override void InitMaxSpeed()
 	{
 		maxSpeed = gnollBoneMaxSpeed;
 	}
-	protected override GameObject CreateProjectileAttackRange()
+	protected override void CreateProjectileAttackRange()
 	{
 		string attackRangeDirName = gnollBoneAttackRangeDirName;
-		Transform parentTransform = transform;
 		Creature attacker = owner;
 		AttackRange.TargetType targetType = AttackRange.TargetType.Hero;
 		float attackRangeDurationTime = gnollBoneAttackRangeDurationTime;
 
-		return AttackRange.CreateAttackRangeObject(attackRangeDirName, parentTransform, attacker, harmInfo, targetType, attackRangeDurationTime);
+		GameObject attackRangeObject = AttackRange.CreateAttackRangeObject(attackRangeDirName, attacker, harmInfo, targetType, attackRangeDurationTime);
+		attackRangeObject.transform.position = transform.position;
 	}
 }

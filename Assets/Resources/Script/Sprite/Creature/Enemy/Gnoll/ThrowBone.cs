@@ -17,7 +17,7 @@ public class ThrowBone : EnemyAttack
 	{
 		attackCoolDownMaxTime = throwBoneCoolDownMaxTime;
 	}
-	public override GameObject CreateRangedProjectile()
+	public override void CreateRangedProjectile()
 	{
 		GameObject gnollBone = Instantiate(Resources.Load<GameObject>(gnollBoneDirName));
 		gnollBone.transform.position = transform.Find("ProjectilePosition").position;
@@ -31,8 +31,6 @@ public class ThrowBone : EnemyAttack
 		{
 			gnollBone.GetComponent<GnollBone>().SetDirection(new Vector2(1, 0));
 		}
-
-		return gnollBone;
 	}
 
 }

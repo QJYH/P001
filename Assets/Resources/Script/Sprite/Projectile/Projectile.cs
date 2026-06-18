@@ -15,6 +15,7 @@ public class Projectile : MonoBehaviour
 		ToBeDestory
 	}
 	private Status currentStatus;
+	private readonly float destoryDelayTime = 0.1f;
 	private Vector2 direction;
 	protected float maxSpeed;
 	private GameObject target;
@@ -76,7 +77,7 @@ public class Projectile : MonoBehaviour
 	{
 		if (LayerMask.LayerToName(collision.gameObject.layer) == "Decoration")
 		{
-			StartCoroutine(DelayDestory(0.1f));
+			StartCoroutine(DelayDestory(destoryDelayTime));
 			return;
 		}
 
@@ -92,10 +93,10 @@ public class Projectile : MonoBehaviour
 			if (receiver == null) return;
 		}
 		CreateProjectileAttackRange();
-		StartCoroutine(DelayDestory(0.1f));
+		StartCoroutine(DelayDestory(destoryDelayTime));
 	}
 
-	protected virtual GameObject CreateProjectileAttackRange()
+	protected virtual void CreateProjectileAttackRange()
 	{
 		throw new NotImplementedException();
 	}

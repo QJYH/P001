@@ -56,11 +56,10 @@ public class WarriorLightAttack : HeroLightAttack
 		warrior.SetDefendAllEnable(0);
 	}
 
-	public override GameObject CreateMeleeAttackRange()
+	public override void CreateMeleeAttackRange()
 	{
 		string attackRangeDirName;
 		float attackRangeDurationTime;
-		Transform parentTransform = transform;
 		Creature attacker = warrior;
 		HarmInfo harmInfo = new HarmInfo(currentHarmInfo);
 		AttackRange.TargetType targetType = AttackRange.TargetType.Enemy;
@@ -80,10 +79,11 @@ public class WarriorLightAttack : HeroLightAttack
 		{
 			throw new Exception("Error Light Attack Phase!");
 		}
-		return AttackRange.CreateAttackRangeObject(attackRangeDirName, parentTransform, attacker, harmInfo, targetType, attackRangeDurationTime);
+		GameObject attackRangeObject = AttackRange.CreateAttackRangeObject(attackRangeDirName, attacker, harmInfo, targetType, attackRangeDurationTime);
+		attackRangeObject.transform.SetParent(transform);
 	}
 
-	
+
 
 	protected virtual string GetFinisherAttackRangeObjectDirName()
 	{

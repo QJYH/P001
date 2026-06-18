@@ -28,7 +28,7 @@ public class Creature : MonoBehaviour
 		creatureCanvas = new GameObject("MainCanvas");
 		Canvas canvas = creatureCanvas.AddComponent<Canvas>();
 		canvas.renderMode = RenderMode.WorldSpace;
-		canvas.sortingLayerName = "UI";
+		canvas.sortingLayerName = "Sprite";
 		creatureCanvas.AddComponent<CanvasScaler>();
 		creatureCanvas.AddComponent<GraphicRaycaster>();
 		RectTransform rectTransform = creatureCanvas.GetComponent<RectTransform>();

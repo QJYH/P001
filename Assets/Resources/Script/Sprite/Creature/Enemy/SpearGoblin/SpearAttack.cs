@@ -19,15 +19,15 @@ public class SpearAttack : EnemyAttack
 		attackCoolDownMaxTime = spearAttackCoolDownMaxTime;
 	}
 
-	public override GameObject CreateMeleeAttackRange()
+	public override void CreateMeleeAttackRange()
 	{
 		string attackRangeDirName = spearAttackRangeDirName;
-		Transform parentTransform = transform;
 		Creature attacker = enemy;
 		HarmInfo harmInfo = new HarmInfo(currentHarmInfo);
 		AttackRange.TargetType targetType = AttackRange.TargetType.Hero;
 		float attackRangeDurationTime = spearAttackRangeDurationTime;
 
-		return AttackRange.CreateAttackRangeObject(attackRangeDirName, parentTransform, attacker, harmInfo, targetType, attackRangeDurationTime);
+		GameObject attackRangeObject = AttackRange.CreateAttackRangeObject(attackRangeDirName, attacker, harmInfo, targetType, attackRangeDurationTime);
+		attackRangeObject.transform.SetParent(transform);
 	}
 }

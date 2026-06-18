@@ -4,21 +4,30 @@ using UnityEngine;
 
 public class DetectRange : Range
 {
+	private EnemyAttack enemyAttack;
+	private void Awake()
+	{
+		enemyAttack = GetComponentInParent<EnemyAttack>();
+	}
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
+		if (enemyAttack == null) return;
+
 		Hero hero = collision.GetComponent<Hero>();
 		if (hero != null)
 		{
-			GetComponentInParent<EnemyAttack>().OnTargetEnterDectectRange();
+			enemyAttack.OnTargetEnterDectectRange();
 		}
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)
 	{
+		if (enemyAttack == null) return;
+
 		Hero hero = collision.GetComponent<Hero>();
 		if (hero != null)
 		{
-			GetComponentInParent<EnemyAttack>().OnTargetExitDectectRange();
+			enemyAttack.OnTargetExitDectectRange();
 		}
 	}
 }
