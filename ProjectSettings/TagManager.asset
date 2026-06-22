@@ -13,7 +13,7 @@ TagManager:
   - UI
   - Hero
   - Enemy
-  - Decoration
+  - EnvironmentBlock
   - Projectile
   - Range
   - CameraEdge
