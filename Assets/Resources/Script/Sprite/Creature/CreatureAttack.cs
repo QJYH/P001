@@ -1,17 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static AttackRange;
 
 public class CreatureAttack : MonoBehaviour
 {
-	protected HarmInfo currentHarmInfo = new HarmInfo();
-
-	public HarmInfo GetCurrentHarmInfo()
-	{
-		return currentHarmInfo;
-	}
+	public HarmInfo CurrentHarmInfo { get; private set; } = new HarmInfo();
 
 	public virtual void OnAttackBegin()
 	{

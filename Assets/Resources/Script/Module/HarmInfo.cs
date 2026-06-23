@@ -4,20 +4,20 @@ using System.Collections.Generic;
 
 public class HarmInfo : Object
 {
-	public float baseHarm;
+	public float BaseHarm { get; set; }
 	private List<float> harmRateList;
 	private List<float> extraHarmList;
 
 	public HarmInfo()
 	{
-		baseHarm = 0;
+		BaseHarm = 0;
 		harmRateList = new List<float>();
 		extraHarmList = new List<float>();
 	}
 
 	public HarmInfo(HarmInfo original)
 	{
-		baseHarm = original.baseHarm;
+		BaseHarm = original.BaseHarm;
 		harmRateList = new List<float>();
 		foreach (float value in original.harmRateList)
 		{
@@ -32,13 +32,9 @@ public class HarmInfo : Object
 
 	public void Rsset()
 	{
-		baseHarm = 0;
+		BaseHarm = 0;
 		harmRateList.Clear();
 		extraHarmList.Clear();
-	}
-	public void SetBaseHarm(float value)
-	{
-		baseHarm = value;
 	}
 
 	public void AddHarmRate(float value)
@@ -53,7 +49,7 @@ public class HarmInfo : Object
 
 	public float CalFinalHarm()
 	{
-		float finalHarm = baseHarm;
+		float finalHarm = BaseHarm;
 		foreach (float value in harmRateList)
 		{
 			finalHarm *= value;

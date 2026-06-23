@@ -1,27 +1,24 @@
-using BehaviorTree;
+using CommonEnum;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
-using static AttackRange;
 
 public class Projectile : MonoBehaviour
 {
+	private const float destoryDelayTime = 0.1f;
 	private enum Status
 	{
 		Running,
 		ToBeDestory
 	}
+	
+	public Vector2 Direction { get; set; }
+	public GameObject Target { get; set; }
+	public AttackTargetType TargetType { get; set; }
+	public Creature Owner { get; set; }
+	public HarmInfo HarmInfo { get; set; }
+	protected float MaxSpeed { get; set; }
 	private Status currentStatus;
-	private readonly float destoryDelayTime = 0.1f;
-	private Vector2 direction;
-	protected float maxSpeed;
-	private GameObject target;
-	private TargetType targetType;
-	protected Creature owner;
-	protected HarmInfo harmInfo;
 
 	private void Awake()
 	{
@@ -43,51 +40,31 @@ public class Projectile : MonoBehaviour
 	{
 		if (currentStatus == Status.ToBeDestory) return;
 
-		if (target != null)
+		if (Target != null)
 		{
 			//todo
 		}
 		else
 		{
-			GetComponent<Rigidbody2D>().velocity = direction * maxSpeed;
+			GetComponent<Rigidbody2D>().velocity = Direction * MaxSpeed;
 		}
-	}
-
-	public void SetDirection(Vector2 direction)
-	{
-		this.direction = direction.normalized;
-	}
-
-	public void SetTargetType(TargetType targetType)
-	{
-		this.targetType = targetType;
-	}
-
-	public void SetOwner(Creature owner)
-	{
-		this.owner = owner;
-	}
-
-	public void SetHarmInfo(HarmInfo harmInfo)
-	{
-		this.harmInfo = harmInfo;
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (LayerMask.LayerToName(collision.gameObject.layer) == "Decoration")
+		if (LayerMask.LayerToName(collision.gameObject.layer) == "EnvironmentBlock")
 		{
 			StartCoroutine(DelayDestory(destoryDelayTime));
 			return;
 		}
 
 		Creature receiver = null;
-		if (targetType == TargetType.Hero)
+		if (TargetType == AttackTargetType.Hero)
 		{
 			receiver = collision.GetComponent<Hero>();
 			if (receiver == null) return;
 		}
-		else if (targetType == TargetType.Enemy)
+		else if (TargetType == AttackTargetType.Enemy)
 		{
 			receiver = collision.GetComponent<Enemy>();
 			if (receiver == null) return;

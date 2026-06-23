@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
-using static WarriorLightAttack;
 
 public class EnemyAttack : CreatureAttack
 {
@@ -66,8 +62,8 @@ public class EnemyAttack : CreatureAttack
 
 	public void Attack()
 	{
-		currentHarmInfo.Rsset();
-		currentHarmInfo.SetBaseHarm(attackHarmValue);
+		CurrentHarmInfo.Rsset();
+		CurrentHarmInfo.BaseHarm = attackHarmValue;
 		attackCoolDownTime = attackCoolDownMaxTime;
 		enemy.Attack();
 	}

@@ -15,7 +15,7 @@ public static class UICommonFunc
 	public static GameObject CreatePanel(string panelName, Transform parent)
 	{
 		string panelDir = string.Format("Prefab/UI/Panel/{0}/{1}", panelName, panelName);
-		Transform parentTransform = (parent != null) ? parent : SceneDirector.GetMainCanvas().transform;
+		Transform parentTransform = (parent != null) ? parent : SceneDirector.SceneInstance.MainCanvas.transform;
 		GameObject panel = Object.Instantiate(Resources.Load<GameObject>(panelDir));
 		panel.transform.SetParent(parentTransform, false);
 

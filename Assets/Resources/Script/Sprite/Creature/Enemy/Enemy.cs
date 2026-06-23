@@ -1,14 +1,8 @@
 using BehaviorTree;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Serialization;
-using UnityEditor.Tilemaps;
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.UI;
-using static Hero;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class Enemy : Creature
 {
@@ -63,10 +57,9 @@ public class Enemy : Creature
 	{
 		enemyHpBar = Instantiate(Resources.Load<GameObject>("Prefab/UI/EnemyHpBar"));
 		RectTransform rectTransform = enemyHpBar.GetComponent<RectTransform>();
-		rectTransform.SetParent(creatureCanvas.GetComponent<RectTransform>());
+		rectTransform.SetParent(CreatureCanvas.GetComponent<RectTransform>());
 		AdjustHpBarPos(rectTransform);
-		enemyHpBar.GetComponent<Slider>().maxValue = maxHp;
-		enemyHpBar.GetComponent<Slider>().value = hp;
+		enemyHpBar.GetComponent<Slider>().value = Hp / MaxHp;
 	}
 
 	protected virtual void AdjustHpBarPos(RectTransform rectTransform)
@@ -269,7 +262,7 @@ public class Enemy : Creature
 
 	protected override void OnHpChange()
 	{
-		enemyHpBar.GetComponent<Slider>().value = hp;
+		enemyHpBar.GetComponent<Slider>().value = Hp;
 	}
 
 	public void Attack()

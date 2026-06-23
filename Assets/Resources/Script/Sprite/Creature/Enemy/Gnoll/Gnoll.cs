@@ -7,8 +7,8 @@ public class Gnoll : Enemy
 	private readonly float gnollHp = 5f;
 	protected override void InitHp()
 	{
-		hp = gnollHp;
-		maxHp = gnollHp;
+		Hp = gnollHp;
+		MaxHp = gnollHp;
 	}
 
 	protected override void InitAttackList()

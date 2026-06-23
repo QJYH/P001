@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Warrior : Hero
 {
@@ -13,8 +9,8 @@ public class Warrior : Hero
 
 	protected override void InitHp()
 	{
-		hp = warriorHp;
-		maxHp = warriorHp;
+		Hp = warriorHp;
+		MaxHp = warriorHp;
 	}
 
 	protected override void InitAttackModule()

@@ -1,29 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CommonEnum;
 
 public class AttackRange : Range
 {
-	public enum TargetType
-	{
-		Hero,
-		Enemy
-	}
-	private Creature attacker;
-	private HarmInfo harmInfo;
-	private TargetType targetType;
-	private float durationTime = 0;
+	private Creature Attacker { get; set; }
+	private HarmInfo HarmInfo { get; set; }
+	private AttackTargetType TargetType { get; set; }
+	private float DurationTime { get; set; } = 0;
 
-	private void Start()
+private void Start()
 	{
 		TryDestory();
 	}
 
 	private void TryDestory()
 	{
-		if (durationTime > 0)
+		if (DurationTime > 0)
 		{
-			StartCoroutine(DelayDestory(durationTime));
+			StartCoroutine(DelayDestory(DurationTime));
 		}
 	}
 	private IEnumerator DelayDestory(float durationTime)
@@ -33,47 +29,29 @@ public class AttackRange : Range
 		GameObject.Destroy(gameObject);
 	}
 
-	public void SetAttacker(Creature attacker)
-	{
-		this.attacker = attacker;
-	}
-	public void SetHarmInfo(HarmInfo harmInfo)
-	{
-		this.harmInfo = harmInfo;
-	}
-	public void SetTargetType(TargetType targetType)
-	{
-		this.targetType = targetType;
-	}
-	public void SetDurationTime(float durationTime)
-	{
-		this.durationTime = durationTime;
-		
-	}
-
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		Creature receiver = null;
-		if (targetType == TargetType.Hero)
+		if (TargetType == AttackTargetType.Hero)
 		{
 			receiver = collision.GetComponent<Hero>();
 			if (receiver == null) return;
 		}
-		else if (targetType == TargetType.Enemy)
+		else if (TargetType == AttackTargetType.Enemy)
 		{
 			receiver = collision.GetComponent<Enemy>();
 			if (receiver == null) return;
 		}
-		Creature.HandleAttack(attacker, receiver, harmInfo);
+		Creature.HandleAttack(Attacker, receiver, HarmInfo);
 	}
 
-	public static GameObject CreateAttackRangeObject(string attackRangeDirName, Creature attacker, HarmInfo harmInfo, TargetType targetType, float durationTime)
+	public static GameObject CreateAttackRangeObject(string attackRangeDirName, Creature attacker, HarmInfo harmInfo, AttackTargetType targetType, float durationTime)
 	{
 		GameObject attackRangeObject = Instantiate(Resources.Load<GameObject>(attackRangeDirName));
-		attackRangeObject.GetComponent<AttackRange>().SetAttacker(attacker);
-		attackRangeObject.GetComponent<AttackRange>().SetHarmInfo(harmInfo);
-		attackRangeObject.GetComponent<AttackRange>().SetTargetType(targetType);
-		attackRangeObject.GetComponent<AttackRange>().SetDurationTime(durationTime);
+		attackRangeObject.GetComponent<AttackRange>().Attacker = attacker;
+		attackRangeObject.GetComponent<AttackRange>().HarmInfo = harmInfo;
+		attackRangeObject.GetComponent<AttackRange>().TargetType = targetType;
+		attackRangeObject.GetComponent<AttackRange>().DurationTime = durationTime;
 
 		return attackRangeObject;
 	}

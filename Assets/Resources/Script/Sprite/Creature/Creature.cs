@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class Creature : MonoBehaviour
 {
-	protected float hp;
-	protected float maxHp;
-	private readonly float hurtDuration = 0.4f;
+	private const float hurtDuration = 0.4f;
+	protected float Hp { get; set; }
+	protected float MaxHp { get; set; }
+	protected GameObject CreatureCanvas { get; private set; }
 	private float hurtTimer = 0;
-	protected GameObject creatureCanvas;
 
 	protected virtual void Awake()
 	{
@@ -25,13 +25,13 @@ public class Creature : MonoBehaviour
 
 	private void InitCanvas()
 	{
-		creatureCanvas = new GameObject("MainCanvas");
-		Canvas canvas = creatureCanvas.AddComponent<Canvas>();
+		CreatureCanvas = new GameObject("MainCanvas");
+		Canvas canvas = CreatureCanvas.AddComponent<Canvas>();
 		canvas.renderMode = RenderMode.WorldSpace;
 		canvas.sortingLayerName = "Sprite";
-		creatureCanvas.AddComponent<CanvasScaler>();
-		creatureCanvas.AddComponent<GraphicRaycaster>();
-		RectTransform rectTransform = creatureCanvas.GetComponent<RectTransform>();
+		CreatureCanvas.AddComponent<CanvasScaler>();
+		CreatureCanvas.AddComponent<GraphicRaycaster>();
+		RectTransform rectTransform = CreatureCanvas.GetComponent<RectTransform>();
 		rectTransform.SetParent(transform);
 		rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 16);
 		rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 9);
@@ -66,15 +66,15 @@ public class Creature : MonoBehaviour
 	{
 		if (harmValue <= 0) return;
 
-		ChangeHp(hp - harmValue);
+		ChangeHp(Hp - harmValue);
 		hurtTimer = hurtDuration;
 
-		if (hp <= 0) Die();
+		if (Hp <= 0) Die();
 	}
 
 	private void ChangeHp(float v)
 	{
-		hp = v;
+		Hp = v;
 		OnHpChange();
 	}
 
@@ -94,6 +94,6 @@ public class Creature : MonoBehaviour
 
 	public bool IsDead()
 	{
-		return hp <= 0;
+		return Hp <= 0;
 	}
 }

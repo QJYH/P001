@@ -1,8 +1,6 @@
+using CommonEnum;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements.Experimental;
 
 public class WarriorLightAttack : HeroLightAttack
 {
@@ -25,8 +23,8 @@ public class WarriorLightAttack : HeroLightAttack
 
 	public virtual void DoNormal()
 	{
-		currentHarmInfo.Rsset();
-		currentHarmInfo.SetBaseHarm(normalHarmValue);
+		CurrentHarmInfo.Rsset();
+		CurrentHarmInfo.BaseHarm = normalHarmValue;
 		currentPhase = WarriorLightAttackPhase.Normal;
 		warrior.GetComponent<Animator>().SetInteger("LightAttackPhase", 1);
 		warrior.GetComponent<Animator>().SetTrigger("LightAttack");
@@ -34,9 +32,9 @@ public class WarriorLightAttack : HeroLightAttack
 
 	public virtual void DoFinisher(float harmRate)
 	{
-		currentHarmInfo.Rsset();
-		currentHarmInfo.SetBaseHarm(finisherHarmValue);
-		currentHarmInfo.AddHarmRate(harmRate);
+		CurrentHarmInfo.Rsset();
+		CurrentHarmInfo.BaseHarm = finisherHarmValue;
+		CurrentHarmInfo.AddHarmRate(harmRate);
 		currentPhase = WarriorLightAttackPhase.Finisher;
 		warrior.GetComponent<Animator>().SetInteger("LightAttackPhase", 2);
 		warrior.GetComponent<Animator>().SetTrigger("LightAttack");
@@ -61,8 +59,8 @@ public class WarriorLightAttack : HeroLightAttack
 		string attackRangeDirName;
 		float attackRangeDurationTime;
 		Creature attacker = warrior;
-		HarmInfo harmInfo = new HarmInfo(currentHarmInfo);
-		AttackRange.TargetType targetType = AttackRange.TargetType.Enemy;
+		HarmInfo harmInfo = new HarmInfo(CurrentHarmInfo);
+		AttackTargetType targetType = AttackTargetType.Enemy;
 
 
 		if (currentPhase == WarriorLightAttackPhase.Normal)

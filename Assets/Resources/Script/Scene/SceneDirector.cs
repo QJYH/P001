@@ -9,16 +9,15 @@ using UnityEngine.UI;
 
 public class SceneDirector : MonoBehaviour
 {
-	public static SceneDirector sceneInstance;
-	protected GameObject mainCamera;
-	protected GameObject virtualCamera;
-	protected GameObject mainCanvas;
-	protected GameObject mainEventSystem;
-
+	public static SceneDirector SceneInstance { get; private set; }
+	public GameObject MainCanvas { get; private set; }
+	protected GameObject MainEventSystem { get; private set; }
+	protected GameObject MainCamera { get; private set; }
+	protected GameObject VirtualCamera { get; private set; }
 
 	protected virtual void Awake()
 	{
-		sceneInstance = this;
+		SceneInstance = this;
 		Application.targetFrameRate = 60;
 		InitCamera();
 		InitCanvas();
@@ -40,27 +39,27 @@ public class SceneDirector : MonoBehaviour
 
 	private void InitCamera()
 	{
-		mainCamera = GameObject.FindAnyObjectByType<Camera>().gameObject;
-		virtualCamera = Instantiate(Resources.Load<GameObject>("Prefab/VirtualCamera"));
-		mainCamera.AddComponent<CinemachineBrain>();
+		MainCamera = GameObject.FindAnyObjectByType<Camera>().gameObject;
+		VirtualCamera = Instantiate(Resources.Load<GameObject>("Prefab/VirtualCamera"));
+		MainCamera.AddComponent<CinemachineBrain>();
 	}
 
 	private void InitCanvas()
 	{
-		mainCanvas = new GameObject("MainCanvas");
-		mainCanvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
-		mainCanvas.AddComponent<CanvasScaler>();
-		mainCanvas.AddComponent<GraphicRaycaster>();
+		MainCanvas = new GameObject("MainCanvas");
+		MainCanvas.AddComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
+		MainCanvas.AddComponent<CanvasScaler>();
+		MainCanvas.AddComponent<GraphicRaycaster>();
 
-		mainEventSystem = new GameObject("EvenSystem");
-		mainEventSystem.AddComponent<EventSystem>();
-		mainEventSystem.AddComponent<InputSystemUIInputModule>();
+		MainEventSystem = new GameObject("EvenSystem");
+		MainEventSystem.AddComponent<EventSystem>();
+		MainEventSystem.AddComponent<InputSystemUIInputModule>();
 	}
 
 	private void ShowMask()
 	{
 		GameObject mask = Instantiate(Resources.Load<GameObject>("Prefab/UI/CircleRevealMask"));
-		mask.transform.SetParent(mainCanvas.transform, false);
+		mask.transform.SetParent(MainCanvas.transform, false);
 		mask.GetComponent<RectTransform>().StretchToFillParent(null, null);
 		Vector2 centerScreenPos = GetRevealCenter();
 		mask.GetComponent<CircleRevealMask>().Expand(centerScreenPos);
@@ -71,11 +70,4 @@ public class SceneDirector : MonoBehaviour
 		return new Vector2(Screen.width / 2, Screen.height / 2);
 	}
 
-	public static GameObject GetMainCanvas()
-	{
-		if (sceneInstance == null) return null;
-
-		return sceneInstance.mainCanvas;
-
-	}
 }

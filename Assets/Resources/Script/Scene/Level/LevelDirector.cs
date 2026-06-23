@@ -6,15 +6,14 @@ using UnityEngine;
 
 public class LevelDirector : SceneDirector
 {
-	public static LevelDirector levelInstance;
-
-	protected GameObject currentHero;
+	public static LevelDirector LevelInstance { get; private set; }
+	protected GameObject currentHero { get; private set; }
 	private GameObject levelHUD;
 
 	protected override void Awake()
 	{
 		base.Awake();
-		levelInstance = this;
+		LevelInstance = this;
 		AddHero();
 		SetCameraEdge();
 		SetCameraTarget();
@@ -39,20 +38,20 @@ public class LevelDirector : SceneDirector
 		GameObject cameraEdge = GameObject.Find("CameraEdge");
 		if (cameraEdge != null)
 		{
-			CinemachineConfiner2D cinemachineConfiner2D = virtualCamera.GetComponent<CinemachineConfiner2D>();
+			CinemachineConfiner2D cinemachineConfiner2D = VirtualCamera.GetComponent<CinemachineConfiner2D>();
 			cinemachineConfiner2D.m_BoundingShape2D = cameraEdge.GetComponent<PolygonCollider2D>();
 			cinemachineConfiner2D.InvalidateCache();
 		}
 	}
 	private void SetCameraTarget()
 	{
-		virtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = currentHero.transform;
-		virtualCamera.GetComponent<CinemachineCameraOffset>().m_Offset = new Vector3(0, -0.2f, 0);
+		VirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = currentHero.transform;
+		VirtualCamera.GetComponent<CinemachineCameraOffset>().m_Offset = new Vector3(0, -0.2f, 0);
 	}
 
 	protected override Vector2 GetRevealCenter()
 	{
-		Vector3 heroScreenPos = mainCamera.GetComponent<Camera>().WorldToScreenPoint(currentHero.transform.position);
+		Vector3 heroScreenPos = MainCamera.GetComponent<Camera>().WorldToScreenPoint(currentHero.transform.position);
 		return new Vector2(heroScreenPos.x, heroScreenPos.y);
 	}
 
@@ -63,16 +62,16 @@ public class LevelDirector : SceneDirector
 
 	public static void OnHeroHpChange(float hpRate)
 	{
-		if (levelInstance == null) return;
+		if (LevelInstance == null) return;
 
-		levelInstance.levelHUD.GetComponent<PanelLevelHUD>().OnHeroHpChange(hpRate);
+		LevelInstance.levelHUD.GetComponent<PanelLevelHUD>().OnHeroHpChange(hpRate);
 	}
 
 	public static void OnHeroDie()
 	{
-		if (levelInstance == null) return;
+		if (LevelInstance == null) return;
 
-		levelInstance.StartCoroutine(levelInstance.DelayCreatePanelHeroDie());
+		LevelInstance.StartCoroutine(LevelInstance.DelayCreatePanelHeroDie());
 	}
 
 	private IEnumerator DelayCreatePanelHeroDie()

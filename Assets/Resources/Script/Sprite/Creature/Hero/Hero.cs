@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static Enemy;
 
 public class Hero : Creature
 {
@@ -227,7 +224,7 @@ public class Hero : Creature
 
 	protected override void OnHpChange()
 	{
-		LevelDirector.OnHeroHpChange(hp/maxHp);
+		LevelDirector.OnHeroHpChange(Hp/MaxHp);
 	}
 
 	public void CreateMeleeAttackRange()

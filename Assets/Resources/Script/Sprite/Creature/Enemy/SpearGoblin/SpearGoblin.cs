@@ -7,8 +7,8 @@ public class SpearGoblin : Enemy
 	private readonly float spearGoblinHp = 5f;
 	protected override void InitHp()
 	{
-		hp = spearGoblinHp;
-		maxHp = spearGoblinHp;
+		Hp = spearGoblinHp;
+		MaxHp = spearGoblinHp;
 	}
 
 	protected override void InitAttackList()

@@ -2,24 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CommonEnum;
 
 public class GnollBone : Projectile
 {
-	private readonly float gnollBoneMaxSpeed = 5f;
-	private readonly string gnollBoneAttackRangeDirName = "Prefab/Sprite/Projectile/Enemy/Gnoll/GnollBoneAttackRange";
-	private readonly float gnollBoneAttackRangeDurationTime = 0.1f;
+	private const float gnollBoneMaxSpeed = 5f;
+	private const string gnollBoneAttackRangeDirName = "Prefab/Sprite/Projectile/Enemy/Gnoll/GnollBoneAttackRange";
+	private const float gnollBoneAttackRangeDurationTime = 0.1f;
 	protected override void InitMaxSpeed()
 	{
-		maxSpeed = gnollBoneMaxSpeed;
+		MaxSpeed = gnollBoneMaxSpeed;
 	}
 	protected override void CreateProjectileAttackRange()
 	{
 		string attackRangeDirName = gnollBoneAttackRangeDirName;
-		Creature attacker = owner;
-		AttackRange.TargetType targetType = AttackRange.TargetType.Hero;
+		Creature attacker = Owner;
+		AttackTargetType targetType = TargetType;
 		float attackRangeDurationTime = gnollBoneAttackRangeDurationTime;
 
-		GameObject attackRangeObject = AttackRange.CreateAttackRangeObject(attackRangeDirName, attacker, harmInfo, targetType, attackRangeDurationTime);
+		GameObject attackRangeObject = AttackRange.CreateAttackRangeObject(attackRangeDirName, attacker, HarmInfo, targetType, attackRangeDurationTime);
 		attackRangeObject.transform.position = transform.position;
 	}
 }
