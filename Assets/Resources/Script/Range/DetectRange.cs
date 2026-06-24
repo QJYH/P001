@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class DetectRange : Range
 {
-	private EnemyAttack enemyAttack;
+	private EnemyAttack<Enemy> enemyAttack;
 	private void Awake()
 	{
-		enemyAttack = GetComponentInParent<EnemyAttack>();
+		enemyAttack = GetComponentInParent<EnemyAttack<Enemy>>();
 	}
 	private void OnTriggerEnter2D(Collider2D collision)
 	{

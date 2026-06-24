@@ -1,33 +1,22 @@
 using System;
 using UnityEngine;
 
-public class EnemyAttack : CreatureAttack
+public class EnemyAttack<OwnerType> : CreatureAttack<OwnerType> where OwnerType : Enemy
 {
-	protected Enemy enemy;
+	protected virtual float AttackCoolDownMaxTime { get; } = 0;
+	protected virtual float AttackHarmValue { get; } = 0;
+
 	private bool isTargetInDectectRange = false;
 	private float attackCoolDownTime = 0;
-	protected float attackCoolDownMaxTime;
-	protected float attackHarmValue;
-	private void Awake()
+
+	protected override void Awake()
 	{
-		enemy = GetComponentInParent<Enemy>();
-		InitAttackCoolDownMaxTime();
-		InitAttackHarmValue();
+		base.Awake();
 	}
 
 	private void Update()
 	{
 		UpdateCoolDownTime();
-	}
-
-	protected virtual void InitAttackHarmValue()
-	{
-		throw new NotImplementedException();
-	}
-
-	protected virtual void InitAttackCoolDownMaxTime()
-	{
-		throw new NotImplementedException();
 	}
 
 	private void UpdateCoolDownTime()
@@ -57,25 +46,14 @@ public class EnemyAttack : CreatureAttack
 	}
 	public bool CanLaunchAttack()
 	{
-		return enemy.HaveTarget() && IsTargetInDectectRange();
+		return Owner.HaveTarget() && IsTargetInDectectRange();
 	}
 
 	public void Attack()
 	{
 		CurrentHarmInfo.Rsset();
-		CurrentHarmInfo.BaseHarm = attackHarmValue;
-		attackCoolDownTime = attackCoolDownMaxTime;
-		enemy.Attack();
+		CurrentHarmInfo.BaseHarm = AttackHarmValue;
+		attackCoolDownTime = AttackCoolDownMaxTime;
+		Owner.Attack();
 	}
-
-	public override void OnAttackBegin()
-	{
-		
-	}
-
-	public override void OnAttackEnd()
-	{
-
-	}
-
 }

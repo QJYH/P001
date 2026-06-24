@@ -2,76 +2,81 @@ using CommonEnum;
 using System;
 using UnityEngine;
 
-public class WarriorLightAttack : HeroLightAttack
+public class WarriorLightAttack<OwnerType> : HeroLightAttack<OwnerType> where OwnerType : Warrior
 {
-	protected Warrior warrior;
-	protected float normalHarmValue;
-	protected float finisherHarmValue;
-	public enum WarriorLightAttackPhase
+	protected virtual float NormalHarmValue { get; } = 0;
+	protected virtual float FinisherHarmValue { get; } = 0;
+	protected virtual string NormalAttackRangeObjectDirName { get; } = "";
+	protected virtual string FinisherAttackRangeObjectDirName { get; } = "";
+	protected virtual float NormalAttackRangeDurationTime { get; } = 0;
+	protected virtual float FinisherAttackRangeDurationTime { get; } = 0;
+
+	private enum WarriorLightAttackPhase
 	{
 		None,
 		Normal,
 		Finisher
 	}
-	protected WarriorLightAttackPhase currentPhase;
+	private WarriorLightAttackPhase currentPhase;
 
-	protected virtual void Awake()
+	protected override void Awake()
 	{
-		warrior = GetComponentInParent<Warrior>();
+		base.Awake();
 		currentPhase = WarriorLightAttackPhase.None;
+		
 	}
 
 	public virtual void DoNormal()
 	{
 		CurrentHarmInfo.Rsset();
-		CurrentHarmInfo.BaseHarm = normalHarmValue;
+		CurrentHarmInfo.BaseHarm = NormalHarmValue;
 		currentPhase = WarriorLightAttackPhase.Normal;
-		warrior.GetComponent<Animator>().SetInteger("LightAttackPhase", 1);
-		warrior.GetComponent<Animator>().SetTrigger("LightAttack");
+		Owner.GetComponent<Animator>().SetInteger("LightAttackPhase", 1);
+		Owner.GetComponent<Animator>().SetTrigger("LightAttack");
 	}
 
 	public virtual void DoFinisher(float harmRate)
 	{
 		CurrentHarmInfo.Rsset();
-		CurrentHarmInfo.BaseHarm = finisherHarmValue;
+		CurrentHarmInfo.BaseHarm = FinisherHarmValue;
 		CurrentHarmInfo.AddHarmRate(harmRate);
 		currentPhase = WarriorLightAttackPhase.Finisher;
-		warrior.GetComponent<Animator>().SetInteger("LightAttackPhase", 2);
-		warrior.GetComponent<Animator>().SetTrigger("LightAttack");
+		Owner.GetComponent<Animator>().SetInteger("LightAttackPhase", 2);
+		Owner.GetComponent<Animator>().SetTrigger("LightAttack");
 	}
 
 	public override void OnAttackBegin()
 	{
 		if (currentPhase == WarriorLightAttackPhase.Finisher)
 		{
-			warrior.SetDefendAllEnable(1);
+			Owner.SetDefendAllEnable(1);
 		}
 	}
 
 	public override void OnAttackEnd()
 	{
 		currentPhase = WarriorLightAttackPhase.None;
-		warrior.SetDefendAllEnable(0);
+		Owner.SetDefendAllEnable(0);
 	}
 
 	public override void CreateMeleeAttackRange()
 	{
 		string attackRangeDirName;
 		float attackRangeDurationTime;
-		Creature attacker = warrior;
+		Creature attacker = Owner;
 		HarmInfo harmInfo = new HarmInfo(CurrentHarmInfo);
-		AttackTargetType targetType = AttackTargetType.Enemy;
+		TargetType targetType = TargetType.Enemy;
 
 
 		if (currentPhase == WarriorLightAttackPhase.Normal)
 		{
-			attackRangeDirName = GetNormalAttackRangeObjectDirName();
-			attackRangeDurationTime = GetNormalAttackRangeDurationTime();
+			attackRangeDirName = NormalAttackRangeObjectDirName;
+			attackRangeDurationTime = NormalAttackRangeDurationTime;
 		}
 		else if (currentPhase == WarriorLightAttackPhase.Finisher)
 		{
-			attackRangeDirName = GetFinisherAttackRangeObjectDirName();
-			attackRangeDurationTime = GetFinisherAttackRangeDurationTime();
+			attackRangeDirName = FinisherAttackRangeObjectDirName;
+			attackRangeDurationTime = FinisherAttackRangeDurationTime;
 		}
 		else
 		{
@@ -79,27 +84,5 @@ public class WarriorLightAttack : HeroLightAttack
 		}
 		GameObject attackRangeObject = AttackRange.CreateAttackRangeObject(attackRangeDirName, attacker, harmInfo, targetType, attackRangeDurationTime);
 		attackRangeObject.transform.SetParent(transform);
-	}
-
-
-
-	protected virtual string GetFinisherAttackRangeObjectDirName()
-	{
-		throw new NotImplementedException();
-	}
-
-	protected virtual string GetNormalAttackRangeObjectDirName()
-	{
-		throw new NotImplementedException();
-	}
-
-	protected virtual float GetFinisherAttackRangeDurationTime()
-	{
-		throw new NotImplementedException();
-	}
-
-	protected virtual float GetNormalAttackRangeDurationTime()
-	{
-		throw new NotImplementedException();
 	}
 }

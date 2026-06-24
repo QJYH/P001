@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+using CommonEnum;
 
 namespace BehaviorTree
 {
@@ -16,7 +17,7 @@ namespace BehaviorTree
 
 		protected override void OnInit()
 		{
-			enemy.SetStatus(Enemy.EnemyStatus.Patrol);
+			enemy.CurrentStatus = EnemyStatus.Patrol;
 		}
 		protected override BehaviorStatus OnUpdate()
 		{

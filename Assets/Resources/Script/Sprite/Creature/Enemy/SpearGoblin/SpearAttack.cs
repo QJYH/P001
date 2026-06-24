@@ -3,28 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CommonEnum;
-public class SpearAttack : EnemyAttack
+public class SpearAttack : EnemyAttack<SpearGoblin>
 {
-	private readonly float spearAttackHarmValue = 1f;
-	private readonly float spearAttackCoolDownMaxTime = 2f;
-	private readonly float spearAttackRangeDurationTime = 0.2f;
-	private readonly string spearAttackRangeDirName = "Prefab/Sprite/Creature/Enemy/SpearGoblin/SpearAttackRange";
-	protected override void InitAttackHarmValue()
-	{
-		attackHarmValue = spearAttackHarmValue;
-	}
+	private const float spearAttackRangeDurationTime = 0.2f;
+	private const string spearAttackRangeDirName = "Prefab/Sprite/Creature/Enemy/SpearGoblin/SpearAttackRange";
 
-	protected override void InitAttackCoolDownMaxTime()
-	{
-		attackCoolDownMaxTime = spearAttackCoolDownMaxTime;
-	}
+	protected override float AttackCoolDownMaxTime { get; } = 2f;
+	protected override float AttackHarmValue { get; } = 1f;
 
 	public override void CreateMeleeAttackRange()
 	{
 		string attackRangeDirName = spearAttackRangeDirName;
-		Creature attacker = enemy;
+		Creature attacker = Owner;
 		HarmInfo harmInfo = new HarmInfo(CurrentHarmInfo);
-		AttackTargetType targetType = AttackTargetType.Hero;
+		TargetType targetType = TargetType.Hero;
 		float attackRangeDurationTime = spearAttackRangeDurationTime;
 
 		GameObject attackRangeObject = AttackRange.CreateAttackRangeObject(attackRangeDirName, attacker, harmInfo, targetType, attackRangeDurationTime);

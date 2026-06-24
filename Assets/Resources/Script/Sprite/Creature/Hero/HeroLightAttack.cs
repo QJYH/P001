@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class HeroLightAttack : HeroAttack
+public class HeroLightAttack<OwnerType> : HeroAttack<OwnerType> where OwnerType : Hero
 {
 	public virtual void HandleLightAttackInput(InputAction.CallbackContext context)
 	{

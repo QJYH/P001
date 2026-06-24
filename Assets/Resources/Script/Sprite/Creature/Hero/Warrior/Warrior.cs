@@ -2,23 +2,18 @@ using UnityEngine;
 
 public class Warrior : Hero
 {
-	private readonly float warriorHp = 5f;
+	protected override float MaxHp { get; } = 5f;
+
 	private bool strikeBack;
 	private bool defendAll;
 	private bool defendHalf;
-
-	protected override void InitHp()
-	{
-		Hp = warriorHp;
-		MaxHp = warriorHp;
-	}
 
 	protected override void InitAttackModule()
 	{
 		string lightAttackDir = string.Format("Prefab/Sprite/Creature/Hero/Warrior/LightAttack/{0}/{0}", "TripleSlash");
 		string heavyAttackDir = string.Format("Prefab/Sprite/Creature/Hero/Warrior/HeavyAttack/{0}/{0}", "NormalGuard");
-		lightAttack = Instantiate(Resources.Load<GameObject>(lightAttackDir), gameObject.transform);
-		heavyAttack = Instantiate(Resources.Load<GameObject>(heavyAttackDir), gameObject.transform);
+		LightAttack = Instantiate(Resources.Load<GameObject>(lightAttackDir), gameObject.transform);
+		HeavyAttack = Instantiate(Resources.Load<GameObject>(heavyAttackDir), gameObject.transform);
 		GetComponent<Animator>().SetInteger("LightAttackCode", 101101);
 		GetComponent<Animator>().SetInteger("HeavyAttackCode", 101201);
 
@@ -26,9 +21,9 @@ public class Warrior : Hero
 
 	protected override void ReceiveHarm(float harmValue)
 	{
-		if (isStrikeBackEnable())
+		if (IsStrikeBackEnable())
 		{
-			heavyAttack.GetComponent<WarriorHeavyAttack>().StrikeBack(lightAttack.GetComponent<WarriorLightAttack>());
+			HeavyAttack.GetComponent<WarriorHeavyAttack<Warrior>>().StrikeBack(LightAttack.GetComponent<WarriorLightAttack<Warrior>>());
 		}
 		else if (IsDefendAllEnable())
 		{
@@ -49,7 +44,7 @@ public class Warrior : Hero
 		strikeBack = (status == 1) ? true : false;
 	}
 
-	public bool isStrikeBackEnable()
+	public bool IsStrikeBackEnable()
 	{
 		return strikeBack;
 	}

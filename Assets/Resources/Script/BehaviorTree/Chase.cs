@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CommonEnum;
 
 namespace BehaviorTree
 {
 	public class Chase : BehaviourNode
 	{
 		private Enemy enemy;
-		private EnemyAttack enemyAttack;
+		private EnemyAttack<Enemy> enemyAttack;
 
-		public Chase(Enemy enemy, EnemyAttack enemyAttack)
+		public Chase(Enemy enemy, EnemyAttack<Enemy> enemyAttack)
 		{
 			this.enemy = enemy;
 			this.enemyAttack = enemyAttack;
@@ -17,7 +18,7 @@ namespace BehaviorTree
 
 		protected override void OnInit()
 		{
-			enemy.SetStatus(Enemy.EnemyStatus.Chase);
+			enemy.CurrentStatus = EnemyStatus.Chase;
 		}
 		protected override BehaviorStatus OnUpdate()
 		{

@@ -7,7 +7,7 @@ public class AttackRange : Range
 {
 	private Creature Attacker { get; set; }
 	private HarmInfo HarmInfo { get; set; }
-	private AttackTargetType TargetType { get; set; }
+	private TargetType TargetType { get; set; }
 	private float DurationTime { get; set; } = 0;
 
 private void Start()
@@ -32,12 +32,12 @@ private void Start()
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		Creature receiver = null;
-		if (TargetType == AttackTargetType.Hero)
+		if (TargetType == TargetType.Hero)
 		{
 			receiver = collision.GetComponent<Hero>();
 			if (receiver == null) return;
 		}
-		else if (TargetType == AttackTargetType.Enemy)
+		else if (TargetType == TargetType.Enemy)
 		{
 			receiver = collision.GetComponent<Enemy>();
 			if (receiver == null) return;
@@ -45,7 +45,7 @@ private void Start()
 		Creature.HandleAttack(Attacker, receiver, HarmInfo);
 	}
 
-	public static GameObject CreateAttackRangeObject(string attackRangeDirName, Creature attacker, HarmInfo harmInfo, AttackTargetType targetType, float durationTime)
+	public static GameObject CreateAttackRangeObject(string attackRangeDirName, Creature attacker, HarmInfo harmInfo, TargetType targetType, float durationTime)
 	{
 		GameObject attackRangeObject = Instantiate(Resources.Load<GameObject>(attackRangeDirName));
 		attackRangeObject.GetComponent<AttackRange>().Attacker = attacker;

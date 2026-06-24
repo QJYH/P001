@@ -1,25 +1,17 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using CommonEnum;
 
 public class Hero : Creature
 {
+	private const float maxMoveSpeed = 6f;
+
+	public HeroStatus CurrentStatus { get; set; }
+	protected GameObject LightAttack { get; set; }
+	protected GameObject HeavyAttack { get; set; }
+
 	private Vector2 moveInput;
-	private readonly float maxMoveSpeed = 6f;
-
-	public enum HeroStatus
-	{
-		None,
-		Idle,
-		Run,
-		LightAttack,
-		HeavyAttack,
-		Heal
-
-	}
-	private HeroStatus currentStatus;
-	protected GameObject lightAttack;
-	protected GameObject heavyAttack;
 
 	protected override void Awake()
 	{
@@ -94,14 +86,14 @@ public class Hero : Creature
 		if (horizontalInput < 0)
 		{
 			GetComponent<SpriteRenderer>().flipX = true;
-			FlipAttackX(lightAttack, true);
-			FlipAttackX(heavyAttack, true);
+			FlipAttackX(LightAttack, true);
+			FlipAttackX(HeavyAttack, true);
 		}
 		else if (horizontalInput > 0)
 		{
 			GetComponent<SpriteRenderer>().flipX = false;
-			FlipAttackX(lightAttack, false);
-			FlipAttackX(heavyAttack, false);
+			FlipAttackX(LightAttack, false);
+			FlipAttackX(HeavyAttack, false);
 		}
 
 		Animator animator = GetComponent<Animator>();
@@ -125,84 +117,54 @@ public class Hero : Creature
 		attack.transform.localScale = new Vector3(scaleX, localScale.y, localScale.z);
 	}
 
-	private void SetStatus(HeroStatus heroStatus)
-	{
-		currentStatus = heroStatus;
-	}
-
-	public bool IsIdling()
-	{
-		return currentStatus == HeroStatus.Idle;
-	}
-
-	public bool isRunning()
-	{
-		return currentStatus == HeroStatus.Run;
-	}
-
-	public bool isLightAttacking()
-	{
-		return currentStatus == HeroStatus.LightAttack;
-	}
-
-	public bool isHeavyAttacking()
-	{
-		return currentStatus == HeroStatus.HeavyAttack;
-	}
-
-	public bool isHealing()
-	{
-		return currentStatus == HeroStatus.Heal;
-	}
-
 	public bool IsDoingAction()
 	{
-		return isLightAttacking() || isHeavyAttacking() || isHealing();
+		return (CurrentStatus == HeroStatus.LightAttack) || (CurrentStatus == HeroStatus.HeavyAttack) || (CurrentStatus == HeroStatus.Heal);
 	}
 
 	public void OnIdleAnimationBegin()
 	{
-		SetStatus(HeroStatus.Idle);
+		CurrentStatus = HeroStatus.Idle;
 	}
 	public void OnIdleAnimationEnd()
 	{
-		SetStatus(HeroStatus.None);
+		CurrentStatus = HeroStatus.None;
 	}
 	public void OnRunAnimationBegin()
 	{
-		SetStatus(HeroStatus.Run);
+		CurrentStatus = HeroStatus.Run;
 	}
 	public void OnRunAnimationEnd()
 	{
-		SetStatus(HeroStatus.None);
+		CurrentStatus = HeroStatus.None;
 	}
 	public void OnHealAnimationBegin()
 	{
-		SetStatus(HeroStatus.Heal);
+		CurrentStatus = HeroStatus.Heal;
 	}
 	public void OnHealAnimationEnd()
 	{
-		SetStatus(HeroStatus.None);
+		CurrentStatus = HeroStatus.None;
 	}
 	public void OnLightAttackAnimationBegin()
 	{
-		SetStatus(HeroStatus.LightAttack);
-		lightAttack.GetComponent<HeroLightAttack>().OnAttackBegin();
+		CurrentStatus = HeroStatus.LightAttack;
+		LightAttack.GetComponent<HeroLightAttack<Hero>>().OnAttackBegin();
 	}
 	public void OnLightAttackAnimationEnd()
 	{
-		SetStatus(HeroStatus.None);
-		lightAttack.GetComponent<HeroLightAttack>().OnAttackEnd();
+		CurrentStatus = HeroStatus.None;
+		LightAttack.GetComponent<HeroLightAttack<Hero>>().OnAttackEnd();
 	}
 	public void OnHeavyAttackAnimationBegin()
 	{
-		SetStatus(HeroStatus.HeavyAttack);
-		heavyAttack.GetComponent<HeroHeavyAttack>().OnAttackBegin();
+		CurrentStatus = HeroStatus.HeavyAttack;
+		HeavyAttack.GetComponent<HeroHeavyAttack<Hero>>().OnAttackBegin();
 	}
 	public void OnHeavyAttackAnimationEnd()
 	{
-		SetStatus(HeroStatus.None);
-		heavyAttack.GetComponent<HeroHeavyAttack>().OnAttackEnd();
+		CurrentStatus = HeroStatus.None;
+		HeavyAttack.GetComponent<HeroHeavyAttack<Hero>>().OnAttackEnd();
 	}
 	public void OnDieAnimationBegin()
 	{
@@ -215,11 +177,11 @@ public class Hero : Creature
 	}
 	private void HandleLightAttackInput(InputAction.CallbackContext context)
 	{
-		lightAttack.GetComponent<HeroLightAttack>().HandleLightAttackInput(context);
+		LightAttack.GetComponent<HeroLightAttack<Hero>>().HandleLightAttackInput(context);
 	}
 	private void HandleHeavyAttackInput(InputAction.CallbackContext context)
 	{
-		heavyAttack.GetComponent<HeroHeavyAttack>().HandleHeavyAttackInput(context);
+		HeavyAttack.GetComponent<HeroHeavyAttack<Hero>>().HandleHeavyAttackInput(context);
 	}
 
 	protected override void OnHpChange()
@@ -230,26 +192,26 @@ public class Hero : Creature
 	public void CreateMeleeAttackRange()
 	{
 		//called by animation event
-		if (isLightAttacking())
+		if (CurrentStatus == HeroStatus.LightAttack)
 		{
-			lightAttack.GetComponent<HeroLightAttack>().CreateMeleeAttackRange();
+			LightAttack.GetComponent<HeroLightAttack<Hero>>().CreateMeleeAttackRange();
 		}
-		else if (isHeavyAttacking())
+		else if (CurrentStatus == HeroStatus.HeavyAttack)
 		{
-			heavyAttack.GetComponent<HeroHeavyAttack>().CreateMeleeAttackRange();
+			HeavyAttack.GetComponent<HeroHeavyAttack<Hero>>().CreateMeleeAttackRange();
 		}
 	}
 
 	public void CreateRangedProjectile()
 	{
 		//called by animation event
-		if (isLightAttacking())
+		if (CurrentStatus == HeroStatus.LightAttack)
 		{
-			lightAttack.GetComponent<HeroLightAttack>().CreateRangedProjectile();
+			LightAttack.GetComponent<HeroLightAttack<Hero>>().CreateRangedProjectile();
 		}
-		else if (isHeavyAttacking())
+		else if ( CurrentStatus == HeroStatus.HeavyAttack)
 		{
-			heavyAttack.GetComponent<HeroHeavyAttack>().CreateRangedProjectile();
+			HeavyAttack.GetComponent<HeroHeavyAttack<Hero>>().CreateRangedProjectile();
 		}
 	}
 }

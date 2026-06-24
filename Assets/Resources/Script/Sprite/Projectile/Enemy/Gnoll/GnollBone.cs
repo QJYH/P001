@@ -17,7 +17,7 @@ public class GnollBone : Projectile
 	{
 		string attackRangeDirName = gnollBoneAttackRangeDirName;
 		Creature attacker = Owner;
-		AttackTargetType targetType = TargetType;
+		TargetType targetType = TargetType;
 		float attackRangeDurationTime = gnollBoneAttackRangeDurationTime;
 
 		GameObject attackRangeObject = AttackRange.CreateAttackRangeObject(attackRangeDirName, attacker, HarmInfo, targetType, attackRangeDurationTime);

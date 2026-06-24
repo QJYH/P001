@@ -3,29 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using CommonEnum;
 
-public class ThrowBone : EnemyAttack
+public class ThrowBone : EnemyAttack<Gnoll>
 {
-	private const float gnollBoneHarmValue = 1f;
-	private const float throwBoneCoolDownMaxTime = 2f;
 	private const string gnollBoneDirName = "Prefab/Sprite/Projectile/Enemy/Gnoll/GnollBone";
 
-	protected override void InitAttackHarmValue()
-	{
-		attackHarmValue = gnollBoneHarmValue;
-	}
+	protected override float AttackCoolDownMaxTime { get; } = 2f;
+	protected override float AttackHarmValue { get; } = 1f;
 
-	protected override void InitAttackCoolDownMaxTime()
-	{
-		attackCoolDownMaxTime = throwBoneCoolDownMaxTime;
-	}
 	public override void CreateRangedProjectile()
 	{
 		GameObject gnollBone = Instantiate(Resources.Load<GameObject>(gnollBoneDirName));
 		gnollBone.transform.position = transform.Find("ProjectilePosition").position;
-		gnollBone.GetComponent<GnollBone>().Owner = enemy;
-		gnollBone.GetComponent<GnollBone>().TargetType = AttackTargetType.Hero;
+		gnollBone.GetComponent<GnollBone>().Owner = Owner;
+		gnollBone.GetComponent<GnollBone>().TargetType = TargetType.Hero;
 		gnollBone.GetComponent<GnollBone>().HarmInfo = new HarmInfo(CurrentHarmInfo);
-		if (enemy.GetComponent<SpriteRenderer>().flipX == true)
+		if (Owner.GetComponent<SpriteRenderer>().flipX == true)
 		{
 			gnollBone.GetComponent<GnollBone>().Direction = new Vector2(-1, 0);
 		}

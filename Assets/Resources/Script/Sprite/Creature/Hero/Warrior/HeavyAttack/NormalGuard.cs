@@ -7,19 +7,19 @@ using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class NormalGuard : WarriorHeavyAttack
+public class NormalGuard : WarriorHeavyAttack<Warrior>
 {
 	public override void HandleHeavyAttackInput(InputAction.CallbackContext context)
 	{
-		if (warrior.IsDoingAction()) return;
+		if (Owner.IsDoingAction()) return;
 
 		if (context.phase == InputActionPhase.Started)
-		{		
-			warrior.GetComponent<Animator>().SetTrigger("HeavyAttack");
+		{
+			Owner.GetComponent<Animator>().SetTrigger("HeavyAttack");
 		}
 	}
 
-	public override void StrikeBack(WarriorLightAttack lightAttack)
+	public override void StrikeBack(WarriorLightAttack<Warrior> lightAttack)
 	{
 		lightAttack.DoFinisher(1);
 	}

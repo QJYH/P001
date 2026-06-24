@@ -9,7 +9,7 @@ public class VisionRange : Range
 		Hero hero = collision.GetComponent<Hero>();
 		if (hero != null)
 		{
-			GetComponentInParent<Enemy>().SetTarget(hero);
+			GetComponentInParent<Enemy>().SeeHero(hero);
 		}
 	}
 }

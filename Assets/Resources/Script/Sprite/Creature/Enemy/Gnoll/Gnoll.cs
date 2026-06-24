@@ -4,17 +4,12 @@ using UnityEngine;
 
 public class Gnoll : Enemy
 {
-	private readonly float gnollHp = 5f;
-	protected override void InitHp()
-	{
-		Hp = gnollHp;
-		MaxHp = gnollHp;
-	}
+	protected override float MaxHp { get; } = 5f;
 
 	protected override void InitAttackList()
 	{
 		GameObject spearAttack = transform.Find("ThrowBone").gameObject;
-		attackList.Add(spearAttack);
+		AttackList.Add(spearAttack);
 	}
 	protected override void AdjustHpBarPos(RectTransform rectTransform)
 	{

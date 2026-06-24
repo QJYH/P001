@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class SpearGoblin : Enemy
 {
-	private readonly float spearGoblinHp = 5f;
-	protected override void InitHp()
-	{
-		Hp = spearGoblinHp;
-		MaxHp = spearGoblinHp;
-	}
+	protected override float MaxHp { get; } = 5f;
 
 	protected override void InitAttackList()
 	{
 		GameObject spearAttack = transform.Find("SpearAttack").gameObject;
-		attackList.Add(spearAttack);
+		AttackList.Add(spearAttack);
 	}
 }

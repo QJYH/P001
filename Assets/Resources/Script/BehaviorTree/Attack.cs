@@ -1,3 +1,4 @@
+using CommonEnum;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +8,9 @@ namespace BehaviorTree
 	public class Attack : BehaviourNode
 	{
 		private Enemy enemy;
-		private EnemyAttack enemyAttack;
+		private EnemyAttack<Enemy> enemyAttack;
 
-		public Attack(Enemy enemy, EnemyAttack enemyAttack)
+		public Attack(Enemy enemy, EnemyAttack<Enemy> enemyAttack)
 		{
 			this.enemy = enemy;
 			this.enemyAttack = enemyAttack;
@@ -21,7 +22,7 @@ namespace BehaviorTree
 		}
 		protected override BehaviorStatus OnUpdate()
 		{
-			if (!enemy.IsAttacking()) return BehaviorStatus.Success;
+			if (!(enemy.CurrentStatus == EnemyStatus.Attack)) return BehaviorStatus.Success;
 
 			return BehaviorStatus.Running;
 		}

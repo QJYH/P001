@@ -7,9 +7,11 @@ using UnityEngine.UI;
 public class Creature : MonoBehaviour
 {
 	private const float hurtDuration = 0.4f;
-	protected float Hp { get; set; }
-	protected float MaxHp { get; set; }
+
+	protected virtual float MaxHp { get; }
 	protected GameObject CreatureCanvas { get; private set; }
+	protected float Hp { get; set; }
+	
 	private float hurtTimer = 0;
 
 	protected virtual void Awake()
@@ -49,9 +51,9 @@ public class Creature : MonoBehaviour
 
 	}
 
-	protected virtual void InitHp()
+	private void InitHp()
 	{
-		throw new NotImplementedException();
+		Hp = MaxHp;
 	}
 
 	public static void HandleAttack(Creature attacker, Creature receiver, HarmInfo harmInfo)

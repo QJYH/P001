@@ -5,26 +5,23 @@ using System.Threading;
 using System.Timers;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.EventSystems.EventTrigger;
 
-public class TripleSlash : WarriorLightAttack
+public class TripleSlash : WarriorLightAttack<Warrior>
 {
-	private readonly float tripleSlashNormalHarmValue = 1f;
-	private readonly float tripleSlashFinisherHarmValue = 2f;
-	private readonly float comboLimitTime = 1f;
+	private const float comboLimitTime = 1f;
+	protected override float NormalHarmValue { get; } = 1f;
+	protected override float FinisherHarmValue { get; } = 2f;
+	protected override string NormalAttackRangeObjectDirName { get; } = "Prefab/Sprite/Creature/Hero/Warrior/LightAttack/TripleSlash/NormalAttackRange";
+	protected override string FinisherAttackRangeObjectDirName { get; } = "Prefab/Sprite/Creature/Hero/Warrior/LightAttack/TripleSlash/FinisherAttackRange";
+	protected override float NormalAttackRangeDurationTime { get; } = 0.1f;
+	protected override float FinisherAttackRangeDurationTime { get; } = 0.1f;
+
 	private int slashCount = 0;
 	private float lastSlashTime = 0;
 
-	protected override void Awake()
-	{
-		base.Awake();
-		normalHarmValue = tripleSlashNormalHarmValue;
-		finisherHarmValue = tripleSlashFinisherHarmValue;
-	}
-
 	public override void HandleLightAttackInput(InputAction.CallbackContext context)
 	{
-		if (warrior.IsDoingAction()) return;
+		if (Owner.IsDoingAction()) return;
 
 		if (context.phase == InputActionPhase.Canceled)
 		{
@@ -54,25 +51,5 @@ public class TripleSlash : WarriorLightAttack
 		lastSlashTime = 0;
 		slashCount = 0;
 		base.DoFinisher(harmRate);
-	}
-
-	protected override string GetFinisherAttackRangeObjectDirName()
-	{
-		return "Prefab/Sprite/Creature/Hero/Warrior/LightAttack/TripleSlash/FinisherAttackRange";
-	}
-
-	protected override string GetNormalAttackRangeObjectDirName()
-	{
-		return "Prefab/Sprite/Creature/Hero/Warrior/LightAttack/TripleSlash/NormalAttackRange";
-	}
-
-	protected override float GetFinisherAttackRangeDurationTime()
-	{
-		return 0.1f;
-	}
-
-	protected override float GetNormalAttackRangeDurationTime()
-	{
-		return 0.1f;
 	}
 }

@@ -4,10 +4,29 @@ using UnityEngine;
 
 namespace CommonEnum
 {
-	public enum AttackTargetType
+	public enum TargetType
 	{
 		Hero,
 		Enemy
+	}
+
+	public enum HeroStatus
+	{
+		None,
+		Idle,
+		Run,
+		LightAttack,
+		HeavyAttack,
+		Heal
+	}
+
+	public enum EnemyStatus
+	{
+		None,
+		Patrol,
+		Rest,
+		Chase,
+		Attack,
 	}
 }
 

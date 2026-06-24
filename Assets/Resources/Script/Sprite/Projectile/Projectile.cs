@@ -14,7 +14,7 @@ public class Projectile : MonoBehaviour
 	
 	public Vector2 Direction { get; set; }
 	public GameObject Target { get; set; }
-	public AttackTargetType TargetType { get; set; }
+	public TargetType TargetType { get; set; }
 	public Creature Owner { get; set; }
 	public HarmInfo HarmInfo { get; set; }
 	protected float MaxSpeed { get; set; }
@@ -52,19 +52,19 @@ public class Projectile : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (LayerMask.LayerToName(collision.gameObject.layer) == "EnvironmentBlock")
+		if (LayerMask.LayerToName(collision.gameObject.layer) == "Environment")
 		{
 			StartCoroutine(DelayDestory(destoryDelayTime));
 			return;
 		}
 
 		Creature receiver = null;
-		if (TargetType == AttackTargetType.Hero)
+		if (TargetType == TargetType.Hero)
 		{
 			receiver = collision.GetComponent<Hero>();
 			if (receiver == null) return;
 		}
-		else if (TargetType == AttackTargetType.Enemy)
+		else if (TargetType == TargetType.Enemy)
 		{
 			receiver = collision.GetComponent<Enemy>();
 			if (receiver == null) return;

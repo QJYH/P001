@@ -3,26 +3,22 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CommonEnum;
 
 public class Enemy : Creature
 {
-	public enum EnemyStatus
-	{
-		None,
-		Patrol,
-		Rest,
-		Chase,
-		Attack,
-	}
-	private Hero target;
-	private GameObject enemyHpBar;
-	private EnemyStatus currentStatus;
-	protected List<GameObject> attackList = new List<GameObject>();
+	private const float maxMoveSpeed = 5f;
+
+	public EnemyStatus CurrentStatus { get; set; }
+	protected List<GameObject> AttackList { get; private set; } = new List<GameObject>();
+
 	private GameObject runningAttack;
-	private readonly float maxMoveSpeed = 5f;
+	private GameObject enemyHpBar;
+	private Hero target;
 	private LinkedList<Vector2> patrolPosList;
 	private LinkedListNode<Vector2> currentPatrolPos;
 	private Selector behaviorTree;
+	
 
 	protected override void Awake()
 	{
@@ -71,9 +67,9 @@ public class Enemy : Creature
 	{
 		behaviorTree = new Selector();
 
-		foreach (GameObject attackObject in attackList)
+		foreach (GameObject attackObject in AttackList)
 		{
-			EnemyAttack enemyAttack = attackObject.GetComponent<EnemyAttack>();
+			EnemyAttack<Enemy> enemyAttack = attackObject.GetComponent<EnemyAttack<Enemy>>();
 			Sequence attackSeq = new Sequence();
 			attackSeq.AddChild(new AttackCondition(this, enemyAttack));
 			attackSeq.AddChild(new Chase(this, enemyAttack));
@@ -112,15 +108,21 @@ public class Enemy : Creature
 
 		if (target.IsDead())
 		{
-			SetTarget(null);
+			target = null;
 		}
+	}
+	public void SeeHero(Hero hero)
+	{
+		if (hero.IsDead()) return;
+
+		target = hero;
 	}
 
 	private void Move()
 	{
 		bool isMoving;
 		Vector2 targetPos;
-		if (IsPatroling())
+		if (CurrentStatus == EnemyStatus.Patrol)
 		{
 			isMoving = true;
 			float distance = Vector2.Distance(transform.position, currentPatrolPos.Value);
@@ -134,7 +136,7 @@ public class Enemy : Creature
 			}
 			targetPos = currentPatrolPos.Value;
 		}
-		else if (IsChasing())
+		else if (CurrentStatus == EnemyStatus.Chase)
 		{
 			isMoving = true;
 			Vector2 heroPos = target.transform.position;
@@ -174,11 +176,12 @@ public class Enemy : Creature
 	{
 		GetComponent<SpriteRenderer>().flipX = isFacingLeft;
 		FlipChildX("VisionRange", isFacingLeft);
-		foreach (GameObject attackObject in attackList)
+		foreach (GameObject attackObject in AttackList)
 		{
 			FlipChildX(attackObject.name, isFacingLeft);
 		}
 	}
+
 	private void FlipChildX(String childName, bool needFlipX)
 	{
 		Transform childTrans = transform.Find(childName);
@@ -188,26 +191,6 @@ public class Enemy : Creature
 		childTrans.localScale = new Vector3(scaleX, localScale.y, localScale.z);
 	}
 
-	public void SetStatus(EnemyStatus enemyStatus)
-	{
-		currentStatus = enemyStatus;
-	}
-	public bool IsPatroling()
-	{
-		return currentStatus == EnemyStatus.Patrol;
-	}
-	public bool IsResting()
-	{
-		return currentStatus == EnemyStatus.Rest;
-	}
-	public bool IsChasing()
-	{
-		return currentStatus == EnemyStatus.Chase;
-	}
-	public bool IsAttacking()
-	{
-		return currentStatus == EnemyStatus.Attack;
-	}
 	public void OnIdleAnimationBegin()
 	{
 
@@ -226,12 +209,12 @@ public class Enemy : Creature
 	}
 	public void OnAttackAnimationBegin()
 	{
-		runningAttack.GetComponent<EnemyAttack>().OnAttackBegin();
+		runningAttack.GetComponent<EnemyAttack<Enemy>>().OnAttackBegin();
 	}
 	public void OnAttackAnimationEnd()
 	{
-		SetStatus(EnemyStatus.None);
-		runningAttack.GetComponent<EnemyAttack>().OnAttackEnd();
+		CurrentStatus = EnemyStatus.None;
+		runningAttack.GetComponent<EnemyAttack<Enemy>>().OnAttackEnd();
 		runningAttack = null;
 	}
 	public void OnDieAnimationBegin()
@@ -243,21 +226,10 @@ public class Enemy : Creature
 	{
 		
 	}
-	public void SetTarget(Hero hero)
-	{
-		if ((hero) && (!hero.IsDead()))
-		{
-			target = hero;
-		}
-		else
-		{
-			target = null;
-		}
-	}
 
 	public bool HaveTarget()
 	{
-		return target != null;
+		return (target != null);
 	}
 
 	protected override void OnHpChange()
@@ -267,7 +239,7 @@ public class Enemy : Creature
 
 	public void Attack()
 	{
-		SetStatus(EnemyStatus.Attack);
+		CurrentStatus = EnemyStatus.Attack;
 		bool isTargetInLeft = (target.transform.position.x - transform.position.x) < 0;
 		SetForward(isTargetInLeft);
 		Animator animator = GetComponent<Animator>();
@@ -277,12 +249,12 @@ public class Enemy : Creature
 	public void CreateMeleeAttackRange()
 	{
 		//called by animation event
-		runningAttack.GetComponent<EnemyAttack>().CreateMeleeAttackRange();
+		runningAttack.GetComponent<EnemyAttack<Enemy>>().CreateMeleeAttackRange();
 	}
 
 	public void CreateRangedProjectile()
 	{
 		//called by animation event
-		runningAttack.GetComponent<EnemyAttack>().CreateRangedProjectile();
+		runningAttack.GetComponent<EnemyAttack<Enemy>>().CreateRangedProjectile();
 	}
 }

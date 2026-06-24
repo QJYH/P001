@@ -11,13 +11,13 @@ TagManager:
   - 
   - Water
   - UI
-  - Hero
-  - Enemy
-  - EnvironmentBlock
+  - Creature
+  - Environment
   - Projectile
-  - Range
-  - CameraEdge
   - MapEdge
+  - Range
+  - 
+  - 
   - 
   - 
   - 
@@ -49,12 +49,6 @@ TagManager:
     locked: 0
   - name: Ground
     uniqueID: 3769866463
-    locked: 0
-  - name: Hill
-    uniqueID: 160222587
-    locked: 0
-  - name: Mountain
-    uniqueID: 1067777719
     locked: 0
   - name: Road
     uniqueID: 3191239385

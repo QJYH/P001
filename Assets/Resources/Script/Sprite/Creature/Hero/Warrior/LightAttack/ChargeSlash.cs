@@ -6,24 +6,23 @@ using System.Timers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ChargeSlash : WarriorLightAttack
+public class ChargeSlash : WarriorLightAttack<Warrior>
 {
-	private readonly float chargeSlashNormalHarmValue = 1f;
-	private readonly float chargeSlashFinisherHarmValue = 2f;
-	private readonly float chargeNeedTime = 1f;
+	private const float chargeNeedTime = 1f;
+
+	protected override float NormalHarmValue { get; } = 1f;
+	protected override float FinisherHarmValue { get; } = 2f;
+	protected override string NormalAttackRangeObjectDirName { get; } = "Prefab/Sprite/Creature/Hero/Warrior/LightAttack/ChargeSlash/NormalAttackRange";
+	protected override string FinisherAttackRangeObjectDirName { get; } = "Prefab/Sprite/Creature/Hero/Warrior/LightAttack/ChargeSlash/FinisherAttackRange";
+	protected override float NormalAttackRangeDurationTime { get; } = 0.1f;
+	protected override float FinisherAttackRangeDurationTime { get; } = 0.1f;
+
 	private float chargeBeginTime = 0;
 	private bool isCharging = false;
 
-	protected override void Awake()
-	{
-		base.Awake();
-		normalHarmValue = chargeSlashNormalHarmValue;
-		finisherHarmValue = chargeSlashFinisherHarmValue;
-	}
-
 	public override void HandleLightAttackInput(InputAction.CallbackContext context)
 	{
-		if (warrior.IsDoingAction()) return;
+		if (Owner.IsDoingAction()) return;
 
 		if (context.phase == InputActionPhase.Started)
 		{
@@ -56,25 +55,5 @@ public class ChargeSlash : WarriorLightAttack
 		chargeBeginTime = 0;
 		isCharging = false;
 		base.DoFinisher(harmRate);
-	}
-
-	protected override string GetFinisherAttackRangeObjectDirName()
-	{
-		return "Prefab/Sprite/Creature/Hero/Warrior/LightAttack/ChargeSlash/FinisherAttackRange";
-	}
-
-	protected override string GetNormalAttackRangeObjectDirName()
-	{
-		return "Prefab/Sprite/Creature/Hero/Warrior/LightAttack/ChargeSlash/NormalAttackRange";
-	}
-
-	protected override float GetFinisherAttackRangeDurationTime()
-	{
-		return 0.1f;
-	}
-
-	protected override float GetNormalAttackRangeDurationTime()
-	{
-		return 0.1f;
 	}
 }
