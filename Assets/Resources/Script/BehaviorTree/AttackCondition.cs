@@ -8,9 +8,9 @@ namespace BehaviorTree
 	public class AttackCondition : BehaviourNode
 	{
 		private Enemy enemy;
-		private EnemyAttack<Enemy> enemyAttack;
+		private EnemyAttack enemyAttack;
 		
-		public AttackCondition(Enemy enemy, EnemyAttack<Enemy> enemyAttack)
+		public AttackCondition(Enemy enemy, EnemyAttack enemyAttack)
 		{
 			this.enemy = enemy;
 			this.enemyAttack = enemyAttack;

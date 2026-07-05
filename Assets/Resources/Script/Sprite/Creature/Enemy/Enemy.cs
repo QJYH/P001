@@ -55,6 +55,7 @@ public class Enemy : Creature
 		RectTransform rectTransform = enemyHpBar.GetComponent<RectTransform>();
 		rectTransform.SetParent(CreatureCanvas.GetComponent<RectTransform>());
 		AdjustHpBarPos(rectTransform);
+		enemyHpBar.GetComponent<Slider>().maxValue = 1;
 		enemyHpBar.GetComponent<Slider>().value = Hp / MaxHp;
 	}
 
@@ -69,7 +70,7 @@ public class Enemy : Creature
 
 		foreach (GameObject attackObject in AttackList)
 		{
-			EnemyAttack<Enemy> enemyAttack = attackObject.GetComponent<EnemyAttack<Enemy>>();
+			EnemyAttack enemyAttack = attackObject.GetComponent<EnemyAttack>();
 			Sequence attackSeq = new Sequence();
 			attackSeq.AddChild(new AttackCondition(this, enemyAttack));
 			attackSeq.AddChild(new Chase(this, enemyAttack));
@@ -209,12 +210,12 @@ public class Enemy : Creature
 	}
 	public void OnAttackAnimationBegin()
 	{
-		runningAttack.GetComponent<EnemyAttack<Enemy>>().OnAttackBegin();
+		runningAttack.GetComponent<EnemyAttack>().OnAttackBegin();
 	}
 	public void OnAttackAnimationEnd()
 	{
 		CurrentStatus = EnemyStatus.None;
-		runningAttack.GetComponent<EnemyAttack<Enemy>>().OnAttackEnd();
+		runningAttack.GetComponent<EnemyAttack>().OnAttackEnd();
 		runningAttack = null;
 	}
 	public void OnDieAnimationBegin()
@@ -234,7 +235,7 @@ public class Enemy : Creature
 
 	protected override void OnHpChange()
 	{
-		enemyHpBar.GetComponent<Slider>().value = Hp;
+		enemyHpBar.GetComponent<Slider>().value = Hp / MaxHp;
 	}
 
 	public void Attack()
@@ -249,12 +250,12 @@ public class Enemy : Creature
 	public void CreateMeleeAttackRange()
 	{
 		//called by animation event
-		runningAttack.GetComponent<EnemyAttack<Enemy>>().CreateMeleeAttackRange();
+		runningAttack.GetComponent<EnemyAttack>().CreateMeleeAttackRange();
 	}
 
 	public void CreateRangedProjectile()
 	{
 		//called by animation event
-		runningAttack.GetComponent<EnemyAttack<Enemy>>().CreateRangedProjectile();
+		runningAttack.GetComponent<EnemyAttack>().CreateRangedProjectile();
 	}
 }

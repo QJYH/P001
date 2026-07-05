@@ -23,7 +23,7 @@ public class Warrior : Hero
 	{
 		if (IsStrikeBackEnable())
 		{
-			HeavyAttack.GetComponent<WarriorHeavyAttack<Warrior>>().StrikeBack(LightAttack.GetComponent<WarriorLightAttack<Warrior>>());
+			HeavyAttack.GetComponent<WarriorHeavyAttack>().StrikeBack(LightAttack.GetComponent<WarriorLightAttack>());
 		}
 		else if (IsDefendAllEnable())
 		{

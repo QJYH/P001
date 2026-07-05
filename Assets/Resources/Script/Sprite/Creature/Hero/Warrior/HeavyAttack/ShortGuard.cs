@@ -7,11 +7,11 @@ using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ShortGuard : WarriorHeavyAttack<Warrior>
+public class ShortGuard : WarriorHeavyAttack
 {
 	public override void HandleHeavyAttackInput(InputAction.CallbackContext context)
 	{
-		if (Owner.IsDoingAction()) return;
+		if (((Hero)Owner).IsDoingAction()) return;
 
 		if (context.phase == InputActionPhase.Started)
 		{		
@@ -19,7 +19,7 @@ public class ShortGuard : WarriorHeavyAttack<Warrior>
 		}
 	}
 
-	public override void StrikeBack(WarriorLightAttack<Warrior> lightAttack)
+	public override void StrikeBack(WarriorLightAttack lightAttack)
 	{
 		lightAttack.DoFinisher(2);
 	}

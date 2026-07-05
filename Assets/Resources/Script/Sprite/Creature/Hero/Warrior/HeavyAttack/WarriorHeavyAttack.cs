@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WarriorHeavyAttack<OwnerType> : HeroHeavyAttack<OwnerType> where OwnerType : Warrior
+public class WarriorHeavyAttack : HeroHeavyAttack
 {
 	public override void OnAttackBegin()
 	{
-		Owner.SetDefendHalfEnable(1);
+		((Warrior)Owner).SetDefendHalfEnable(1);
 	}
 
 	public override void OnAttackEnd()
 	{
-		Owner.SetDefendHalfEnable(0);
-		Owner.SetStrikeBackEnable(0);
+		((Warrior)Owner).SetDefendHalfEnable(0);
+		((Warrior)Owner).SetStrikeBackEnable(0);
 	}
 
-	public virtual void StrikeBack(WarriorLightAttack<Warrior> lightAttack)
+	public virtual void StrikeBack(WarriorLightAttack lightAttack)
 	{
 		throw new NotImplementedException();
 	}

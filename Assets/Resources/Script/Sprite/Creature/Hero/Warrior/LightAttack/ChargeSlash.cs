@@ -6,7 +6,7 @@ using System.Timers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ChargeSlash : WarriorLightAttack<Warrior>
+public class ChargeSlash : WarriorLightAttack
 {
 	private const float chargeNeedTime = 1f;
 
@@ -22,7 +22,7 @@ public class ChargeSlash : WarriorLightAttack<Warrior>
 
 	public override void HandleLightAttackInput(InputAction.CallbackContext context)
 	{
-		if (Owner.IsDoingAction()) return;
+		if (((Hero)Owner).IsDoingAction()) return;
 
 		if (context.phase == InputActionPhase.Started)
 		{

@@ -6,7 +6,7 @@ using System.Timers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TripleSlash : WarriorLightAttack<Warrior>
+public class TripleSlash : WarriorLightAttack
 {
 	private const float comboLimitTime = 1f;
 	protected override float NormalHarmValue { get; } = 1f;
@@ -21,7 +21,7 @@ public class TripleSlash : WarriorLightAttack<Warrior>
 
 	public override void HandleLightAttackInput(InputAction.CallbackContext context)
 	{
-		if (Owner.IsDoingAction()) return;
+		if (((Hero)Owner).IsDoingAction()) return;
 
 		if (context.phase == InputActionPhase.Canceled)
 		{

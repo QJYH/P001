@@ -8,9 +8,9 @@ namespace BehaviorTree
 	public class Chase : BehaviourNode
 	{
 		private Enemy enemy;
-		private EnemyAttack<Enemy> enemyAttack;
+		private EnemyAttack enemyAttack;
 
-		public Chase(Enemy enemy, EnemyAttack<Enemy> enemyAttack)
+		public Chase(Enemy enemy, EnemyAttack enemyAttack)
 		{
 			this.enemy = enemy;
 			this.enemyAttack = enemyAttack;

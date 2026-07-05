@@ -149,22 +149,22 @@ public class Hero : Creature
 	public void OnLightAttackAnimationBegin()
 	{
 		CurrentStatus = HeroStatus.LightAttack;
-		LightAttack.GetComponent<HeroLightAttack<Hero>>().OnAttackBegin();
+		LightAttack.GetComponent<HeroLightAttack>().OnAttackBegin();
 	}
 	public void OnLightAttackAnimationEnd()
 	{
 		CurrentStatus = HeroStatus.None;
-		LightAttack.GetComponent<HeroLightAttack<Hero>>().OnAttackEnd();
+		LightAttack.GetComponent<HeroLightAttack>().OnAttackEnd();
 	}
 	public void OnHeavyAttackAnimationBegin()
 	{
 		CurrentStatus = HeroStatus.HeavyAttack;
-		HeavyAttack.GetComponent<HeroHeavyAttack<Hero>>().OnAttackBegin();
+		HeavyAttack.GetComponent<HeroHeavyAttack>().OnAttackBegin();
 	}
 	public void OnHeavyAttackAnimationEnd()
 	{
 		CurrentStatus = HeroStatus.None;
-		HeavyAttack.GetComponent<HeroHeavyAttack<Hero>>().OnAttackEnd();
+		HeavyAttack.GetComponent<HeroHeavyAttack>().OnAttackEnd();
 	}
 	public void OnDieAnimationBegin()
 	{
@@ -177,11 +177,11 @@ public class Hero : Creature
 	}
 	private void HandleLightAttackInput(InputAction.CallbackContext context)
 	{
-		LightAttack.GetComponent<HeroLightAttack<Hero>>().HandleLightAttackInput(context);
+		LightAttack.GetComponent<HeroLightAttack>().HandleLightAttackInput(context);
 	}
 	private void HandleHeavyAttackInput(InputAction.CallbackContext context)
 	{
-		HeavyAttack.GetComponent<HeroHeavyAttack<Hero>>().HandleHeavyAttackInput(context);
+		HeavyAttack.GetComponent<HeroHeavyAttack>().HandleHeavyAttackInput(context);
 	}
 
 	protected override void OnHpChange()
@@ -194,11 +194,11 @@ public class Hero : Creature
 		//called by animation event
 		if (CurrentStatus == HeroStatus.LightAttack)
 		{
-			LightAttack.GetComponent<HeroLightAttack<Hero>>().CreateMeleeAttackRange();
+			LightAttack.GetComponent<HeroLightAttack>().CreateMeleeAttackRange();
 		}
 		else if (CurrentStatus == HeroStatus.HeavyAttack)
 		{
-			HeavyAttack.GetComponent<HeroHeavyAttack<Hero>>().CreateMeleeAttackRange();
+			HeavyAttack.GetComponent<HeroHeavyAttack>().CreateMeleeAttackRange();
 		}
 	}
 
@@ -207,11 +207,11 @@ public class Hero : Creature
 		//called by animation event
 		if (CurrentStatus == HeroStatus.LightAttack)
 		{
-			LightAttack.GetComponent<HeroLightAttack<Hero>>().CreateRangedProjectile();
+			LightAttack.GetComponent<HeroLightAttack>().CreateRangedProjectile();
 		}
 		else if ( CurrentStatus == HeroStatus.HeavyAttack)
 		{
-			HeavyAttack.GetComponent<HeroHeavyAttack<Hero>>().CreateRangedProjectile();
+			HeavyAttack.GetComponent<HeroHeavyAttack>().CreateRangedProjectile();
 		}
 	}
 }

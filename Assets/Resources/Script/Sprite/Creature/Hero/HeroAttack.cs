@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class HeroAttack<OwnerType> : CreatureAttack<OwnerType> where OwnerType : Hero
+public class HeroAttack : CreatureAttack
 {
 	
 }

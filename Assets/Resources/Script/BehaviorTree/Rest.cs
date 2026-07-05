@@ -9,9 +9,9 @@ namespace BehaviorTree
 	public class Rest : BehaviourNode
 	{
 		private Enemy enemy;
-		private EnemyAttack<Enemy> enemyAttack;
+		private EnemyAttack enemyAttack;
 
-		public Rest(Enemy enemy, EnemyAttack<Enemy> enemyAttack)
+		public Rest(Enemy enemy, EnemyAttack enemyAttack)
 		{
 			this.enemy = enemy;
 			this.enemyAttack = enemyAttack;

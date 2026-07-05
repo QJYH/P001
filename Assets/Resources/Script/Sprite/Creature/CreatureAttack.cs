@@ -1,14 +1,14 @@
 using System;
 using UnityEngine;
 
-public class CreatureAttack<OwnerType> : MonoBehaviour where OwnerType : Creature
+public class CreatureAttack : MonoBehaviour
 {
 	public HarmInfo CurrentHarmInfo { get; private set; } = new HarmInfo();
-	protected OwnerType Owner { get; private set; }
+	protected Creature Owner { get; private set; }
 
 	protected virtual void Awake()
 	{
-		Owner = GetComponentInParent<OwnerType>();
+		Owner = GetComponentInParent<Creature>();
 	}
 
 	public virtual void OnAttackBegin()

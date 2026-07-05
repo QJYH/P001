@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CommonEnum;
 
-public class ThrowBone : EnemyAttack<Gnoll>
+public class ThrowBone : EnemyAttack
 {
 	private const string gnollBoneDirName = "Prefab/Sprite/Projectile/Enemy/Gnoll/GnollBone";
 

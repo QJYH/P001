@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class EnemyAttack<OwnerType> : CreatureAttack<OwnerType> where OwnerType : Enemy
+public class EnemyAttack : CreatureAttack
 {
 	protected virtual float AttackCoolDownMaxTime { get; } = 0;
 	protected virtual float AttackHarmValue { get; } = 0;
@@ -46,7 +46,7 @@ public class EnemyAttack<OwnerType> : CreatureAttack<OwnerType> where OwnerType 
 	}
 	public bool CanLaunchAttack()
 	{
-		return Owner.HaveTarget() && IsTargetInDectectRange();
+		return ((Enemy)Owner).HaveTarget() && IsTargetInDectectRange();
 	}
 
 	public void Attack()
@@ -54,6 +54,6 @@ public class EnemyAttack<OwnerType> : CreatureAttack<OwnerType> where OwnerType 
 		CurrentHarmInfo.Rsset();
 		CurrentHarmInfo.BaseHarm = AttackHarmValue;
 		attackCoolDownTime = AttackCoolDownMaxTime;
-		Owner.Attack();
+		((Enemy)Owner).Attack();
 	}
 }

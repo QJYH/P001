@@ -2,7 +2,7 @@ using CommonEnum;
 using System;
 using UnityEngine;
 
-public class WarriorLightAttack<OwnerType> : HeroLightAttack<OwnerType> where OwnerType : Warrior
+public class WarriorLightAttack : HeroLightAttack
 {
 	protected virtual float NormalHarmValue { get; } = 0;
 	protected virtual float FinisherHarmValue { get; } = 0;
@@ -49,14 +49,14 @@ public class WarriorLightAttack<OwnerType> : HeroLightAttack<OwnerType> where Ow
 	{
 		if (currentPhase == WarriorLightAttackPhase.Finisher)
 		{
-			Owner.SetDefendAllEnable(1);
+			((Warrior)Owner).SetDefendAllEnable(1);
 		}
 	}
 
 	public override void OnAttackEnd()
 	{
 		currentPhase = WarriorLightAttackPhase.None;
-		Owner.SetDefendAllEnable(0);
+		((Warrior)Owner).SetDefendAllEnable(0);
 	}
 
 	public override void CreateMeleeAttackRange()
@@ -83,6 +83,6 @@ public class WarriorLightAttack<OwnerType> : HeroLightAttack<OwnerType> where Ow
 			throw new Exception("Error Light Attack Phase!");
 		}
 		GameObject attackRangeObject = AttackRange.CreateAttackRangeObject(attackRangeDirName, attacker, harmInfo, targetType, attackRangeDurationTime);
-		attackRangeObject.transform.SetParent(transform);
+		attackRangeObject.transform.SetParent(transform, false);
 	}
 }
