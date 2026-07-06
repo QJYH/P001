@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3558586128786703165, guid: 4edcbe2985f701541825c44f8166c630, type: 3}
       propertyPath: m_Name
-      value: GnollBoneAttackRange Variant
+      value: GnollBoneAttackRange
       objectReference: {fileID: 0}
     - target: {fileID: 8543300313086686039, guid: 4edcbe2985f701541825c44f8166c630, type: 3}
       propertyPath: m_LocalPosition.x
@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8637026117164280723, guid: 4edcbe2985f701541825c44f8166c630, type: 3}
       propertyPath: m_Offset.y
-      value: 0.45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8637026117164280723, guid: 4edcbe2985f701541825c44f8166c630, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].x

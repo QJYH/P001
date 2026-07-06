@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: aa1112b337436413a9e3f0f07d8475c2, type: 2}
+    - target: {fileID: 1649069889898548366, guid: 234db54b9406e9c4b8eb4b8e556f2b15, type: 3}
+      propertyPath: verticalOffset
+      value: -35
+      objectReference: {fileID: 0}
     - target: {fileID: 4415335338637766296, guid: 234db54b9406e9c4b8eb4b8e556f2b15, type: 3}
       propertyPath: m_Size.x
       value: 1
@@ -62,10 +66,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4415335338637766296, guid: 234db54b9406e9c4b8eb4b8e556f2b15, type: 3}
       propertyPath: m_Offset.y
-      value: 1.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4415335338637766296, guid: 234db54b9406e9c4b8eb4b8e556f2b15, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4415335338637766296, guid: 234db54b9406e9c4b8eb4b8e556f2b15, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4415335338637766296, guid: 234db54b9406e9c4b8eb4b8e556f2b15, type: 3}
@@ -106,7 +114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7502801700610956358, guid: 234db54b9406e9c4b8eb4b8e556f2b15, type: 3}
       propertyPath: m_Name
-      value: Warrior Variant
+      value: Warrior
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
