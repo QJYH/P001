@@ -11,4 +11,9 @@ public class SpearGoblin : Enemy
 		GameObject spearAttack = transform.Find("SpearAttack").gameObject;
 		AttackList.Add(spearAttack);
 	}
+
+	protected override void AdjustHpBarPos(RectTransform rectTransform)
+	{
+		rectTransform.anchoredPosition = new Vector2(0, -1f);
+	}
 }

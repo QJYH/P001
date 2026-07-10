@@ -96,6 +96,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaterRock
       objectReference: {fileID: 0}
+    - target: {fileID: 5794257866375921194, guid: 480f3285ba9c85c4396a3eeb3a5c2f65, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

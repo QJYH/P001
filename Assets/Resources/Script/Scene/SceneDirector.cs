@@ -11,9 +11,9 @@ public class SceneDirector : MonoBehaviour
 {
 	public static SceneDirector SceneInstance { get; private set; }
 	public GameObject MainCanvas { get; private set; }
-	protected GameObject MainEventSystem { get; private set; }
-	protected GameObject MainCamera { get; private set; }
-	protected GameObject VirtualCamera { get; private set; }
+	public GameObject MainEventSystem { get; private set; }
+	public GameObject MainCamera { get; private set; }
+	public GameObject VirtualCamera { get; private set; }
 
 	protected virtual void Awake()
 	{

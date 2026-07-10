@@ -37,7 +37,7 @@ public class Creature : MonoBehaviour
 		rectTransform.SetParent(transform);
 		rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 16);
 		rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 9);
-		rectTransform.anchoredPosition = new Vector3(0, 1, 0);
+		rectTransform.anchoredPosition = new Vector3(0, 0, 0);
 	}
 
 	private void UpdateHurtTimer()

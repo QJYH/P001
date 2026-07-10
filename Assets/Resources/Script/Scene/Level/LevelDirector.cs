@@ -20,11 +20,6 @@ public class LevelDirector : SceneDirector
 		CreateHUD();
 	}
 
-	protected override void Start()
-	{
-		base.Start();
-	}
-
 	private void AddHero()
 	{
 		GameObject entrance = GameObject.Find("Entrance1");
