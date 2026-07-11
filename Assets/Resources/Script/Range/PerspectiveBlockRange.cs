@@ -5,7 +5,8 @@ using UnityEngine;
 public class PerspectiveBlockRange : Range
 {
 	private Camera mainCamera;
-	private List<PerspectiveBlock> perspectiveBlockList = new List<PerspectiveBlock>();
+	private Dictionary<int, PerspectiveBlock> perspectiveBlockTable = new Dictionary<int, PerspectiveBlock>();
+
 	private void Awake()
 	{
 		mainCamera = SceneDirector.SceneInstance.MainCamera.GetComponent<Camera>();
@@ -15,9 +16,12 @@ public class PerspectiveBlockRange : Range
 	{
 		Vector3 heroScreenPos = mainCamera.WorldToScreenPoint(transform.position);
 
-		foreach (var perspectiveBlock in perspectiveBlockList)
+		foreach (var keyValuePair in perspectiveBlockTable)
 		{
-			perspectiveBlock.SetHeroScreenPos(heroScreenPos);
+			if (keyValuePair.Value != null)
+			{
+				keyValuePair.Value.SetHeroScreenPos(heroScreenPos);
+			}
 		}
 	}
 	private void OnTriggerStay2D(Collider2D collision)
@@ -25,18 +29,8 @@ public class PerspectiveBlockRange : Range
 		PerspectiveBlock perspectiveBlock = collision.GetComponent<PerspectiveBlock>();
 		if (perspectiveBlock == null) return;
 
-		bool needAdd = true;
-		foreach (var item in perspectiveBlockList)
-		{
-			if (item.GetInstanceID() == perspectiveBlock.GetInstanceID())
-			{
-				needAdd = false;
-			}
-		}
-		if (needAdd)
-		{
-			perspectiveBlockList.Add(perspectiveBlock);
-		}
+		if (perspectiveBlockTable.ContainsKey(perspectiveBlock.GetInstanceID())) return;
+		perspectiveBlockTable.Add(perspectiveBlock.GetInstanceID(), perspectiveBlock);
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)
@@ -45,13 +39,6 @@ public class PerspectiveBlockRange : Range
 		if (perspectiveBlock == null) return;
 
 		perspectiveBlock.SetHeroScreenPos(new Vector2(-Screen.width, -Screen.height));
-		foreach (var item in perspectiveBlockList)
-		{
-			if(item.GetInstanceID() == perspectiveBlock.GetInstanceID())
-			{
-				perspectiveBlockList.Remove(item);
-				return;
-			}
-		}
+		perspectiveBlockTable.Remove(perspectiveBlock.GetInstanceID());
 	}
 }

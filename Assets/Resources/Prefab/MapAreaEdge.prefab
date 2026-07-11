@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5673113232618502490}
   - component: {fileID: 605781016669899075}
-  m_Layer: 9
-  m_Name: MapAreaRange
+  m_Layer: 10
+  m_Name: MapAreaEdge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
