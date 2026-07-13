@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PanelMapHUD : MonoBehaviour
+public class PanelMapHUD : Panel
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public static PanelMapHUD Instance { get; private set; }
+	private void Awake()
+	{
+		Instance = this;
+	}
+	private void OnDestroy()
+	{
+		Instance = null;
+	}
 }

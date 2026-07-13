@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class PerspectiveBlock : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+	private SpriteRenderer spriteRenderer;
+	private void Awake()
+	{
+		spriteRenderer = GetComponentInParent<SpriteRenderer>();
+	}
+	// Start is called before the first frame update
+	void Start()
     {
-		GetComponentInParent<SpriteRenderer>().material = Resources.Load<Material>("Material/PerspectiveBlock");
-		GetComponentInParent<SpriteRenderer>().material.SetFloat("_ScreenWidth", Screen.width);
-		GetComponentInParent<SpriteRenderer>().material.SetFloat("_ScreenHeight", Screen.height);
+		spriteRenderer.material = Resources.Load<Material>("Material/PerspectiveBlock");
+		spriteRenderer.material.SetFloat("_ScreenWidth", Screen.width);
+		spriteRenderer.material.SetFloat("_ScreenHeight", Screen.height);
 		SetHeroScreenPos(new Vector2(-Screen.width, -Screen.height));
 	}
 
@@ -21,6 +26,8 @@ public class PerspectiveBlock : MonoBehaviour
 
 	public void SetHeroScreenPos(Vector2 screenPos)
 	{
-		GetComponentInParent<SpriteRenderer>().material.SetVector("_HeroScreenPos", screenPos);
+		if (spriteRenderer == null) return;
+
+		spriteRenderer.material.SetVector("_HeroScreenPos", screenPos);
 	}
 }

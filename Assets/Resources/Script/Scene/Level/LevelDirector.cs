@@ -55,13 +55,6 @@ public class LevelDirector : SceneDirector
 		levelHUD = UICommonFunc.CreatePanel("PanelLevelHUD", null);
 	}
 
-	public static void OnHeroHpChange(float hpRate)
-	{
-		if (LevelInstance == null) return;
-
-		LevelInstance.levelHUD.GetComponent<PanelLevelHUD>().OnHeroHpChange(hpRate);
-	}
-
 	public static void OnHeroDie()
 	{
 		if (LevelInstance == null) return;

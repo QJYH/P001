@@ -13,11 +13,11 @@ TagManager:
   - UI
   - Creature
   - Block
+  - Particle
+  - Pickup
   - Projectile
   - Range
   - Edge
-  - 
-  - 
   - 
   - 
   - 

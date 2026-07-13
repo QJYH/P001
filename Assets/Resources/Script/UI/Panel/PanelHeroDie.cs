@@ -6,13 +6,23 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PanelHeroDie : MonoBehaviour
+public class PanelHeroDie : Panel
 {
-	private Texture2D screenshot;
-	private readonly int maxBlurTimes = 8;
-	private readonly float blurDurationPerTimes = 0.2f;
-
+	public static PanelHeroDie Instance { get; private set; }
 	private void Awake()
+	{
+		Instance = this;
+	}
+	private void OnDestroy()
+	{
+		Instance = null;
+	}
+
+	private Texture2D screenshot;
+	private const int maxBlurTimes = 8;
+	private const float blurDurationPerTimes = 0.2f;
+
+	private void Start()
 	{
 		StartCoroutine(CaptureScreen());
 	}

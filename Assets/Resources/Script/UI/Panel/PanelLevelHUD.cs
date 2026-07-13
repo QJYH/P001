@@ -4,11 +4,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PanelLevelHUD : MonoBehaviour
+public class PanelLevelHUD : Panel
 {
-	internal void OnHeroHpChange(float hpRate)
+	public static PanelLevelHUD Instance { get; private set; }
+	private void Awake()
 	{
-		Transform sliderHp = transform.Find("TopLeft/ImageAvatar/SliderHp");
+		Instance = this;
+	}
+	private void OnDestroy()
+	{
+		Instance = null;
+	}
+
+	public static void OnHeroHpChange(float hpRate)
+	{
+		if (Instance == null) return;
+
+		Transform sliderHp = Instance.transform.Find("TopLeft/ImageAvatar/SliderHp");
 		sliderHp.GetComponent<Slider>().value = hpRate;
+	}
+
+	public static Vector2 GetGoldIconScreenPos()
+	{
+		if (Instance == null) return Vector2.zero;
+
+		Transform imageGold = Instance.transform.Find("TopLeft/ImageAvatar/ImageGold");
+		return imageGold.position;
+	}
+
+	public static void OnPickUpGold()
+	{
+		if (Instance == null) return;
+
+		//todo
 	}
 }

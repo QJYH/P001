@@ -186,7 +186,7 @@ public class Hero : Creature
 
 	protected override void OnHpChange()
 	{
-		LevelDirector.OnHeroHpChange(Hp/MaxHp);
+		PanelLevelHUD.OnHeroHpChange(Hp/MaxHp);
 	}
 
 	public void CreateMeleeAttackRange()
