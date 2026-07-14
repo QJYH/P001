@@ -6,6 +6,7 @@ public class Gold : Pickup
 {
 	private const float speed = 20f;
 	private const float destoryDistance = 0.2f;
+	[SerializeField] private int goldValue;
 	private Vector2 goldIconScreenPos;
 
 	protected override void OnPickUp()
@@ -23,7 +24,7 @@ public class Gold : Pickup
 		if (Vector3.Distance(targetWorldPos, transform.position) < destoryDistance)
 		{
 			Destroy(gameObject);
-			PanelLevelHUD.OnPickUpGold();
+			PanelLevelHUD.OnPickUpGold(goldValue);
 		}
 		else
 		{

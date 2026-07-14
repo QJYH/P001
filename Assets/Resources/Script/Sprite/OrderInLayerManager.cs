@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class OrderInLayerManager : MonoBehaviour
 {
+	[SerializeField] private float verticalOffset;
 	private SpriteRenderer spriteRenderer;
 
-	[SerializeField]
-	private float verticalOffset;
-
-    // Start is called before the first frame update
-    void Start()
+	// Start is called before the first frame update
+	void Start()
     {
 		spriteRenderer = GetComponent<SpriteRenderer>();
     }

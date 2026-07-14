@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gold_0
+      name: SmallGold_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 314fc758774b7a346937715467306265
-      internalID: -1530314264
+      spriteID: e6eca469076d51842bcdaf7f111d1d7b
+      internalID: 809926781
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gold_1
+      name: SmallGold_1
       rect:
         serializedVersion: 2
         x: 128
@@ -132,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 761b3a3898f27144a8d3edaab7fe4799
-      internalID: 273476219
+      spriteID: fe463ff3a3cabbb45bbcc47e2b683635
+      internalID: 159182466
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gold_2
+      name: SmallGold_2
       rect:
         serializedVersion: 2
         x: 256
@@ -153,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0c4f8084d05d5754189e6aefefb3269d
-      internalID: -620857674
+      spriteID: e03793195de95154cb3e0699a2bb2a37
+      internalID: 1008722005
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gold_3
+      name: SmallGold_3
       rect:
         serializedVersion: 2
         x: 384
@@ -174,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b39d631f18d453439a4296cee79b008
-      internalID: 1490054132
+      spriteID: d6fe6452d4ac8c049b7ad40b5f09b8ec
+      internalID: 1216552220
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gold_4
+      name: SmallGold_4
       rect:
         serializedVersion: 2
         x: 512
@@ -195,14 +195,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a3515bd8d258ae845ab81a7e8ceb49db
-      internalID: 666664758
+      spriteID: c90d7a73d3e4fd144906043e6ec21c47
+      internalID: -1012833389
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gold_5
+      name: SmallGold_5
       rect:
         serializedVersion: 2
         x: 640
@@ -216,8 +216,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 10add41b506d12642b9afe2e83f5657a
-      internalID: -1448779094
+      spriteID: f844326c42605d247a28a4a983baffe0
+      internalID: -1428585516
       vertices: []
       indices: 
       edges: []
@@ -233,12 +233,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Gold_0: -1530314264
-      Gold_1: 273476219
-      Gold_2: -620857674
-      Gold_3: 1490054132
-      Gold_4: 666664758
-      Gold_5: -1448779094
+      SmallGold_0: 809926781
+      SmallGold_1: 159182466
+      SmallGold_2: 1008722005
+      SmallGold_3: 1216552220
+      SmallGold_4: -1012833389
+      SmallGold_5: -1428585516
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -32,7 +32,7 @@ public class PanelLevelHUD : Panel
 		return imageGold.position;
 	}
 
-	public static void OnPickUpGold()
+	public static void OnPickUpGold(int goldValue)
 	{
 		if (Instance == null) return;
 
