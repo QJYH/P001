@@ -1,12 +1,20 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PanelLevelHUD : Panel
 {
 	public static PanelLevelHUD Instance { get; private set; }
+	private Tween goldImageScaleTween;
+	private Tween goldCountTextUpdateTween;
+	private int realGoldCount = 0;
+	private int nominalGoldCount = 0;
+
 	private void Awake()
 	{
 		Instance = this;
@@ -14,6 +22,8 @@ public class PanelLevelHUD : Panel
 	private void OnDestroy()
 	{
 		Instance = null;
+
+		goldImageScaleTween?.Kill();
 	}
 
 	public static void OnHeroHpChange(float hpRate)
@@ -36,6 +46,24 @@ public class PanelLevelHUD : Panel
 	{
 		if (Instance == null) return;
 
-		//todo
+		Instance.realGoldCount += goldValue;
+
+		Instance.goldImageScaleTween?.Kill();
+		Transform imageGold = Instance.transform.Find("TopLeft/ImageAvatar/ImageGold");
+		imageGold.localScale = new Vector3(1, 1, 1);
+		Instance.goldImageScaleTween = imageGold.DOScale(1.5f, 0.5f).SetLoops(2, LoopType.Yoyo);
+
+		Instance.goldCountTextUpdateTween?.Kill();
+		TextMeshProUGUI textGoldCount = imageGold.Find("TextGoldCount").GetComponent<TextMeshProUGUI>();
+		Instance.goldCountTextUpdateTween = DOTween.To(
+			() => Instance.nominalGoldCount,
+			x =>
+			{
+				Instance.nominalGoldCount = x;
+				textGoldCount.text = Instance.nominalGoldCount.ToString();
+			},
+			Instance.realGoldCount,
+			1f
+		);
 	}
 }
