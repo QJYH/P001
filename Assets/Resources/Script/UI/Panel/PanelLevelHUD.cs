@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -56,10 +57,13 @@ public class PanelLevelHUD : Panel
 		Instance.goldCountTextUpdateTween?.Kill();
 		TextMeshProUGUI textGoldCount = imageGold.Find("TextGoldCount").GetComponent<TextMeshProUGUI>();
 		Instance.goldCountTextUpdateTween = DOTween.To(
-			() => Instance.nominalGoldCount,
-			x =>
+			delegate ()
 			{
-				Instance.nominalGoldCount = x;
+				return Instance.nominalGoldCount;
+			},
+			delegate (int value)
+			{
+				Instance.nominalGoldCount = value;
 				textGoldCount.text = Instance.nominalGoldCount.ToString();
 			},
 			Instance.realGoldCount,

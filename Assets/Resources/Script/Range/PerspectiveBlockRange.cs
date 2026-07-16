@@ -5,7 +5,7 @@ using UnityEngine;
 public class PerspectiveBlockRange : Range
 {
 	private Camera mainCamera;
-	private Dictionary<int, PerspectiveBlock> perspectiveBlockTable = new Dictionary<int, PerspectiveBlock>();
+	private Dictionary<int, PerspectiveBlock> perspectiveBlockDict = new Dictionary<int, PerspectiveBlock>();
 
 	private void Awake()
 	{
@@ -16,7 +16,7 @@ public class PerspectiveBlockRange : Range
 	{
 		Vector3 heroScreenPos = mainCamera.WorldToScreenPoint(transform.position);
 
-		foreach (var keyValuePair in perspectiveBlockTable)
+		foreach (var keyValuePair in perspectiveBlockDict)
 		{
 			if (keyValuePair.Value != null)
 			{
@@ -29,8 +29,8 @@ public class PerspectiveBlockRange : Range
 		PerspectiveBlock perspectiveBlock = collision.GetComponent<PerspectiveBlock>();
 		if (perspectiveBlock == null) return;
 
-		if (perspectiveBlockTable.ContainsKey(perspectiveBlock.GetInstanceID())) return;
-		perspectiveBlockTable.Add(perspectiveBlock.GetInstanceID(), perspectiveBlock);
+		if (perspectiveBlockDict.ContainsKey(perspectiveBlock.GetInstanceID())) return;
+		perspectiveBlockDict.Add(perspectiveBlock.GetInstanceID(), perspectiveBlock);
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)
@@ -39,6 +39,6 @@ public class PerspectiveBlockRange : Range
 		if (perspectiveBlock == null) return;
 
 		perspectiveBlock.SetHeroScreenPos(new Vector2(-Screen.width, -Screen.height));
-		perspectiveBlockTable.Remove(perspectiveBlock.GetInstanceID());
+		perspectiveBlockDict.Remove(perspectiveBlock.GetInstanceID());
 	}
 }

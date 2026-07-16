@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7718573472720630478}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: ProjectilePosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2032856585934245909}
   - component: {fileID: 6005984781032384060}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: ThrowBone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,13 +125,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2088250939680076914, guid: 526f736743137b644ab27bb354579090, type: 3}
+      propertyPath: m_Size.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088250939680076914, guid: 526f736743137b644ab27bb354579090, type: 3}
+      propertyPath: m_Size.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2088250939680076914, guid: 526f736743137b644ab27bb354579090, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 2633199456630277792, guid: 526f736743137b644ab27bb354579090, type: 3}
       propertyPath: m_Size.x
-      value: 1.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2633199456630277792, guid: 526f736743137b644ab27bb354579090, type: 3}
       propertyPath: m_Size.y
-      value: 1.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2633199456630277792, guid: 526f736743137b644ab27bb354579090, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x
@@ -172,6 +184,10 @@ PrefabInstance:
     - target: {fileID: 4191879354117812590, guid: 526f736743137b644ab27bb354579090, type: 3}
       propertyPath: verticalOffset
       value: -33
+      objectReference: {fileID: 0}
+    - target: {fileID: 5821165208045178634, guid: 526f736743137b644ab27bb354579090, type: 3}
+      propertyPath: m_Offset.x
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8090322034794990203, guid: 526f736743137b644ab27bb354579090, type: 3}
       propertyPath: m_Size.x

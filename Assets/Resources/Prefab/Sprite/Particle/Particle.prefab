@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6717649561161305979, guid: 9c18ed345225692448dfa69c14fb2c48, type: 3}
       propertyPath: m_Name
-      value: Particle Variant
+      value: Particle
       objectReference: {fileID: 0}
     - target: {fileID: 6717649561161305979, guid: 9c18ed345225692448dfa69c14fb2c48, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 9085971590297548143, guid: 9c18ed345225692448dfa69c14fb2c48, type: 3}
       propertyPath: m_LocalPosition.x

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8174813017139913152}
   - component: {fileID: 9161737412761526845}
   - component: {fileID: 3076562698210628302}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: PerspectiveBlockRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7009092836926992587, guid: f65373e7f262f5048abb1c8adfdcfca1, type: 3}
       propertyPath: m_Name
-      value: Hero Variant
+      value: Hero
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

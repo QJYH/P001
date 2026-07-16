@@ -24,6 +24,18 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4953849274233941212, guid: e98e08588964ce748ad1792ba5f56799, type: 3}
+      propertyPath: m_Size.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953849274233941212, guid: e98e08588964ce748ad1792ba5f56799, type: 3}
+      propertyPath: m_Size.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953849274233941212, guid: e98e08588964ce748ad1792ba5f56799, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 5968251401592692235, guid: e98e08588964ce748ad1792ba5f56799, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -74,19 +86,19 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: aa1112b337436413a9e3f0f07d8475c2, type: 2}
     - target: {fileID: 8213796809211192351, guid: e98e08588964ce748ad1792ba5f56799, type: 3}
       propertyPath: m_Name
-      value: Warrior Variant
+      value: Warrior
       objectReference: {fileID: 0}
     - target: {fileID: 8993246955420835342, guid: e98e08588964ce748ad1792ba5f56799, type: 3}
       propertyPath: m_Size.x
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8993246955420835342, guid: e98e08588964ce748ad1792ba5f56799, type: 3}
       propertyPath: m_Size.y
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8993246955420835342, guid: e98e08588964ce748ad1792ba5f56799, type: 3}
       propertyPath: m_Offset.y
-      value: -0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8993246955420835342, guid: e98e08588964ce748ad1792ba5f56799, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x

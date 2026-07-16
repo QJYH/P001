@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5673113232618502490}
   - component: {fileID: 605781016669899075}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: MapAreaEdge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
