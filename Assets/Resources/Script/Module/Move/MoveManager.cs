@@ -1,13 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MoveManager : MonoBehaviour
 {
 	private Dictionary<string, Velocity> velocityDict = new Dictionary<string, Velocity>();
+
+	public UnityEvent<Vector2> OnSetVelocity;
 	private void FixedUpdate()
 	{
-		Vector2 totalVelocity = Vector2.zero;
+		Rigidbody2D rigidbody2D = GetComponent<Rigidbody2D>();
+		if (rigidbody2D.bodyType == RigidbodyType2D.Static) return;
+
+			Vector2 totalVelocity = Vector2.zero;
 		foreach (var keyValuePair in velocityDict)
 		{
 			Velocity velocityInfo = keyValuePair.Value;
@@ -17,32 +24,52 @@ public class MoveManager : MonoBehaviour
 			totalVelocity += velocityInfo.CurrentVelocity;
 		}
 
-		GetComponent<Rigidbody2D>().velocity = totalVelocity;
+		rigidbody2D.velocity = totalVelocity;
+		OnSetVelocity.Invoke(totalVelocity);
 	}
 
-	public void AddVelocity(string name, Velocity velocityInfo)
+	public void RemoveAllVelocity()
 	{
-		velocityDict.Remove(name);
-		velocityDict.Add(name, velocityInfo);
+		velocityDict.Clear();
 	}
 
-	public void RemoveVelocity(string name)
+	public void AddVelocity(string velocityName, Velocity velocity)
 	{
-		velocityDict.Remove(name);
+		velocityDict.Remove(velocityName);
+		velocityDict.Add(velocityName, velocity);
 	}
 
-	public Velocity GetVelocity(string name)
+	public void RemoveVelocity(string velocityName)
 	{
-		return velocityDict[name];
+		velocityDict.Remove(velocityName);
 	}
 
-	public void ChangeVelocity(string name, Vector2? currentVelocity, Vector2? targetVelocity, float? maxAcceleration)
+	public Velocity GetVelocity(string velocityName)
 	{
-		if (!velocityDict.ContainsKey(name)) return;
+		return velocityDict[velocityName];
+	}
 
-		Velocity velocityInfo = velocityDict[name];
-		velocityInfo.CurrentVelocity = currentVelocity ?? velocityInfo.CurrentVelocity;
-		velocityInfo.TargetVelocity = targetVelocity ?? velocityInfo.TargetVelocity;
-		velocityInfo.MaxAcceleration = maxAcceleration ?? velocityInfo.MaxAcceleration;
+	public void ChangeCurrentVelocity(string velocityName, Vector2 currentVelocity)
+	{
+		if (!velocityDict.ContainsKey(velocityName)) return;
+
+		Velocity velocity = velocityDict[velocityName];
+		velocity.CurrentVelocity = currentVelocity;
+	}
+
+	public void ChangeTargetVelocity(string velocityName, Vector2 targetVelocity)
+	{
+		if (!velocityDict.ContainsKey(velocityName)) return;
+
+		Velocity velocity = velocityDict[velocityName];
+		velocity.TargetVelocity = targetVelocity;
+	}
+
+	public void ChangeMaxAcceleration(string velocityName, float maxAcceleration)
+	{
+		if (!velocityDict.ContainsKey(velocityName)) return;
+
+		Velocity velocity = velocityDict[velocityName];
+		velocity.MaxAcceleration = maxAcceleration;
 	}
 }

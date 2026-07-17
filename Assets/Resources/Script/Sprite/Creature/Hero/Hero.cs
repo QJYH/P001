@@ -5,7 +5,8 @@ using CommonEnum;
 
 public class Hero : Creature
 {
-	private const float maxMoveSpeed = 6f;
+	private const float maxInputMoveSpeed = 6f;
+	private const float maxInputMoveAcceleration = 60f;
 
 	public HeroStatus CurrentStatus { get; set; }
 	protected GameObject LightAttack { get; set; }
@@ -17,28 +18,26 @@ public class Hero : Creature
 	{
 		base.Awake();
 		InitAttackModule();
+		AddInputMoveVelocity();
 	}
 
-	private void OnEnable()
+	protected override void OnEnable()
 	{
+		base.OnEnable();
 		PlayerInput heroInput = GetComponent<PlayerInput>();
 		heroInput.onActionTriggered += OnActionTriggered;
 	}
 
-	private void OnDisable()
+	protected override void OnDisable()
 	{
+		base.OnDisable();
 		PlayerInput heroInput = GetComponent<PlayerInput>();
 		heroInput.onActionTriggered -= OnActionTriggered;
 	}
 
-	protected override void Update()
-    {
-		base.Update();
-	}
-
 	private void FixedUpdate()
 	{
-		Move();
+		UpdateInputMoveVelocity();
 	}
 
 	protected virtual void InitAttackModule()
@@ -74,47 +73,27 @@ public class Hero : Creature
 		healEffect.transform.SetParent(gameObject.transform, false);
 	}
 
-	private void Move()
+	private void AddInputMoveVelocity()
 	{
-		Vector2 currentMoveInput = new Vector2(moveInput.x, moveInput.y);
-
-		currentMoveInput = IsDoingAction() ? Vector2.zero : currentMoveInput;
-		currentMoveInput = currentMoveInput.normalized;
-		float horizontalInput = currentMoveInput.x;
-		float verticalInput = currentMoveInput.y;
-	
-		if (horizontalInput < 0)
-		{
-			GetComponent<SpriteRenderer>().flipX = true;
-			FlipAttackX(LightAttack, true);
-			FlipAttackX(HeavyAttack, true);
-		}
-		else if (horizontalInput > 0)
-		{
-			GetComponent<SpriteRenderer>().flipX = false;
-			FlipAttackX(LightAttack, false);
-			FlipAttackX(HeavyAttack, false);
-		}
-
-		Animator animator = GetComponent<Animator>();
-		if ((horizontalInput != 0) || (verticalInput != 0))
-		{
-			animator.SetBool("IsMoving", true);
-		}
-		else
-		{
-			animator.SetBool("IsMoving", false);
-		}
-
-		Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
-		rigidbody.velocity = currentMoveInput * maxMoveSpeed;
+		Velocity velocity = new Velocity(Vector2.zero, Vector2.zero, maxInputMoveAcceleration);
+		GetComponent<MoveManager>().AddVelocity("_InputMove", velocity);
 	}
 
-	private void FlipAttackX(GameObject attack, bool needFlipX)
+	private void UpdateInputMoveVelocity()
 	{
-		Vector3 localScale = attack.transform.localScale;
-		float scaleX = needFlipX ? -MathF.Abs(localScale.x) : MathF.Abs(localScale.x);
-		attack.transform.localScale = new Vector3(scaleX, localScale.y, localScale.z);
+		Vector2 currentInputMoveDirection = new Vector2(moveInput.x, moveInput.y);
+		currentInputMoveDirection = IsDoingAction() ? Vector2.zero : currentInputMoveDirection;
+		currentInputMoveDirection = currentInputMoveDirection.normalized;
+		Vector2 targetVelocity = currentInputMoveDirection * maxInputMoveSpeed;
+		GetComponent<MoveManager>().ChangeTargetVelocity("_InputMove", targetVelocity);
+	}
+
+	protected override void OnSetVelocity(Vector2 velocity)
+	{
+		base.OnSetVelocity(velocity);
+
+		FlipChildHorizontally(LightAttack.name, (velocity.x < 0));
+		FlipChildHorizontally(HeavyAttack.name, (velocity.x < 0));
 	}
 
 	public bool IsDoingAction()

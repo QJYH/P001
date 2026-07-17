@@ -17,43 +17,44 @@ public class Projectile : MonoBehaviour
 	public TargetType TargetType { get; set; }
 	public Creature Owner { get; set; }
 	public HarmInfo HarmInfo { get; set; }
-	protected float MaxSpeed { get; set; }
+	protected virtual float MaxSpeed { get; set; } = 0;
+	protected virtual float MaxAcceleration { get; set; } = 0;
+	protected virtual float MaxExistTime { get; set; } = 5f;
 	private Status currentStatus;
 
-	private void Awake()
+	private void Start()
 	{
 		currentStatus = Status.Running;
-		InitMaxSpeed();
+		AddBaseMoveVelocity();
+		StartCoroutine(DelayDestory(MaxExistTime));
 	}
 
-	protected virtual void InitMaxSpeed()
+	private void AddBaseMoveVelocity()
 	{
-		throw new NotImplementedException();
+		Vector2 targetVelocity = Direction * MaxSpeed;
+		Velocity velocity = new Velocity(Vector2.zero, targetVelocity, MaxAcceleration);
+		GetComponent<MoveManager>().AddVelocity("_BaseMove", velocity);
 	}
 
 	private void FixedUpdate()
 	{
-		Move();
+		TryFollowTarget();
 	}
 
-	private void Move()
+	private void TryFollowTarget()
 	{
 		if (currentStatus == Status.ToBeDestory) return;
+		if (Target == null) return;
 
-		if (Target != null)
-		{
-			//todo
-		}
-		else
-		{
-			GetComponent<Rigidbody2D>().velocity = Direction * MaxSpeed;
-		}
+		//todo
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (LayerMask.LayerToName(collision.gameObject.layer) == "Environment")
+		if (LayerMask.LayerToName(collision.gameObject.layer) == "EnvironmentBlock")
 		{
+			currentStatus = Status.ToBeDestory;
+			GetComponent<MoveManager>().RemoveAllVelocity();
 			StartCoroutine(DelayDestory(destoryDelayTime));
 			return;
 		}
@@ -70,6 +71,8 @@ public class Projectile : MonoBehaviour
 			if (receiver == null) return;
 		}
 		CreateProjectileAttackRange();
+		currentStatus = Status.ToBeDestory;
+		GetComponent<MoveManager>().RemoveAllVelocity();
 		StartCoroutine(DelayDestory(destoryDelayTime));
 	}
 
@@ -80,8 +83,6 @@ public class Projectile : MonoBehaviour
 
 	private IEnumerator DelayDestory(float durationTime)
 	{
-		currentStatus = Status.ToBeDestory;
-		GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 		yield return new WaitForSeconds(durationTime);
 
 		GameObject.Destroy(gameObject);

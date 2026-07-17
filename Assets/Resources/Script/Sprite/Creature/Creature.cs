@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Creature : MonoBehaviour
 {
 	private const float hurtDuration = 0.4f;
 
-	protected virtual float MaxHp { get; }
+	protected virtual float MaxHp { get; } = 0;
 	protected GameObject CreatureCanvas { get; private set; }
 	protected float Hp { get; set; }
 	
@@ -23,6 +24,34 @@ public class Creature : MonoBehaviour
 	protected virtual void Update()
 	{
 		UpdateHurtTimer();
+	}
+
+	protected virtual void OnEnable()
+	{
+		GetComponent<MoveManager>().OnSetVelocity.AddListener(OnSetVelocity);
+	}
+
+	protected virtual void OnDisable()
+	{
+		GetComponent<MoveManager>().OnSetVelocity.RemoveListener(OnSetVelocity);
+		
+	}
+
+	protected virtual void OnSetVelocity(Vector2 velocity)
+	{
+		GetComponent<Animator>().SetBool("IsMoving", (velocity != Vector2.zero));
+		if (velocity.x != 0)
+		{
+			GetComponent<SpriteRenderer>().flipX = (velocity.x < 0);
+		}
+	}
+
+	protected void FlipChildHorizontally(string childName, bool needFlipX)
+	{
+		Transform childTrans = transform.Find(childName);
+		Vector3 localScale = childTrans.localScale;
+		float scaleX = needFlipX ? -MathF.Abs(localScale.x) : MathF.Abs(localScale.x);
+		childTrans.localScale = new Vector3(scaleX, localScale.y, localScale.z);
 	}
 
 	private void InitCanvas()

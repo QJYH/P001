@@ -6,13 +6,12 @@ using CommonEnum;
 
 public class GnollBone : Projectile
 {
-	private const float gnollBoneMaxSpeed = 5f;
 	private const string gnollBoneAttackRangeDirName = "Prefab/Sprite/Projectile/Enemy/Gnoll/GnollBoneAttackRange";
 	private const float gnollBoneAttackRangeDurationTime = 0.1f;
-	protected override void InitMaxSpeed()
-	{
-		MaxSpeed = gnollBoneMaxSpeed;
-	}
+
+	protected override float MaxSpeed { get; set; } = 5f;
+	protected override float MaxAcceleration { get; set; } = 50f;
+
 	protected override void CreateProjectileAttackRange()
 	{
 		string attackRangeDirName = gnollBoneAttackRangeDirName;

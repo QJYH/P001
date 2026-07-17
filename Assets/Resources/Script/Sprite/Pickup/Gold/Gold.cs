@@ -19,8 +19,8 @@ public class Gold : Pickup
 
 		Vector3 targetWorldPos = CalTargetWorldPos();
 		Vector2 targetVelocity = maxSpeed * ((targetWorldPos - transform.position).normalized);
-		Velocity velocityInfo = new Velocity(Vector2.zero, targetVelocity, maxAcceleration);
-		GetComponent<MoveManager>().AddVelocity("_GoToGoldIcon", velocityInfo);
+		Velocity velocity = new Velocity(Vector2.zero, targetVelocity, maxAcceleration);
+		GetComponent<MoveManager>().AddVelocity("_GoToGoldIcon", velocity);
 	}
 
 	private void FixedUpdate()
@@ -36,7 +36,7 @@ public class Gold : Pickup
 		else
 		{
 			Vector2 targetVelocity = maxSpeed * ((targetWorldPos - transform.position).normalized);
-			GetComponent<MoveManager>().ChangeVelocity("_GoToGoldIcon", null, targetVelocity, null);
+			GetComponent<MoveManager>().ChangeTargetVelocity("_GoToGoldIcon", targetVelocity);
 		}
 	}
 

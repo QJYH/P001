@@ -7,7 +7,8 @@ using CommonEnum;
 
 public class Enemy : Creature
 {
-	private const float maxMoveSpeed = 5f;
+	private const float maxBaseMoveSpeed = 5f;
+	private const float maxBaseMoveAcceleration = 50f;
 
 	public EnemyStatus CurrentStatus { get; set; }
 	protected List<GameObject> AttackList { get; private set; } = new List<GameObject>();
@@ -27,6 +28,7 @@ public class Enemy : Creature
 		InitAttackList();
 		InitPatrolPosList();
 		AddBehaviorTree();
+		AddBaseMoveVelocity();
 	}
 
 	protected override void Update()
@@ -38,17 +40,25 @@ public class Enemy : Creature
 
 	private void FixedUpdate()
 	{
-		Move();
+		UpdateBaseMoveVelocity();
 	}
 
 	protected virtual void InitAttackList()
 	{
 		throw new NotImplementedException();
 	}
-	public void SetRunningAttack(GameObject gameObject)
+
+	private void InitPatrolPosList()
 	{
-		runningAttack = gameObject;
+		patrolPosList = new LinkedList<Vector2>();
+		Vector2 currentPos = transform.position;
+		Vector2 patrolPos1 = new Vector2(currentPos.x - 2, currentPos.y);
+		Vector2 patrolPos2 = new Vector2(currentPos.x + 2, currentPos.y);
+		patrolPosList.AddLast(patrolPos1);
+		patrolPosList.AddLast(patrolPos2);
+		currentPatrolPos = patrolPosList.First;
 	}
+
 	private void InitHpBar()
 	{
 		enemyHpBar = Instantiate(Resources.Load<GameObject>("Prefab/UI/EnemyHpBar"));
@@ -92,17 +102,6 @@ public class Enemy : Creature
 		behaviorTree.Tick();
 	}
 
-	private void InitPatrolPosList()
-	{
-		patrolPosList = new LinkedList<Vector2>();
-		Vector2 currentPos = transform.position;
-		Vector2 patrolPos1 = new Vector2(currentPos.x - 2, currentPos.y);
-		Vector2 patrolPos2 = new Vector2(currentPos.x + 2, currentPos.y);
-		patrolPosList.AddLast(patrolPos1);
-		patrolPosList.AddLast(patrolPos2);
-		currentPatrolPos = patrolPosList.First;
-	}
-
 	private void UpdateTarget()
 	{
 		if (target == null) return;
@@ -119,13 +118,17 @@ public class Enemy : Creature
 		target = hero;
 	}
 
-	private void Move()
+	private void AddBaseMoveVelocity()
 	{
-		bool isMoving;
+		Velocity velocity = new Velocity(Vector2.zero, Vector2.zero, maxBaseMoveAcceleration);
+		GetComponent<MoveManager>().AddVelocity("_BaseMove", velocity);
+	}
+
+	private void UpdateBaseMoveVelocity()
+	{
 		Vector2 targetPos;
 		if (CurrentStatus == EnemyStatus.Patrol)
 		{
-			isMoving = true;
 			float distance = Vector2.Distance(transform.position, currentPatrolPos.Value);
 			if (distance < 0.1f)
 			{
@@ -139,7 +142,6 @@ public class Enemy : Creature
 		}
 		else if (CurrentStatus == EnemyStatus.Chase)
 		{
-			isMoving = true;
 			Vector2 heroPos = target.transform.position;
 			BoxCollider2D heroCollider = target.GetComponent<BoxCollider2D>();
 			heroPos.x += heroCollider.offset.x;
@@ -154,42 +156,23 @@ public class Enemy : Creature
 		}
 		else
 		{
-			isMoving = false;
 			targetPos = transform.position;
 		}
 
-		Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
-		Animator animator = GetComponent<Animator>();
-		if (isMoving)
-		{
-			rigidbody.velocity = (targetPos - (Vector2)transform.position).normalized * maxMoveSpeed;
-			SetForward(rigidbody.velocity.x < 0);
-			animator.SetBool("IsMoving", true);
-		}
-		else
-		{
-			rigidbody.velocity = Vector2.zero;
-			animator.SetBool("IsMoving", false);
-		}
+		Vector2 targetVelocity = (targetPos - (Vector2)transform.position).normalized * maxBaseMoveSpeed;
+		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", targetVelocity);
 	}
 
-	private void SetForward(bool isFacingLeft)
+
+	protected override void OnSetVelocity(Vector2 velocity)
 	{
-		GetComponent<SpriteRenderer>().flipX = isFacingLeft;
-		FlipChildX("VisionRange", isFacingLeft);
+		base.OnSetVelocity(velocity);
+
+		FlipChildHorizontally("VisionRange", (velocity.x < 0));
 		foreach (GameObject attackObject in AttackList)
 		{
-			FlipChildX(attackObject.name, isFacingLeft);
+			FlipChildHorizontally(attackObject.name, (velocity.x < 0));
 		}
-	}
-
-	private void FlipChildX(String childName, bool needFlipX)
-	{
-		Transform childTrans = transform.Find(childName);
-		if (childTrans == null) return;
-		Vector3 localScale = childTrans.localScale;
-		float scaleX = needFlipX ? -MathF.Abs(localScale.x) : MathF.Abs(localScale.x);
-		childTrans.localScale = new Vector3(scaleX, localScale.y, localScale.z);
 	}
 
 	public void OnIdleAnimationBegin()
@@ -241,10 +224,7 @@ public class Enemy : Creature
 	public void Attack()
 	{
 		CurrentStatus = EnemyStatus.Attack;
-		bool isTargetInLeft = (target.transform.position.x - transform.position.x) < 0;
-		SetForward(isTargetInLeft);
-		Animator animator = GetComponent<Animator>();
-		animator.SetTrigger("Attack");
+		GetComponent<Animator>().SetTrigger("Attack");
 	}
 
 	public void CreateMeleeAttackRange()
@@ -257,5 +237,10 @@ public class Enemy : Creature
 	{
 		//called by animation event
 		runningAttack.GetComponent<EnemyAttack>().CreateRangedProjectile();
+	}
+
+	public void SetRunningAttack(GameObject gameObject)
+	{
+		runningAttack = gameObject;
 	}
 }
