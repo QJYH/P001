@@ -37,21 +37,16 @@ public class Creature : MonoBehaviour
 		
 	}
 
-	protected virtual void OnSetVelocity(Vector2 velocity)
+	private void OnSetVelocity(Vector2 velocity)
 	{
 		GetComponent<Animator>().SetBool("IsMoving", (velocity != Vector2.zero));
+
 		if (velocity.x != 0)
 		{
-			GetComponent<SpriteRenderer>().flipX = (velocity.x < 0);
+			Vector3 localScale = transform.localScale;
+			float scaleX = (velocity.x < 0) ? -MathF.Abs(localScale.x) : MathF.Abs(localScale.x);
+			transform.localScale = new Vector3(scaleX, localScale.y, localScale.z);
 		}
-	}
-
-	protected void FlipChildHorizontally(string childName, bool needFlipX)
-	{
-		Transform childTrans = transform.Find(childName);
-		Vector3 localScale = childTrans.localScale;
-		float scaleX = needFlipX ? -MathF.Abs(localScale.x) : MathF.Abs(localScale.x);
-		childTrans.localScale = new Vector3(scaleX, localScale.y, localScale.z);
 	}
 
 	private void InitCanvas()

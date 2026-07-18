@@ -6,7 +6,7 @@ using CommonEnum;
 public class Hero : Creature
 {
 	private const float maxInputMoveSpeed = 6f;
-	private const float maxInputMoveAcceleration = 60f;
+	private const float maxInputMoveAcceleration = 30f;
 
 	public HeroStatus CurrentStatus { get; set; }
 	protected GameObject LightAttack { get; set; }
@@ -86,14 +86,6 @@ public class Hero : Creature
 		currentInputMoveDirection = currentInputMoveDirection.normalized;
 		Vector2 targetVelocity = currentInputMoveDirection * maxInputMoveSpeed;
 		GetComponent<MoveManager>().ChangeTargetVelocity("_InputMove", targetVelocity);
-	}
-
-	protected override void OnSetVelocity(Vector2 velocity)
-	{
-		base.OnSetVelocity(velocity);
-
-		FlipChildHorizontally(LightAttack.name, (velocity.x < 0));
-		FlipChildHorizontally(HeavyAttack.name, (velocity.x < 0));
 	}
 
 	public bool IsDoingAction()

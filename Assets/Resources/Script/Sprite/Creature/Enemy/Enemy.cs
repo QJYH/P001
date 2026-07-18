@@ -8,7 +8,7 @@ using CommonEnum;
 public class Enemy : Creature
 {
 	private const float maxBaseMoveSpeed = 5f;
-	private const float maxBaseMoveAcceleration = 50f;
+	private const float maxBaseMoveAcceleration = 25f;
 
 	public EnemyStatus CurrentStatus { get; set; }
 	protected List<GameObject> AttackList { get; private set; } = new List<GameObject>();
@@ -161,18 +161,6 @@ public class Enemy : Creature
 
 		Vector2 targetVelocity = (targetPos - (Vector2)transform.position).normalized * maxBaseMoveSpeed;
 		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", targetVelocity);
-	}
-
-
-	protected override void OnSetVelocity(Vector2 velocity)
-	{
-		base.OnSetVelocity(velocity);
-
-		FlipChildHorizontally("VisionRange", (velocity.x < 0));
-		foreach (GameObject attackObject in AttackList)
-		{
-			FlipChildHorizontally(attackObject.name, (velocity.x < 0));
-		}
 	}
 
 	public void OnIdleAnimationBegin()

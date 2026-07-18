@@ -17,14 +17,8 @@ public class ThrowBone : EnemyAttack
 		gnollBone.GetComponent<GnollBone>().Owner = Owner;
 		gnollBone.GetComponent<GnollBone>().TargetType = TargetType.Hero;
 		gnollBone.GetComponent<GnollBone>().HarmInfo = new HarmInfo(CurrentHarmInfo);
-		if (Owner.GetComponent<SpriteRenderer>().flipX == true)
-		{
-			gnollBone.GetComponent<GnollBone>().Direction = new Vector2(-1, 0);
-		}
-		else
-		{
-			gnollBone.GetComponent<GnollBone>().Direction = new Vector2(1, 0);
-		}
+		Vector2 direction = (transform.Find("ProjectilePosition").position - transform.position).normalized;
+		gnollBone.GetComponent<GnollBone>().Direction = direction;
 	}
 
 }

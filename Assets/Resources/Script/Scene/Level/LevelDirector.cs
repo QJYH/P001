@@ -41,7 +41,6 @@ public class LevelDirector : SceneDirector
 	private void SetCameraTarget()
 	{
 		VirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = currentHero.transform;
-		VirtualCamera.GetComponent<CinemachineCameraOffset>().m_Offset = new Vector3(0, -0.2f, 0);
 	}
 
 	protected override Vector2 GetRevealCenter()
