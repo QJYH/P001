@@ -59,6 +59,9 @@ TagManager:
   - name: Particle
     uniqueID: 1901408465
     locked: 0
+  - name: Fog
+    uniqueID: 1155353215
+    locked: 0
   - name: UI
     uniqueID: 342131115
     locked: 0

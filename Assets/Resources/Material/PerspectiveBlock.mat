@@ -67,11 +67,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _ScreenHeight: 0
-    - _ScreenWidth: 0
+    - _ScreenHeight: 1080
+    - _ScreenWidth: 1920
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _HeroScreenPos: {r: 0, g: 0, b: 0, a: 0}
+    - _HeroScreenPos: {r: -1920, g: -1080, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
