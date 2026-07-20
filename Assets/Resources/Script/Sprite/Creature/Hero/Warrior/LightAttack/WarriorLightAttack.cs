@@ -45,18 +45,9 @@ public class WarriorLightAttack : HeroLightAttack
 		Owner.GetComponent<Animator>().SetTrigger("LightAttack");
 	}
 
-	public override void OnAttackBegin()
-	{
-		if (currentPhase == WarriorLightAttackPhase.Finisher)
-		{
-			((Warrior)Owner).SetDefendAllEnable(1);
-		}
-	}
-
 	public override void OnAttackEnd()
 	{
 		currentPhase = WarriorLightAttackPhase.None;
-		((Warrior)Owner).SetDefendAllEnable(0);
 	}
 
 	public override void CreateMeleeAttackRange()

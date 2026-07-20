@@ -47,11 +47,17 @@ TagManager:
   - name: Foam
     uniqueID: 493922197
     locked: 0
+  - name: WaterReflection
+    uniqueID: 2761717599
+    locked: 0
   - name: Ground
     uniqueID: 3769866463
     locked: 0
   - name: Road
     uniqueID: 3191239385
+    locked: 0
+  - name: SpriteUI
+    uniqueID: 148940739
     locked: 0
   - name: Sprite
     uniqueID: 2096265675

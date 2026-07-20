@@ -8,7 +8,6 @@ public class MoveManager : MonoBehaviour
 {
 	private Dictionary<string, Velocity> velocityDict = new Dictionary<string, Velocity>();
 
-	public UnityEvent<Vector2> OnSetVelocity;
 	private void FixedUpdate()
 	{
 		Rigidbody2D rigidbody2D = GetComponent<Rigidbody2D>();
@@ -25,7 +24,6 @@ public class MoveManager : MonoBehaviour
 		}
 
 		rigidbody2D.velocity = totalVelocity;
-		OnSetVelocity.Invoke(totalVelocity);
 	}
 
 	public void RemoveAllVelocity()

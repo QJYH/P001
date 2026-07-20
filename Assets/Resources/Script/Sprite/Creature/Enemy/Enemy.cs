@@ -8,7 +8,7 @@ using CommonEnum;
 public class Enemy : Creature
 {
 	private const float maxBaseMoveSpeed = 5f;
-	private const float maxBaseMoveAcceleration = 25f;
+	private const float maxBaseMoveAcceleration = 50f;
 
 	public EnemyStatus CurrentStatus { get; set; }
 	protected List<GameObject> AttackList { get; private set; } = new List<GameObject>();
@@ -161,6 +161,8 @@ public class Enemy : Creature
 
 		Vector2 targetVelocity = (targetPos - (Vector2)transform.position).normalized * maxBaseMoveSpeed;
 		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", targetVelocity);
+		GetComponent<Animator>().SetBool("IsMoving", (targetVelocity != Vector2.zero));
+		TryFlipX(targetVelocity);
 	}
 
 	public void OnIdleAnimationBegin()

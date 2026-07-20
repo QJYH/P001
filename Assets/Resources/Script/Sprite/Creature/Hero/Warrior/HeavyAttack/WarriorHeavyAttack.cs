@@ -7,13 +7,13 @@ public class WarriorHeavyAttack : HeroHeavyAttack
 {
 	public override void OnAttackBegin()
 	{
-		((Warrior)Owner).SetDefendHalfEnable(1);
+		((Warrior)Owner).DefendEnable = true;
 	}
 
 	public override void OnAttackEnd()
 	{
-		((Warrior)Owner).SetDefendHalfEnable(0);
-		((Warrior)Owner).SetStrikeBackEnable(0);
+		((Warrior)Owner).DefendEnable = false;
+		((Warrior)Owner).StrikeBackEnable = false;
 	}
 
 	public virtual void StrikeBack(WarriorLightAttack lightAttack)

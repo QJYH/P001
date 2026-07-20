@@ -4,9 +4,8 @@ public class Warrior : Hero
 {
 	protected override float MaxHp { get; } = 5f;
 
-	private bool strikeBack;
-	private bool defendAll;
-	private bool defendHalf;
+	public bool StrikeBackEnable { get; set; } = false;
+	public bool DefendEnable { get; set; } = false;
 
 	protected override void InitAttackModule()
 	{
@@ -21,17 +20,13 @@ public class Warrior : Hero
 
 	protected override void ReceiveHarm(float harmValue)
 	{
-		if (IsStrikeBackEnable())
+		if (StrikeBackEnable)
 		{
 			HeavyAttack.GetComponent<WarriorHeavyAttack>().StrikeBack(LightAttack.GetComponent<WarriorLightAttack>());
 		}
-		else if (IsDefendAllEnable())
+		else if (DefendEnable)
 		{
-			return;
-		}
-		else if (IsDefendHalfEnable())
-		{
-			base.ReceiveHarm(harmValue / 2);
+			
 		}
 		else
 		{
@@ -41,31 +36,7 @@ public class Warrior : Hero
 
 	public void SetStrikeBackEnable(int status)
 	{
-		strikeBack = (status == 1) ? true : false;
-	}
-
-	public bool IsStrikeBackEnable()
-	{
-		return strikeBack;
-	}
-
-	public void SetDefendAllEnable(int status)
-	{
-		defendAll = (status == 1) ? true : false;
-	}
-
-	public bool IsDefendAllEnable()
-	{
-		return defendAll;
-	}
-
-	public void SetDefendHalfEnable(int status)
-	{
-		defendHalf = (status == 1) ? true : false;
-	}
-
-	public bool IsDefendHalfEnable()
-	{
-		return defendHalf;
+		//动画事件调用
+		StrikeBackEnable = (status == 1) ? true : false;
 	}
 }   

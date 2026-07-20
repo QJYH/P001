@@ -10,7 +10,7 @@ void GetEdgeColor_float(float2 uv, float timeOffset, out float3 Out)
     angle = ((angle / 3.14159 * 180) + 180);
     angle = fmod((angle + timeOffset * rotateAnglePerScecond), 360);
     
-    Out = float3(angle / 360, 1, 1);
+    Out = float3(angle / 360, 0.6, 1);
     return;
 
 }

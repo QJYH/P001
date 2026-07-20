@@ -26,21 +26,8 @@ public class Creature : MonoBehaviour
 		UpdateHurtTimer();
 	}
 
-	protected virtual void OnEnable()
+	protected void TryFlipX(Vector2 velocity)
 	{
-		GetComponent<MoveManager>().OnSetVelocity.AddListener(OnSetVelocity);
-	}
-
-	protected virtual void OnDisable()
-	{
-		GetComponent<MoveManager>().OnSetVelocity.RemoveListener(OnSetVelocity);
-		
-	}
-
-	private void OnSetVelocity(Vector2 velocity)
-	{
-		GetComponent<Animator>().SetBool("IsMoving", (velocity != Vector2.zero));
-
 		if (velocity.x != 0)
 		{
 			Vector3 localScale = transform.localScale;
@@ -54,7 +41,7 @@ public class Creature : MonoBehaviour
 		CreatureCanvas = new GameObject("MainCanvas");
 		Canvas canvas = CreatureCanvas.AddComponent<Canvas>();
 		canvas.renderMode = RenderMode.WorldSpace;
-		canvas.sortingLayerName = "Sprite";
+		canvas.sortingLayerName = "SpriteUI";
 		CreatureCanvas.AddComponent<CanvasScaler>();
 		CreatureCanvas.AddComponent<GraphicRaycaster>();
 		RectTransform rectTransform = CreatureCanvas.GetComponent<RectTransform>();

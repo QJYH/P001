@@ -22,6 +22,7 @@ namespace BehaviorTree
 		}
 		protected override BehaviorStatus OnUpdate()
 		{
+			if (!enemy.HaveTarget()) return BehaviorStatus.Failure;
 			if (enemyAttack.CanLaunchAttack()) return BehaviorStatus.Success;
 
 			return BehaviorStatus.Running;
