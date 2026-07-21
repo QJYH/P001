@@ -5,29 +5,25 @@ using UnityEngine;
 public class PerspectiveBlock : MonoBehaviour
 {
 	private SpriteRenderer spriteRenderer;
-	private void Awake()
-	{
-		spriteRenderer = GetComponentInParent<SpriteRenderer>();
-	}
-	// Start is called before the first frame update
+	private MaterialPropertyBlock propertyBlock;
+
 	void Start()
     {
-		spriteRenderer.material = Resources.Load<Material>("Material/PerspectiveBlock");
-		spriteRenderer.material.SetFloat("_ScreenWidth", Screen.width);
-		spriteRenderer.material.SetFloat("_ScreenHeight", Screen.height);
+		spriteRenderer = GetComponentInParent<SpriteRenderer>();
+		spriteRenderer.sharedMaterial = Resources.Load<Material>("Material/PerspectiveBlock");
+		propertyBlock = new MaterialPropertyBlock();
+		spriteRenderer.GetPropertyBlock(propertyBlock);
+
+		propertyBlock.SetFloat("_ScreenWidth", Screen.width);
+		propertyBlock.SetFloat("_ScreenHeight", Screen.height);
 		SetHeroScreenPos(new Vector2(-Screen.width, -Screen.height));
 	}
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
 	public void SetHeroScreenPos(Vector2 screenPos)
 	{
 		if (spriteRenderer == null) return;
 
-		spriteRenderer.material.SetVector("_HeroScreenPos", screenPos);
+		propertyBlock.SetVector("_HeroScreenPos", screenPos);
+		spriteRenderer.SetPropertyBlock(propertyBlock);
 	}
 }
