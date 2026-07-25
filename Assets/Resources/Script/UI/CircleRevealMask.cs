@@ -22,6 +22,9 @@ public class CircleRevealMask : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
+		GetComponent<Image>().material.SetFloat("_ScreenWidth", Screen.width);
+		GetComponent<Image>().material.SetFloat("_ScreenHeight", Screen.height);
+		GetComponent<Image>().material.SetFloat("_Radius", 0);
 		minRadius = 0;
 		maxRadius = MathF.Sqrt(Screen.width * Screen.width + Screen.height * Screen.height);
     }

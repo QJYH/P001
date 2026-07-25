@@ -30,7 +30,7 @@ public class LevelDirector : SceneDirector
 	}
 	private void SetCameraEdge()
 	{
-		GameObject cameraEdge = GameObject.Find("CameraEdge");
+		GameObject cameraEdge = GameObject.Find("CameraArea");
 		if (cameraEdge != null)
 		{
 			CinemachineConfiner2D cinemachineConfiner2D = VirtualCamera.GetComponent<CinemachineConfiner2D>();

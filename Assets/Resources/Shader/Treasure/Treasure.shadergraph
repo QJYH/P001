@@ -2096,7 +2096,7 @@
     },
     "m_SourceType": 0,
     "m_FunctionName": "GetEdgeColor",
-    "m_FunctionSource": "3f83cbe3be3482f4883799d87a35adf0",
+    "m_FunctionSource": "b7d4ca6bca504c5418b252e5ba4483b5",
     "m_FunctionBody": "Enter function body here..."
 }
 
@@ -2493,7 +2493,7 @@
     },
     "m_SourceType": 0,
     "m_FunctionName": "IsEdge",
-    "m_FunctionSource": "2d6b9c0fa7c6e2e4a880a051499ada3d",
+    "m_FunctionSource": "b7d4ca6bca504c5418b252e5ba4483b5",
     "m_FunctionBody": "Enter function body here..."
 }
 

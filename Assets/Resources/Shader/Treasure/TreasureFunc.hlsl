@@ -1,6 +1,19 @@
-#ifndef IsEdge
-#define IsEdge
+#ifndef TreasureFunc
+#define TreasureFunc
 #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
+
+void GetEdgeColor_float(float2 uv, float timeOffset, out float3 Out)
+{
+    int rotateAnglePerScecond = 90;
+    uv -= float2(0.5, 0.5);
+    float angle = atan2(uv.y, uv.x);
+    angle = ((angle / 3.14159 * 180) + 180);
+    angle = fmod((angle + timeOffset * rotateAnglePerScecond), 360);
+    
+    Out = float3(angle / 360, 0.6, 1);
+    return;
+
+}
 
 void IsEdge_float(UnityTexture2D unityTexture2D, UnitySamplerState unitySamplerState, float2 uvCenter, float texelWidth, float texelHeight, out bool Out)
 {
