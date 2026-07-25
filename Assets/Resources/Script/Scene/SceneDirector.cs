@@ -40,7 +40,7 @@ public class SceneDirector : MonoBehaviour
 	private void InitCamera()
 	{
 		MainCamera = GameObject.FindAnyObjectByType<Camera>().gameObject;
-		VirtualCamera = Instantiate(Resources.Load<GameObject>("Prefab/VirtualCamera"));
+		VirtualCamera = Instantiate(Resources.Load<GameObject>("Prefab/Module/VirtualCamera"));
 		MainCamera.AddComponent<CinemachineBrain>();
 	}
 
@@ -58,9 +58,7 @@ public class SceneDirector : MonoBehaviour
 
 	private void ShowMask()
 	{
-		GameObject mask = Instantiate(Resources.Load<GameObject>("Prefab/UI/CircleRevealMask"));
-		mask.transform.SetParent(MainCanvas.transform, false);
-		mask.GetComponent<RectTransform>().StretchToFillParent(null, null);
+		GameObject mask = Instantiate(Resources.Load<GameObject>("Prefab/Module/CircleRevealMask"));
 		Vector2 centerScreenPos = GetRevealCenter();
 		mask.GetComponent<CircleRevealMask>().Expand(centerScreenPos);
 	}

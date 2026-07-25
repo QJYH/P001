@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OrderInLayerManager : MonoBehaviour
 {
-	[SerializeField] private float verticalOffset;
+	[SerializeField] public float verticalOffset;
 	private SpriteRenderer spriteRenderer;
 
 	// Start is called before the first frame update

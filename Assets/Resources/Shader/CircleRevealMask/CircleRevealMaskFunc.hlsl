@@ -1,5 +1,5 @@
-#ifndef GetEdgeColor
-#define GetEdgeColor
+#ifndef CircleRevealMaskFunc
+#define CircleRevealMaskFunc
 
 void GetAlpha_float(float distance, float radius, out float Out)
 {

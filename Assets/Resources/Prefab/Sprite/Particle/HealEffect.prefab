@@ -22,11 +22,7 @@ PrefabInstance:
       objectReference: {fileID: -204306336, guid: ba6e6fcbab750844782fae4478ff3fb5, type: 3}
     - target: {fileID: 1163719868861517860, guid: 610aa7f9408e1184e98c15177303bf60, type: 3}
       propertyPath: m_SortingLayer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1163719868861517860, guid: 610aa7f9408e1184e98c15177303bf60, type: 3}
-      propertyPath: m_SortingLayerID
-      value: 2096265675
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1163719868861517860, guid: 610aa7f9408e1184e98c15177303bf60, type: 3}
       propertyPath: m_WasSpriteAssigned
@@ -34,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5321264799159969518, guid: 610aa7f9408e1184e98c15177303bf60, type: 3}
       propertyPath: m_Name
-      value: HealEffect Variant
+      value: HealEffect
       objectReference: {fileID: 0}
     - target: {fileID: 6506654831716526897, guid: 610aa7f9408e1184e98c15177303bf60, type: 3}
       propertyPath: verticalOffset
