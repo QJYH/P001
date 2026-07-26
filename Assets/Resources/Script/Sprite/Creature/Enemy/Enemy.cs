@@ -19,7 +19,6 @@ public class Enemy : Creature
 	private LinkedList<Vector2> patrolPosList;
 	private LinkedListNode<Vector2> currentPatrolPos;
 	private Selector behaviorTree;
-	
 
 	protected override void Awake()
 	{
@@ -31,11 +30,11 @@ public class Enemy : Creature
 		AddBaseMoveVelocity();
 	}
 
-	protected override void Update()
+	private void Update()
 	{
-		base.Update();
 		UpdateTarget();
 		UpdateBehaviorTree();
+
 	}
 
 	private void FixedUpdate()

@@ -85,10 +85,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 344333528435161521, guid: 9c18ed345225692448dfa69c14fb2c48, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: ca24f5a946e841d4ca520fd5920a66ad, type: 2}
     - target: {fileID: 6717649561161305979, guid: 9c18ed345225692448dfa69c14fb2c48, type: 3}
       propertyPath: m_Name
       value: Creature

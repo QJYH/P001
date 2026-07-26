@@ -12,7 +12,7 @@ public class WaterReflection : MonoBehaviour
 		parentSpriteRenderer = transform.parent.GetComponent<SpriteRenderer>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		spriteRenderer.sharedMaterial = Resources.Load<Material>("Material/WaterReflection");
-		spriteRenderer.color = new Color(0.6f, 0.8f, 1f, 0.6f);
+		spriteRenderer.color = new Color(0.6f, 0.8f, 1f, 0.4f);
 
 		float verticalOffset = transform.parent.GetComponent<OrderInLayerManager>().verticalOffset;
 		transform.localPosition = new Vector3(transform.localPosition.x, (2 * verticalOffset - 10) / 64, 0);

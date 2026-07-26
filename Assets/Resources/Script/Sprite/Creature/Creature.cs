@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,17 +14,12 @@ public class Creature : MonoBehaviour
 	protected GameObject CreatureCanvas { get; private set; }
 	protected float Hp { get; set; }
 	
-	private float hurtTimer = 0;
+	private Tween hurtEffectTween;
 
 	protected virtual void Awake()
 	{
 		InitCanvas();
 		InitHp();
-	}
-
-	protected virtual void Update()
-	{
-		UpdateHurtTimer();
 	}
 
 	protected void TryFlipX(Vector2 velocity)
@@ -51,17 +47,6 @@ public class Creature : MonoBehaviour
 		rectTransform.anchoredPosition = new Vector3(0, 0, 0);
 	}
 
-	private void UpdateHurtTimer()
-	{
-		if (hurtTimer > 0)
-		{
-			hurtTimer -= Time.deltaTime;
-		}
-		float hurtColorRate = (hurtTimer > hurtDuration / 2) ? ((hurtDuration - hurtTimer) * 4) : (hurtTimer * 4);
-		GetComponent<SpriteRenderer>().material.SetFloat("_HurtColorRate", hurtTimer > 0 ? hurtColorRate : 0);
-
-	}
-
 	private void InitHp()
 	{
 		Hp = MaxHp;
@@ -80,9 +65,30 @@ public class Creature : MonoBehaviour
 		if (harmValue <= 0) return;
 
 		ChangeHp(Hp - harmValue);
-		hurtTimer = hurtDuration;
+		ShowHurtEffect();
 
-		if (Hp <= 0) Die();
+		if (Hp <= 0)
+		{
+			Die();
+		}
+	}
+
+	private void ShowHurtEffect()
+	{
+		if (Hp <= 0) return;
+
+		hurtEffectTween = DOTween.To(
+			delegate ()
+			{
+				return GetComponent<SpriteRenderer>().color;
+			},
+			delegate (Vector4 color)
+			{
+				GetComponent<SpriteRenderer>().color = color;
+			},
+			new Vector4(1f, 0.5f, 0.5f, 1),
+			hurtDuration/2
+		).SetLoops(2, LoopType.Yoyo);
 	}
 
 	private void ChangeHp(float v)
@@ -98,7 +104,6 @@ public class Creature : MonoBehaviour
 
 	protected virtual void Die()
 	{
-		hurtTimer = 0;
 		GetComponent<Animator>().SetTrigger("Die");
 		GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 
