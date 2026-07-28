@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ba6e6fcbab750844782fae4478ff3fb5
+guid: a97703008085375428262d4efe0805ae
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Heal_0
+      name: WarriorHeal_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71e62f43611f51a4497ec4d19c47c46a
-      internalID: -204306336
+      spriteID: 56659b3745c849e46873f1b04b21239e
+      internalID: 1958001727
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal_1
+      name: WarriorHeal_1
       rect:
         serializedVersion: 2
         x: 192
@@ -132,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8b58c7000ac08b942a946fdaa0312d3e
-      internalID: 1477407736
+      spriteID: 2b6efcedfdb5ff8499e7d9df9c551517
+      internalID: 1568384737
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal_2
+      name: WarriorHeal_2
       rect:
         serializedVersion: 2
         x: 384
@@ -153,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c13740a4866abb845a8a942e13baf6c6
-      internalID: -814153236
+      spriteID: e11c799018664b04096df3de708e8b0e
+      internalID: 79310152
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal_3
+      name: WarriorHeal_3
       rect:
         serializedVersion: 2
         x: 576
@@ -174,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d07a1d932bd4d64e8b4f17fd2071669
-      internalID: -614636568
+      spriteID: ae399af181e46a443b1b73b9bcc01381
+      internalID: -1062510522
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal_4
+      name: WarriorHeal_4
       rect:
         serializedVersion: 2
         x: 768
@@ -195,14 +195,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 39de8d9d1df38c247bc17f8a463d6fa4
-      internalID: 1571668065
+      spriteID: f59041620945e744c896a9865b5be954
+      internalID: 1701197530
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal_5
+      name: WarriorHeal_5
       rect:
         serializedVersion: 2
         x: 960
@@ -216,14 +216,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4d4f90ace9958b14caee465ef4e5f10b
-      internalID: 347968617
+      spriteID: 9f63058b99eb6e848b7660518bf61765
+      internalID: 918522140
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal_6
+      name: WarriorHeal_6
       rect:
         serializedVersion: 2
         x: 1152
@@ -237,14 +237,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 88465feaa0b470247934177873e1e733
-      internalID: 1620188606
+      spriteID: a30236b5954355644bfa5b825c1f6a99
+      internalID: -1895966566
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Heal_7
+      name: WarriorHeal_7
       rect:
         serializedVersion: 2
         x: 1344
@@ -258,71 +258,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a17baf7b71325a24391c7a843ad98697
-      internalID: 340478409
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Heal_8
-      rect:
-        serializedVersion: 2
-        x: 1536
-        y: 0
-        width: 192
-        height: 192
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aa74bc3ac9f50e04f9c9e2d66e06b9ff
-      internalID: 2121637635
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Heal_9
-      rect:
-        serializedVersion: 2
-        x: 1728
-        y: 0
-        width: 192
-        height: 192
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 98b01e2236a6f7045b9fbace9c8eb49f
-      internalID: 1277589478
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Heal_10
-      rect:
-        serializedVersion: 2
-        x: 1920
-        y: 0
-        width: 192
-        height: 192
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5a2011b2a4b73cd428201144113b4c8a
-      internalID: 857221720
+      spriteID: a806fb94747ae924f90b3b3b9e628b03
+      internalID: -634246161
       vertices: []
       indices: 
       edges: []
@@ -338,17 +275,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Heal_0: -204306336
-      Heal_1: 1477407736
-      Heal_10: 857221720
-      Heal_2: -814153236
-      Heal_3: -614636568
-      Heal_4: 1571668065
-      Heal_5: 347968617
-      Heal_6: 1620188606
-      Heal_7: 340478409
-      Heal_8: 2121637635
-      Heal_9: 1277589478
+      WarriorHeal_0: 1958001727
+      WarriorHeal_1: 1568384737
+      WarriorHeal_2: 79310152
+      WarriorHeal_3: -1062510522
+      WarriorHeal_4: 1701197530
+      WarriorHeal_5: 918522140
+      WarriorHeal_6: -1895966566
+      WarriorHeal_7: -634246161
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

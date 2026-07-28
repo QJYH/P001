@@ -59,6 +59,9 @@ public class Hero : Creature
 			case "Heal":
 				Heal(context);
 				break;
+			case "Rush":
+				Rush(context);
+				break;
 		}
 	}
 
@@ -67,8 +70,15 @@ public class Hero : Creature
 		if (IsDoingAction()) return;
 		if (context.phase != InputActionPhase.Started) return;
 
-		GameObject healEffect = Instantiate(Resources.Load<GameObject>("Prefab/Sprite/Particle/HealEffect"));
-		healEffect.transform.SetParent(gameObject.transform, false);
+		GetComponent<Animator>().SetTrigger("Heal");
+	}
+
+	private void Rush(InputAction.CallbackContext context)
+	{
+		if (IsDoingAction()) return;
+		if (context.phase != InputActionPhase.Started) return;
+
+		//GetComponent<Animator>().SetTrigger("Heal");
 	}
 
 	private void AddInputMoveVelocity()
