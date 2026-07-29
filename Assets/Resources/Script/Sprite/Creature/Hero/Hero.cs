@@ -5,14 +5,16 @@ using CommonEnum;
 
 public class Hero : Creature
 {
-	private const float maxInputMoveSpeed = 6f;
-	private const float maxInputMoveAcceleration = 60f;
+	private const float maxInputMoveSpeed = 5f;
+	private const float maxInputMoveAcceleration = 50f;
+	private const float maxRushSpeed = 20f;
+	private const float maxRushAcceleration = 200f;
 
 	public HeroStatus CurrentStatus { get; set; }
 	protected GameObject LightAttack { get; set; }
 	protected GameObject HeavyAttack { get; set; }
 
-	private Vector2 moveInput;
+	private Vector2 moveInput = Vector2.zero;
 
 	protected override void Awake()
 	{
@@ -78,7 +80,13 @@ public class Hero : Creature
 		if (IsDoingAction()) return;
 		if (context.phase != InputActionPhase.Started) return;
 
-		//GetComponent<Animator>().SetTrigger("Heal");
+		Vector2 rushDirection = new Vector2(moveInput.x, moveInput.y);
+		rushDirection = (rushDirection == Vector2.zero) ? Facing : rushDirection;
+		Vector2 rushVelocity = rushDirection.normalized * maxRushSpeed;
+		Velocity velocity = new Velocity(Vector2.zero, rushVelocity, maxRushAcceleration);
+		GetComponent<MoveManager>().AddVelocity("_Rush", velocity);
+
+		GetComponent<Animator>().SetTrigger("Rush");
 	}
 
 	private void AddInputMoveVelocity()
@@ -100,7 +108,10 @@ public class Hero : Creature
 
 	public bool IsDoingAction()
 	{
-		return (CurrentStatus == HeroStatus.LightAttack) || (CurrentStatus == HeroStatus.HeavyAttack) || (CurrentStatus == HeroStatus.Heal);
+		return (CurrentStatus == HeroStatus.LightAttack)
+			|| (CurrentStatus == HeroStatus.HeavyAttack)
+			|| (CurrentStatus == HeroStatus.Heal)
+			|| (CurrentStatus == HeroStatus.Rush);
 	}
 
 	public void OnIdleAnimationBegin()
@@ -118,6 +129,17 @@ public class Hero : Creature
 	public void OnRunAnimationEnd()
 	{
 		CurrentStatus = HeroStatus.None;
+	}
+	public void OnRushAnimationBegin()
+	{
+		CurrentStatus = HeroStatus.Rush;
+	}
+
+	public void OnRushAnimationEnd()
+	{
+		CurrentStatus = HeroStatus.None;
+		GetComponent<MoveManager>().RemoveVelocity("_Rush");
+
 	}
 	public void OnHealAnimationBegin()
 	{
@@ -195,4 +217,15 @@ public class Hero : Creature
 			HeavyAttack.GetComponent<HeroHeavyAttack>().CreateRangedProjectile();
 		}
 	}
+
+	public void CreateHeroPhantom()
+	{
+		//动画事件调用
+		GameObject heroPhantom = Instantiate(Resources.Load<GameObject>("Prefab/Sprite/Creature/Hero/HeroPhantom"));
+		heroPhantom.transform.position = transform.position;
+		heroPhantom.transform.localScale = transform.localScale;
+		heroPhantom.GetComponent<SpriteRenderer>().sprite = GetComponent<SpriteRenderer>().sprite;
+		heroPhantom.GetComponent<OrderInLayerManager>().verticalOffset = GetComponent<OrderInLayerManager>().verticalOffset;
+	}
+
 }

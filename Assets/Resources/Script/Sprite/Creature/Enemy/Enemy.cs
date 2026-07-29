@@ -218,13 +218,13 @@ public class Enemy : Creature
 
 	public void CreateMeleeAttackRange()
 	{
-		//called by animation event
+		//动画事件调用
 		runningAttack.GetComponent<EnemyAttack>().CreateMeleeAttackRange();
 	}
 
 	public void CreateRangedProjectile()
 	{
-		//called by animation event
+		//动画事件调用
 		runningAttack.GetComponent<EnemyAttack>().CreateRangedProjectile();
 	}
 

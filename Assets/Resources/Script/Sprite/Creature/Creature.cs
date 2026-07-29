@@ -13,8 +13,7 @@ public class Creature : MonoBehaviour
 	protected virtual float MaxHp { get; } = 0;
 	protected GameObject CreatureCanvas { get; private set; }
 	protected float Hp { get; set; }
-	
-	private Tween hurtEffectTween;
+	protected Vector2 Facing { get; set; } = Vector2.right;
 
 	protected virtual void Awake()
 	{
@@ -26,6 +25,7 @@ public class Creature : MonoBehaviour
 	{
 		if (velocity.x != 0)
 		{
+			Facing = (velocity.x < 0) ? Vector2.left : Vector2.right;
 			Vector3 localScale = transform.localScale;
 			float scaleX = (velocity.x < 0) ? -MathF.Abs(localScale.x) : MathF.Abs(localScale.x);
 			transform.localScale = new Vector3(scaleX, localScale.y, localScale.z);
@@ -77,7 +77,7 @@ public class Creature : MonoBehaviour
 	{
 		if (Hp <= 0) return;
 
-		hurtEffectTween = DOTween.To(
+		DOTween.To(
 			delegate ()
 			{
 				return GetComponent<SpriteRenderer>().color;

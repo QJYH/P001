@@ -15,6 +15,7 @@ namespace CommonEnum
 		None,
 		Idle,
 		Run,
+		Rush,
 		LightAttack,
 		HeavyAttack,
 		Heal
