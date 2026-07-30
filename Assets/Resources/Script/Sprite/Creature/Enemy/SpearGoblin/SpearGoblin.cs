@@ -16,4 +16,5 @@ public class SpearGoblin : Enemy
 	{
 		rectTransform.anchoredPosition = new Vector2(0, -1f);
 	}
+
 }

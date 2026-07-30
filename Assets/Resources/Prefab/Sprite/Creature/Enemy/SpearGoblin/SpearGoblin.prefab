@@ -95,15 +95,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2088250939680076914, guid: 526f736743137b644ab27bb354579090, type: 3}
       propertyPath: m_Size.x
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 2088250939680076914, guid: 526f736743137b644ab27bb354579090, type: 3}
       propertyPath: m_Size.y
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 2088250939680076914, guid: 526f736743137b644ab27bb354579090, type: 3}
       propertyPath: m_Offset.y
-      value: -0.25
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2633199456630277792, guid: 526f736743137b644ab27bb354579090, type: 3}
       propertyPath: m_Size.x
