@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class RoadTileMap : MonoBehaviour
 {
-	public static UnityEvent<GameObject> OnRoadTileMapStart;
+	public static UnityEvent<GameObject> OnRoadTileMapStart = new UnityEvent<GameObject>();
     // Start is called before the first frame update
     void Start()
     {

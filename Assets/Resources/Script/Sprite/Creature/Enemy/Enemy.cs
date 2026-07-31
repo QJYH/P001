@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using CommonEnum;
+using AStarPathFinding;
 
 public class Enemy : Creature
 {
@@ -16,7 +17,7 @@ public class Enemy : Creature
 	private GameObject runningAttack;
 	private GameObject enemyHpBar;
 	private Hero target;
-	private LinkedList<Vector2> patrolPosList;
+	private LinkedList<Vector2> patrolPosList = new LinkedList<Vector2>();
 	private LinkedListNode<Vector2> currentPatrolPos;
 	private Selector behaviorTree;
 
@@ -49,7 +50,6 @@ public class Enemy : Creature
 
 	private void InitPatrolPosList()
 	{
-		patrolPosList = new LinkedList<Vector2>();
 		Vector2 currentPos = transform.position;
 		Vector2 patrolPos1 = new Vector2(currentPos.x - 2, currentPos.y);
 		Vector2 patrolPos2 = new Vector2(currentPos.x + 2, currentPos.y);
@@ -125,11 +125,10 @@ public class Enemy : Creature
 
 	private void UpdateBaseMoveVelocity()
 	{
-		Vector2 targetPos;
+		Vector3 targetPos;
 		if (CurrentStatus == EnemyStatus.Patrol)
 		{
-			float distance = Vector2.Distance(transform.position, currentPatrolPos.Value);
-			if (distance < 0.1f)
+			if (CommonFunc.IsNear(transform.position, currentPatrolPos.Value))
 			{
 				currentPatrolPos = currentPatrolPos.Next;
 				if (currentPatrolPos == null)
@@ -141,16 +140,16 @@ public class Enemy : Creature
 		}
 		else if (CurrentStatus == EnemyStatus.Chase)
 		{
-			Vector2 heroPos = target.transform.position;
+			Vector3 heroPos = target.transform.position;
 			BoxCollider2D heroCollider = target.GetComponent<BoxCollider2D>();
 			heroPos.x += heroCollider.offset.x;
 			heroPos.y += heroCollider.offset.y;
 			GameObject detectRangeObject = runningAttack.transform.Find("DetectRange").gameObject;
 			PolygonCollider2D detectRange = detectRangeObject.GetComponent<PolygonCollider2D>();
-			Vector2 targetPos1 = new Vector2(heroPos.x - detectRange.offset.x, heroPos.y - detectRange.offset.y);
-			Vector2 targetPos2 = new Vector2(heroPos.x + detectRange.offset.x, heroPos.y - detectRange.offset.y);
-			float distance1 = Vector2.Distance(targetPos1, transform.position);
-			float distance2 = Vector2.Distance(targetPos2, transform.position);
+			Vector3 targetPos1 = new Vector3(heroPos.x - detectRange.offset.x, heroPos.y - detectRange.offset.y);
+			Vector3 targetPos2 = new Vector3(heroPos.x + detectRange.offset.x, heroPos.y - detectRange.offset.y);
+			float distance1 = Vector3.Distance(targetPos1, transform.position);
+			float distance2 = Vector3.Distance(targetPos2, transform.position);
 			targetPos = (distance1 < distance2) ? targetPos1 : targetPos2;
 		}
 		else
@@ -158,10 +157,22 @@ public class Enemy : Creature
 			targetPos = transform.position;
 		}
 
-		Vector2 targetVelocity = (targetPos - (Vector2)transform.position).normalized * maxBaseMoveSpeed;
+		if (!TileMapManager.CanReachDirectly(transform.position, targetPos))
+		{
+			targetPos = GetTargetPosByPathfinding(transform.position, targetPos);
+		}
+
+		Vector3 targetVelocity = (targetPos - transform.position).normalized * maxBaseMoveSpeed;
 		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", targetVelocity);
-		GetComponent<Animator>().SetBool("IsMoving", (targetVelocity != Vector2.zero));
+		GetComponent<Animator>().SetBool("IsMoving", (targetVelocity != Vector3.zero));
 		TryFlipX(targetVelocity);
+	}
+
+	private Vector3 GetTargetPosByPathfinding(Vector3 currentPos, Vector3 targetPos)
+	{
+		List<Vector3> path = AStar.FindPath(currentPos, targetPos);
+
+		return CommonFunc.IsNear(currentPos, path[0]) ? path[1] : path[0];
 	}
 
 	public void OnIdleAnimationBegin()

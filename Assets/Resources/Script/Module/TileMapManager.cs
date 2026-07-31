@@ -94,4 +94,18 @@ public class TileMapManager : MonoBehaviour
 		RaycastHit2D hit = Physics2D.Linecast(beginWorldPos, endWorldPos, obstacleLayer);
 		return hit;
 	}
+
+	public static Vector3Int WorldToCell(Vector3 worldPosition)
+	{
+		GameObject groundTileMap = Instance.groundTileMapList[1];
+		Tilemap tilemap = groundTileMap.GetComponent<Tilemap>();
+		return tilemap.WorldToCell(worldPosition);
+	}
+
+	public static Vector3 CellToWorld(Vector3Int cellPosition)
+	{
+		GameObject groundTileMap = Instance.groundTileMapList[1];
+		Tilemap tilemap = groundTileMap.GetComponent<Tilemap>();
+		return tilemap.CellToWorld(cellPosition);
+	}
 }
