@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting.FullSerializer;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace AStarPathFinding
@@ -24,31 +21,47 @@ namespace AStarPathFinding
 			Y = y;
 		}
 
+		public override bool Equals(object obj)
+		{
+			if (obj is Node other)
+				return this.X == other.X && this.Y == other.Y;
+			return false;
+		}
+
+		public override int GetHashCode()
+		{
+			return Tuple.Create(X, Y).GetHashCode();
+		}
+
 	}
 
-	public class AStar
+	public class AStar : MonoBehaviour
 	{
 		public static List<Vector3> FindPath(Vector3 beginWorldPos, Vector3 endWorldPos)
 		{
+			if (!TileMapManager.CanStandOnPosition(endWorldPos))
+			{
+				print("can not stand");
+				return new List<Vector3> { beginWorldPos, endWorldPos }; ;
+			}
+
 			Vector3Int beginCellPos = TileMapManager.WorldToCell(beginWorldPos);
 			Vector3Int endCellPos = TileMapManager.WorldToCell(endWorldPos);
 			Node startNode = new Node(beginCellPos.x, beginCellPos.y);
 			Node endNode = new Node(endCellPos.x, endCellPos.y);
 
-			List<Node> openList = new List<Node> { startNode };
+			HashSet<Node> openList = new HashSet<Node> { startNode };
 			HashSet<Node> closedList = new HashSet<Node>();
 
 			while (openList.Count > 0)
 			{
-				if (openList.Count > 50)
-				{
-					Debug.Log("???");
-					return new List<Vector3> { beginWorldPos, endWorldPos };
-				}
 				Node currentNode = openList.OrderBy(n => n.F).First();
 
-				if (currentNode == endNode)
+				if (currentNode.Equals(endNode))
+				{
+					print("find path");
 					return ReconstructPath(currentNode);
+				}
 
 				openList.Remove(currentNode);
 				closedList.Add(currentNode);
@@ -57,7 +70,6 @@ namespace AStarPathFinding
 				{
 					if (!CanReachDirectly(currentNode, neighborNode) || closedList.Contains(neighborNode))
 					{
-						closedList.Add(neighborNode);
 						continue;
 					}
 
@@ -75,6 +87,8 @@ namespace AStarPathFinding
 				}
 			}
 
+			printNode(closedList);
+			print("can not find path");
 			return new List<Vector3> { beginWorldPos, endWorldPos };
 		}
 
@@ -117,6 +131,24 @@ namespace AStarPathFinding
 			Vector3 endWorldPos = TileMapManager.CellToWorld(endCellPos);
 
 			return TileMapManager.CanReachDirectly(beginWorldPos, endWorldPos);
+		}
+
+		private static void printNode(HashSet<Node> nodeList)
+		{
+			GameObject nodeListObj = GameObject.Find("NodeList");
+
+			for (int i = nodeListObj.transform.childCount - 1; i >= 0; i--)
+			{
+				Destroy(nodeListObj.transform.GetChild(i).gameObject);
+			}
+
+			foreach (var node in nodeList)
+			{
+				Vector3Int cellPos = new Vector3Int(node.X, node.Y, 0);
+				Vector3 worldPos = TileMapManager.CellToWorld(cellPos);
+				GameObject cube = Instantiate(Resources.Load<GameObject>("Prefab/Square"), nodeListObj.transform);
+				cube.transform.position = worldPos;
+			}
 		}
 	}
 }

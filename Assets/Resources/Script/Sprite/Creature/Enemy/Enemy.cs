@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using CommonEnum;
 using AStarPathFinding;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 public class Enemy : Creature
 {
@@ -146,11 +148,27 @@ public class Enemy : Creature
 			heroPos.y += heroCollider.offset.y;
 			GameObject detectRangeObject = runningAttack.transform.Find("DetectRange").gameObject;
 			PolygonCollider2D detectRange = detectRangeObject.GetComponent<PolygonCollider2D>();
-			Vector3 targetPos1 = new Vector3(heroPos.x - detectRange.offset.x, heroPos.y - detectRange.offset.y);
-			Vector3 targetPos2 = new Vector3(heroPos.x + detectRange.offset.x, heroPos.y - detectRange.offset.y);
-			float distance1 = Vector3.Distance(targetPos1, transform.position);
-			float distance2 = Vector3.Distance(targetPos2, transform.position);
-			targetPos = (distance1 < distance2) ? targetPos1 : targetPos2;
+			Vector3 potentialTargetPos1 = new Vector3(heroPos.x - detectRange.offset.x, heroPos.y - detectRange.offset.y);
+			Vector3 potentialTargetPos2 = new Vector3(heroPos.x + detectRange.offset.x, heroPos.y - detectRange.offset.y);
+
+			List<Vector3> potentialTargetPosList = new List<Vector3> { potentialTargetPos1, potentialTargetPos2 };
+			for (int i = potentialTargetPosList.Count - 1; i >= 0; i--)
+			{
+				if (!TileMapManager.CanStandOnPosition(potentialTargetPosList[i]))
+				{
+					potentialTargetPosList.RemoveAt(i);
+				}
+			}
+			if (potentialTargetPosList.Count == 0)
+			{
+				targetPos = transform.position;
+			}
+			else
+			{
+				targetPos = potentialTargetPosList.OrderBy(
+					delegate (Vector3 potentialTargetPos) { return Vector3.Distance(potentialTargetPos, transform.position); }
+				).First();
+			}
 		}
 		else
 		{
@@ -162,7 +180,9 @@ public class Enemy : Creature
 			targetPos = GetTargetPosByPathfinding(transform.position, targetPos);
 		}
 
+		print(targetPos);
 		Vector3 targetVelocity = (targetPos - transform.position).normalized * maxBaseMoveSpeed;
+		print(targetVelocity);
 		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", targetVelocity);
 		GetComponent<Animator>().SetBool("IsMoving", (targetVelocity != Vector3.zero));
 		TryFlipX(targetVelocity);
@@ -172,7 +192,14 @@ public class Enemy : Creature
 	{
 		List<Vector3> path = AStar.FindPath(currentPos, targetPos);
 
-		return CommonFunc.IsNear(currentPos, path[0]) ? path[1] : path[0];
+		print(currentPos);
+		print("print path");
+		foreach (var item in path)
+		{
+			print(item);
+		}print("print path end");
+		return path[1];
+		//return CommonFunc.IsNear(currentPos, path[0]) ? path[1] : path[0];
 	}
 
 	public void OnIdleAnimationBegin()

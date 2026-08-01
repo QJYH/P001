@@ -46,11 +46,6 @@ public class TileMapManager : MonoBehaviour
 		groundTileMapList.Add(groundTileMap);
 	}
 
-	public static bool CanStandOnPosition(Vector3 worldPos)
-	{
-		return IsTileSolid(worldPos) && (!HaveBlockOnPosition(worldPos));
-	}
-
 	private static bool IsTileSolid(Vector3 worldPos)
 	{
 		foreach (var gameObject in Instance.roadTileMapList)
@@ -83,16 +78,21 @@ public class TileMapManager : MonoBehaviour
 		return hit;
 	}
 
-	public static bool CanReachDirectly(Vector3 beginWorldPos, Vector3 endWorldPos)
-	{
-		return CanStandOnPosition(endWorldPos) && (!HaveBlockOnLine(beginWorldPos, endWorldPos));
-	}
-
 	private static bool HaveBlockOnLine(Vector3 beginWorldPos, Vector3 endWorldPos)
 	{
 		LayerMask obstacleLayer = LayerMask.GetMask("EnvironmentBlock", "Edge");
 		RaycastHit2D hit = Physics2D.Linecast(beginWorldPos, endWorldPos, obstacleLayer);
 		return hit;
+	}
+
+	public static bool CanStandOnPosition(Vector3 worldPos)
+	{
+		return IsTileSolid(worldPos) && (!HaveBlockOnPosition(worldPos));
+	}
+
+	public static bool CanReachDirectly(Vector3 beginWorldPos, Vector3 endWorldPos)
+	{
+		return CanStandOnPosition(endWorldPos) && (!HaveBlockOnLine(beginWorldPos, endWorldPos));
 	}
 
 	public static Vector3Int WorldToCell(Vector3 worldPosition)
@@ -106,6 +106,6 @@ public class TileMapManager : MonoBehaviour
 	{
 		GameObject groundTileMap = Instance.groundTileMapList[1];
 		Tilemap tilemap = groundTileMap.GetComponent<Tilemap>();
-		return tilemap.CellToWorld(cellPosition);
+		return tilemap.GetCellCenterWorld(cellPosition);
 	}
 }
