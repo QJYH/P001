@@ -46,12 +46,12 @@ public class TileMapManager : MonoBehaviour
 		groundTileMapList.Add(groundTileMap);
 	}
 
-	private static bool IsTileSolid(Vector3 worldPos)
+	private static bool IsTileSolid(Vector3Int cellPos)
 	{
 		foreach (var gameObject in Instance.roadTileMapList)
 		{
 			Tilemap tilemap = gameObject.GetComponent<Tilemap>();
-			TileBase tile = tilemap.GetTile(tilemap.WorldToCell(worldPos));
+			TileBase tile = tilemap.GetTile(cellPos);
 			if (tile != null)
 			{
 				return true;
@@ -61,7 +61,7 @@ public class TileMapManager : MonoBehaviour
 		foreach (var gameObject in Instance.groundTileMapList)
 		{
 			Tilemap tilemap = gameObject.GetComponent<Tilemap>();
-			TileBase tile = tilemap.GetTile(tilemap.WorldToCell(worldPos));
+			TileBase tile = tilemap.GetTile(cellPos);
 			if (tile != null)
 			{
 				return true;
@@ -71,8 +71,9 @@ public class TileMapManager : MonoBehaviour
 		return false;
 	}
 
-	private static bool HaveBlockOnPosition(Vector3 worldPos)
+	private static bool HaveBlockOnCell(Vector3Int cellPos)
 	{
+		Vector3 worldPos = CellToWorld(cellPos);
 		LayerMask obstacleLayer = LayerMask.GetMask("EnvironmentBlock", "Edge");
 		Collider2D hit = Physics2D.OverlapCircle(worldPos, 0.45f, obstacleLayer);
 		return hit;
@@ -87,7 +88,8 @@ public class TileMapManager : MonoBehaviour
 
 	public static bool CanStandOnPosition(Vector3 worldPos)
 	{
-		return IsTileSolid(worldPos) && (!HaveBlockOnPosition(worldPos));
+		Vector3Int cellPos = WorldToCell(worldPos);
+		return IsTileSolid(cellPos) && (!HaveBlockOnCell(cellPos));
 	}
 
 	public static bool CanReachDirectly(Vector3 beginWorldPos, Vector3 endWorldPos)
@@ -107,5 +109,12 @@ public class TileMapManager : MonoBehaviour
 		GameObject groundTileMap = Instance.groundTileMapList[1];
 		Tilemap tilemap = groundTileMap.GetComponent<Tilemap>();
 		return tilemap.GetCellCenterWorld(cellPosition);
+	}
+
+	internal static bool IsInSameTile(Vector3 beginWorldPos, Vector3 endWorldPos)
+	{
+		Vector3Int beginCellPos = WorldToCell(beginWorldPos);
+		Vector3Int endCellPos = WorldToCell(endWorldPos);
+		return beginCellPos == endCellPos;
 	}
 }

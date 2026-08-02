@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class CommonFunc : MonoBehaviour
 {
-    public static bool IsNear(Vector2 beginWorldPos, Vector2 endWorldPos)
+	public static bool IsNear(float numberA, float numberB, float? threshold)
 	{
-		float distance = Vector2.Distance(beginWorldPos, endWorldPos);
-		return (distance < 0.1f);
+		threshold = threshold ?? 0.1f;
+		return Mathf.Abs(numberA - numberB) < threshold;
+	}
+    public static bool IsNear(Vector2 beginWorldPos, Vector2 endWorldPos, float? threshold)
+	{
+		threshold = threshold ?? 0.1f;
+		return Vector2.Distance(beginWorldPos, endWorldPos) < threshold;
 	}
 }

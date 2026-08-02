@@ -41,7 +41,6 @@ namespace AStarPathFinding
 		{
 			if (!TileMapManager.CanStandOnPosition(endWorldPos))
 			{
-				print("can not stand");
 				return new List<Vector3> { beginWorldPos, endWorldPos }; ;
 			}
 
@@ -59,7 +58,6 @@ namespace AStarPathFinding
 
 				if (currentNode.Equals(endNode))
 				{
-					print("find path");
 					return ReconstructPath(currentNode);
 				}
 
@@ -87,8 +85,6 @@ namespace AStarPathFinding
 				}
 			}
 
-			printNode(closedList);
-			print("can not find path");
 			return new List<Vector3> { beginWorldPos, endWorldPos };
 		}
 
@@ -131,24 +127,6 @@ namespace AStarPathFinding
 			Vector3 endWorldPos = TileMapManager.CellToWorld(endCellPos);
 
 			return TileMapManager.CanReachDirectly(beginWorldPos, endWorldPos);
-		}
-
-		private static void printNode(HashSet<Node> nodeList)
-		{
-			GameObject nodeListObj = GameObject.Find("NodeList");
-
-			for (int i = nodeListObj.transform.childCount - 1; i >= 0; i--)
-			{
-				Destroy(nodeListObj.transform.GetChild(i).gameObject);
-			}
-
-			foreach (var node in nodeList)
-			{
-				Vector3Int cellPos = new Vector3Int(node.X, node.Y, 0);
-				Vector3 worldPos = TileMapManager.CellToWorld(cellPos);
-				GameObject cube = Instantiate(Resources.Load<GameObject>("Prefab/Square"), nodeListObj.transform);
-				cube.transform.position = worldPos;
-			}
 		}
 	}
 }

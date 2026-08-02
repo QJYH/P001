@@ -130,7 +130,7 @@ public class Enemy : Creature
 		Vector3 targetPos;
 		if (CurrentStatus == EnemyStatus.Patrol)
 		{
-			if (CommonFunc.IsNear(transform.position, currentPatrolPos.Value))
+			if (CommonFunc.IsNear(transform.position, currentPatrolPos.Value, null))
 			{
 				currentPatrolPos = currentPatrolPos.Next;
 				if (currentPatrolPos == null)
@@ -161,7 +161,7 @@ public class Enemy : Creature
 			}
 			if (potentialTargetPosList.Count == 0)
 			{
-				targetPos = transform.position;
+				targetPos = heroPos;
 			}
 			else
 			{
@@ -175,31 +175,41 @@ public class Enemy : Creature
 			targetPos = transform.position;
 		}
 
-		if (!TileMapManager.CanReachDirectly(transform.position, targetPos))
+		if (!TileMapManager.IsInSameTile(transform.position, targetPos))
 		{
 			targetPos = GetTargetPosByPathfinding(transform.position, targetPos);
 		}
 
-		print(targetPos);
 		Vector3 targetVelocity = (targetPos - transform.position).normalized * maxBaseMoveSpeed;
-		print(targetVelocity);
 		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", targetVelocity);
 		GetComponent<Animator>().SetBool("IsMoving", (targetVelocity != Vector3.zero));
 		TryFlipX(targetVelocity);
 	}
 
-	private Vector3 GetTargetPosByPathfinding(Vector3 currentPos, Vector3 targetPos)
+	private Vector3 GetTargetPosByPathfinding(Vector3 beginWorldPos, Vector3 endWorldPos)
 	{
-		List<Vector3> path = AStar.FindPath(currentPos, targetPos);
+		List<Vector3> path = AStar.FindPath(beginWorldPos, endWorldPos);
 
-		print(currentPos);
-		print("print path");
-		foreach (var item in path)
+		Vector3 targetPos;
+		if (CommonFunc.IsNear(path[0].x, path[1].x, null))
 		{
-			print(item);
-		}print("print path end");
-		return path[1];
-		//return CommonFunc.IsNear(currentPos, path[0]) ? path[1] : path[0];
+			targetPos.x = path[0].x;
+			targetPos.y = (Mathf.Abs(beginWorldPos.y - path[1].y) > 1) ? path[0].y : beginWorldPos.y;
+			targetPos.y = (CommonFunc.IsNear(beginWorldPos.x, path[0].x, null)) ? path[1].y : targetPos.y;
+			targetPos.z = 0;
+		}
+		else if (CommonFunc.IsNear(path[0].y, path[1].y, null))
+		{
+			targetPos.x = (Mathf.Abs(beginWorldPos.x - path[1].x) > 1) ? path[0].x : beginWorldPos.x;
+			targetPos.x = (CommonFunc.IsNear(beginWorldPos.y, path[0].y, null)) ? path[1].x : targetPos.x;
+			targetPos.y = path[0].y;
+			targetPos.z = 0;
+		}
+		else
+		{
+			targetPos = endWorldPos;
+		}
+		return targetPos;
 	}
 
 	public void OnIdleAnimationBegin()
