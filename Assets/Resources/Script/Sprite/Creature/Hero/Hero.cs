@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using CommonEnum;
+using System.Collections;
 
 public class Hero : Creature
 {
@@ -9,6 +10,7 @@ public class Hero : Creature
 	private const float maxInputMoveAcceleration = 50f;
 	private const float maxRushSpeed = 20f;
 	private const float maxRushAcceleration = 200f;
+	private const float healValue = 1f;
 
 	public HeroStatus CurrentStatus { get; set; }
 	protected GameObject LightAttack { get; set; }
@@ -27,12 +29,18 @@ public class Hero : Creature
 	{
 		PlayerInput heroInput = GetComponent<PlayerInput>();
 		heroInput.onActionTriggered += OnActionTriggered;
+		OnDie.AddListener(OnHeroDie);
+		OnSubHp.AddListener(OnHeroSubHp);
+		OnHpChange.AddListener(OnHeroHpChange);
 	}
 
 	private void OnDisable()
 	{
 		PlayerInput heroInput = GetComponent<PlayerInput>();
 		heroInput.onActionTriggered -= OnActionTriggered;
+		OnDie.RemoveListener(OnHeroDie);
+		OnSubHp.RemoveListener(OnHeroSubHp);
+		OnHpChange.RemoveListener(OnHeroHpChange);
 	}
 
 	private void FixedUpdate()
@@ -73,6 +81,7 @@ public class Hero : Creature
 		if (context.phase != InputActionPhase.Started) return;
 
 		GetComponent<Animator>().SetTrigger("Heal");
+		ReceiveHeal(healValue);
 	}
 
 	private void Rush(InputAction.CallbackContext context)
@@ -171,12 +180,12 @@ public class Hero : Creature
 	}
 	public void OnDieAnimationBegin()
 	{
-		LevelDirector.OnHeroDie();
+		CurrentStatus = HeroStatus.Die;
 	}
 
 	public void OnDieAnimationEnd()
 	{
-		
+		CurrentStatus = HeroStatus.None;
 	}
 	private void HandleLightAttackInput(InputAction.CallbackContext context)
 	{
@@ -187,9 +196,24 @@ public class Hero : Creature
 		HeavyAttack.GetComponent<HeroHeavyAttack>().HandleHeavyAttackInput(context);
 	}
 
-	protected override void OnHpChange()
+	private void OnHeroDie()
 	{
-		PanelLevelHUD.OnHeroHpChange(Hp/MaxHp);
+		StartCoroutine(DelayCreatePanelHeroDie());
+	}
+	private IEnumerator DelayCreatePanelHeroDie()
+	{
+		yield return new WaitForSeconds(1.1f);
+		UICommonFunc.CreatePanel("PanelHeroDie", null);
+	}
+
+	private void OnHeroSubHp(float value)
+	{
+		//todo shake
+	}
+
+	private void OnHeroHpChange()
+	{
+		PanelLevelHUD.OnHeroHpChange(Hp / MaxHp);
 	}
 
 	public void CreateMeleeAttackRange()

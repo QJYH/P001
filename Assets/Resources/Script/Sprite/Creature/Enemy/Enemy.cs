@@ -1,12 +1,14 @@
-using BehaviorTree;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using CommonEnum;
 using AStarPathFinding;
+using BehaviorTree;
+using CommonEnum;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Enemy : Creature
 {
@@ -31,6 +33,18 @@ public class Enemy : Creature
 		InitPatrolPosList();
 		AddBehaviorTree();
 		AddBaseMoveVelocity();
+	}
+
+	private void OnEnable()
+	{
+		OnDie.AddListener(OnEnemyDie);
+		OnHpChange.AddListener(OnEnemyHpChange);
+	}
+
+	private void OnDisable()
+	{
+		OnDie.RemoveListener(OnEnemyDie);
+		OnHpChange.RemoveListener(OnEnemyHpChange);
 	}
 
 	private void Update()
@@ -128,6 +142,9 @@ public class Enemy : Creature
 	private void UpdateBaseMoveVelocity()
 	{
 		Vector3 targetPos;
+		BoxCollider2D creatureBlock = transform.Find("CreatureBlock").GetComponent<BoxCollider2D>();
+		Vector2 collisionOffset = creatureBlock.offset;
+		Vector2 collisionSize = creatureBlock.size;
 		if (CurrentStatus == EnemyStatus.Patrol)
 		{
 			if (CommonFunc.IsNear(transform.position, currentPatrolPos.Value, null))
@@ -151,23 +168,21 @@ public class Enemy : Creature
 			Vector3 potentialTargetPos1 = new Vector3(heroPos.x - detectRange.offset.x, heroPos.y - detectRange.offset.y);
 			Vector3 potentialTargetPos2 = new Vector3(heroPos.x + detectRange.offset.x, heroPos.y - detectRange.offset.y);
 
-			List<Vector3> potentialTargetPosList = new List<Vector3> { potentialTargetPos1, potentialTargetPos2 };
-			for (int i = potentialTargetPosList.Count - 1; i >= 0; i--)
+			bool canStandOnPos1 = TileMapManager.CanStandOnPosition(potentialTargetPos1, collisionOffset, collisionSize);
+			bool canStandOnPos2 = TileMapManager.CanStandOnPosition(potentialTargetPos2, collisionOffset, collisionSize);
+			if ( canStandOnPos1 && canStandOnPos2)
 			{
-				if (!TileMapManager.CanStandOnPosition(potentialTargetPosList[i]))
-				{
-					potentialTargetPosList.RemoveAt(i);
-				}
+				float distance1 = Vector2.Distance(transform.position, potentialTargetPos1);
+				float distance2 = Vector2.Distance(transform.position, potentialTargetPos2);
+				targetPos = (distance1 < distance2) ? potentialTargetPos1 : potentialTargetPos2;
 			}
-			if (potentialTargetPosList.Count == 0)
+			else if (canStandOnPos1 || canStandOnPos2)
 			{
-				targetPos = heroPos;
+				targetPos = canStandOnPos1 ? potentialTargetPos1 : potentialTargetPos2;
 			}
 			else
 			{
-				targetPos = potentialTargetPosList.OrderBy(
-					delegate (Vector3 potentialTargetPos) { return Vector3.Distance(potentialTargetPos, transform.position); }
-				).First();
+				targetPos = heroPos;
 			}
 		}
 		else
@@ -175,9 +190,9 @@ public class Enemy : Creature
 			targetPos = transform.position;
 		}
 
-		if (!TileMapManager.IsInSameTile(transform.position, targetPos))
+		if (!TileMapManager.CanReachDirectly(transform.position, targetPos, collisionOffset, collisionSize))
 		{
-			targetPos = GetTargetPosByPathfinding(transform.position, targetPos);
+			targetPos = GetTargetPosByPathfinding(transform.position, targetPos, collisionOffset, collisionSize);
 		}
 
 		Vector3 targetVelocity = (targetPos - transform.position).normalized * maxBaseMoveSpeed;
@@ -186,30 +201,12 @@ public class Enemy : Creature
 		TryFlipX(targetVelocity);
 	}
 
-	private Vector3 GetTargetPosByPathfinding(Vector3 beginWorldPos, Vector3 endWorldPos)
+	private Vector3 GetTargetPosByPathfinding(Vector3 beginWorldPos, Vector3 endWorldPos, Vector2 collisionOffset, Vector2 collisionSize)
 	{
-		List<Vector3> path = AStar.FindPath(beginWorldPos, endWorldPos);
+		List<Vector3> path = AStar.FindPath(beginWorldPos, endWorldPos, collisionOffset, collisionSize);
 
-		Vector3 targetPos;
-		if (CommonFunc.IsNear(path[0].x, path[1].x, null))
-		{
-			targetPos.x = path[0].x;
-			targetPos.y = (Mathf.Abs(beginWorldPos.y - path[1].y) > 1) ? path[0].y : beginWorldPos.y;
-			targetPos.y = (CommonFunc.IsNear(beginWorldPos.x, path[0].x, null)) ? path[1].y : targetPos.y;
-			targetPos.z = 0;
-		}
-		else if (CommonFunc.IsNear(path[0].y, path[1].y, null))
-		{
-			targetPos.x = (Mathf.Abs(beginWorldPos.x - path[1].x) > 1) ? path[0].x : beginWorldPos.x;
-			targetPos.x = (CommonFunc.IsNear(beginWorldPos.y, path[0].y, null)) ? path[1].x : targetPos.x;
-			targetPos.y = path[0].y;
-			targetPos.z = 0;
-		}
-		else
-		{
-			targetPos = endWorldPos;
-		}
-		return targetPos;
+		bool canReach = (TileMapManager.CanReachDirectly(beginWorldPos, path[1], collisionOffset, collisionSize));
+		return canReach ? path[1] : path[0];
 	}
 
 	public void OnIdleAnimationBegin()
@@ -234,18 +231,18 @@ public class Enemy : Creature
 	}
 	public void OnAttackAnimationEnd()
 	{
-		CurrentStatus = EnemyStatus.None;
 		runningAttack.GetComponent<EnemyAttack>().OnAttackEnd();
+		CurrentStatus = EnemyStatus.None;
 		runningAttack = null;
 	}
 	public void OnDieAnimationBegin()
 	{
-		enemyHpBar.SetActive(false);
+		CurrentStatus = EnemyStatus.Die;
 	}
 
 	public void OnDieAnimationEnd()
 	{
-		
+		CurrentStatus = EnemyStatus.None;
 	}
 
 	public bool HaveTarget()
@@ -253,7 +250,12 @@ public class Enemy : Creature
 		return (target != null);
 	}
 
-	protected override void OnHpChange()
+	private void OnEnemyDie()
+	{
+		enemyHpBar.SetActive(false);
+	}
+
+	private void OnEnemyHpChange()
 	{
 		enemyHpBar.GetComponent<Slider>().value = Hp / MaxHp;
 	}

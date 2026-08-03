@@ -37,9 +37,9 @@ namespace AStarPathFinding
 
 	public class AStar : MonoBehaviour
 	{
-		public static List<Vector3> FindPath(Vector3 beginWorldPos, Vector3 endWorldPos)
+		public static List<Vector3> FindPath(Vector3 beginWorldPos, Vector3 endWorldPos, Vector2 collisionOffset, Vector2 collisionSize)
 		{
-			if (!TileMapManager.CanStandOnPosition(endWorldPos))
+			if (!TileMapManager.CanStandOnPosition(endWorldPos, collisionOffset, collisionSize))
 			{
 				return new List<Vector3> { beginWorldPos, endWorldPos }; ;
 			}
@@ -66,7 +66,7 @@ namespace AStarPathFinding
 
 				foreach (var neighborNode in GetNeighbors(currentNode))
 				{
-					if (!CanReachDirectly(currentNode, neighborNode) || closedList.Contains(neighborNode))
+					if (!CanReachDirectly(currentNode, neighborNode, collisionOffset, collisionSize) || closedList.Contains(neighborNode))
 					{
 						continue;
 					}
@@ -119,14 +119,14 @@ namespace AStarPathFinding
 			return neighbors;
 		}
 
-		private static bool CanReachDirectly(Node beginNode, Node endNode)
+		private static bool CanReachDirectly(Node beginNode, Node endNode, Vector2 collisionOffset, Vector2 collisionSize)
 		{
 			Vector3Int beginCellPos = new Vector3Int(beginNode.X, beginNode.Y, 0);
 			Vector3Int endCellPos = new Vector3Int(endNode.X, endNode.Y, 0);
 			Vector3 beginWorldPos = TileMapManager.CellToWorld(beginCellPos);
 			Vector3 endWorldPos = TileMapManager.CellToWorld(endCellPos);
 
-			return TileMapManager.CanReachDirectly(beginWorldPos, endWorldPos);
+			return TileMapManager.CanReachDirectly(beginWorldPos, endWorldPos, collisionOffset, collisionSize);
 		}
 	}
 }

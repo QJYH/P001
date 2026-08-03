@@ -71,30 +71,33 @@ public class TileMapManager : MonoBehaviour
 		return false;
 	}
 
-	private static bool HaveBlockOnCell(Vector3Int cellPos)
+	private static bool HaveBlockOnPosition(Vector2 worldPos, Vector2 collisionOffset, Vector2 collisionSize)
 	{
-		Vector3 worldPos = CellToWorld(cellPos);
 		LayerMask obstacleLayer = LayerMask.GetMask("EnvironmentBlock", "Edge");
-		Collider2D hit = Physics2D.OverlapCircle(worldPos, 0.45f, obstacleLayer);
+		Collider2D hit = Physics2D.OverlapBox(worldPos + collisionOffset, collisionSize, 0, obstacleLayer);
 		return hit;
 	}
 
-	private static bool HaveBlockOnLine(Vector3 beginWorldPos, Vector3 endWorldPos)
+	private static bool HaveBlockOnLine(Vector2 beginWorldPos, Vector2 endWorldPos, Vector2 collisionOffset, Vector2 collisionSize)
 	{
 		LayerMask obstacleLayer = LayerMask.GetMask("EnvironmentBlock", "Edge");
-		RaycastHit2D hit = Physics2D.Linecast(beginWorldPos, endWorldPos, obstacleLayer);
+		Vector2 direction = (endWorldPos - beginWorldPos).normalized;
+		float distance = Vector2.Distance(beginWorldPos, endWorldPos);
+		RaycastHit2D hit = Physics2D.BoxCast(beginWorldPos + collisionOffset, collisionSize, 0, direction, distance, obstacleLayer);
 		return hit;
 	}
 
-	public static bool CanStandOnPosition(Vector3 worldPos)
+	public static bool CanStandOnPosition(Vector3 worldPos, Vector2 collisionOffset, Vector2 collisionSize)
 	{
 		Vector3Int cellPos = WorldToCell(worldPos);
-		return IsTileSolid(cellPos) && (!HaveBlockOnCell(cellPos));
+		return IsTileSolid(cellPos) && (!HaveBlockOnPosition(worldPos, collisionOffset, collisionSize));
 	}
 
-	public static bool CanReachDirectly(Vector3 beginWorldPos, Vector3 endWorldPos)
+	public static bool CanReachDirectly(Vector3 beginWorldPos, Vector3 endWorldPos, Vector2 collisionOffset, Vector2 collisionSize)
 	{
-		return CanStandOnPosition(endWorldPos) && (!HaveBlockOnLine(beginWorldPos, endWorldPos));
+		bool canStandOnPosition = CanStandOnPosition(endWorldPos, collisionOffset, collisionSize);
+		bool haveBlockOnLine = HaveBlockOnLine(beginWorldPos, endWorldPos, collisionOffset, collisionSize);
+		return canStandOnPosition && (!haveBlockOnLine);
 	}
 
 	public static Vector3Int WorldToCell(Vector3 worldPosition)

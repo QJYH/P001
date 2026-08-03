@@ -18,7 +18,8 @@ namespace CommonEnum
 		Rush,
 		LightAttack,
 		HeavyAttack,
-		Heal
+		Heal,
+		Die
 	}
 
 	public enum EnemyStatus
@@ -28,6 +29,7 @@ namespace CommonEnum
 		Rest,
 		Chase,
 		Attack,
+		Die
 	}
 }
 

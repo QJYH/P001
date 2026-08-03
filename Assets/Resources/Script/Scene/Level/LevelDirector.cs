@@ -59,18 +59,5 @@ public class LevelDirector : SceneDirector
 	private void CreateHUD()
 	{
 		UICommonFunc.CreatePanel("PanelLevelHUD", null);
-	}
-
-	public static void OnHeroDie()
-	{
-		if (LevelInstance == null) return;
-
-		LevelInstance.StartCoroutine(LevelInstance.DelayCreatePanelHeroDie());
-	}
-
-	private IEnumerator DelayCreatePanelHeroDie()
-	{
-		yield return new WaitForSeconds(1.1f);
-		UICommonFunc.CreatePanel("PanelHeroDie", null);
-	}
+	}	
 }

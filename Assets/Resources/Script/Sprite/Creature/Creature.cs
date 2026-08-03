@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -12,8 +13,12 @@ public class Creature : MonoBehaviour
 
 	protected virtual float MaxHp { get; } = 0;
 	protected GameObject CreatureCanvas { get; private set; }
-	protected float Hp { get; set; }
+	protected float Hp { get; private set; }
 	protected Vector2 Facing { get; set; } = Vector2.right;
+	protected UnityEvent<float> OnSubHp = new UnityEvent<float>();
+	protected UnityEvent<float> OnAddHp = new UnityEvent<float>();
+	protected UnityEvent OnHpChange = new UnityEvent();
+	protected UnityEvent OnDie = new UnityEvent();
 
 	protected virtual void Awake()
 	{
@@ -62,15 +67,43 @@ public class Creature : MonoBehaviour
 
 	protected virtual void ReceiveHarm(float harmValue)
 	{
-		if (harmValue <= 0) return;
+		SubHp(harmValue);
+	}
 
-		ChangeHp(Hp - harmValue);
+	protected void ReceiveHeal(float healValue)
+	{
+		AddHp(healValue);
+	}
+
+	private void SubHp(float value)
+	{
+		if (IsDead()) return;
+		if (value <= 0) return;
+
+		float originalHp = Hp;
+		Hp -= value;
+		Hp = Mathf.Max(Hp, 0);
+		OnSubHp.Invoke(originalHp - Hp);
+		OnHpChange.Invoke();
+
 		ShowHurtEffect();
-
 		if (Hp <= 0)
 		{
 			Die();
 		}
+	}
+
+	private void AddHp(float value)
+	{
+		if (IsDead()) return;
+		if (value <= 0) return;
+		if (Hp == MaxHp) return;
+
+		float originalHp = Hp;
+		Hp += value;
+		Hp = Mathf.Min(Hp, MaxHp);
+		OnAddHp.Invoke(Hp - originalHp);
+		OnHpChange.Invoke();
 	}
 
 	private void ShowHurtEffect()
@@ -91,21 +124,11 @@ public class Creature : MonoBehaviour
 		).SetLoops(2, LoopType.Yoyo);
 	}
 
-	private void ChangeHp(float v)
-	{
-		Hp = v;
-		OnHpChange();
-	}
-
-	protected virtual void OnHpChange()
-	{
-
-	}
-
 	protected virtual void Die()
 	{
 		GetComponent<Animator>().SetTrigger("Die");
 		GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+		OnDie.Invoke();
 
 		enabled = false;
 	}
