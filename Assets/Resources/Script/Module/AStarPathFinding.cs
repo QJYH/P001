@@ -106,10 +106,10 @@ namespace AStarPathFinding
 		private static List<Node> GetNeighbors(Node node)
 		{
 			List<Node> neighbors = new List<Node>();
-			int[] dx = { -1, 1, 0, 0 };
-			int[] dy = { 0, 0, -1, 1 };
+			int[] dx = { -1, -1, -1, 0,  0, 1, 1,  1 };
+			int[] dy = {  1,  0, -1, 1, -1, 1, 0, -1 };
 
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 8; i++)
 			{
 				int nx = node.X + dx[i];
 				int ny = node.Y + dy[i];

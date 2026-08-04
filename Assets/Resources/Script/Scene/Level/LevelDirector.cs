@@ -17,8 +17,6 @@ public class LevelDirector : SceneDirector
 		LevelInstance = this;
 		AddModule();
 		AddHero();
-		SetCameraEdge();
-		SetCameraTarget();
 		CreateHUD();
 	}
 
@@ -29,25 +27,12 @@ public class LevelDirector : SceneDirector
 
 	private void AddHero()
 	{
-		GameObject entrance = GameObject.Find("Entrance1");
+		GameObject entrance = GameObject.Find("Entrance");
 		Vector3 entrancePos = entrance.transform.position;
 		CurrentHero = Instantiate(Resources.Load<GameObject>("Prefab/Sprite/Creature/Hero/Warrior/Warrior"));
 		CurrentHero.transform.position = entrancePos;
-
-	}
-	private void SetCameraEdge()
-	{
-		GameObject cameraEdge = GameObject.Find("CameraArea");
-		if (cameraEdge != null)
-		{
-			CinemachineConfiner2D cinemachineConfiner2D = VirtualCamera.GetComponent<CinemachineConfiner2D>();
-			cinemachineConfiner2D.m_BoundingShape2D = cameraEdge.GetComponent<PolygonCollider2D>();
-			cinemachineConfiner2D.InvalidateCache();
-		}
-	}
-	private void SetCameraTarget()
-	{
 		VirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = CurrentHero.transform;
+
 	}
 
 	protected override Vector2 GetRevealCenter()

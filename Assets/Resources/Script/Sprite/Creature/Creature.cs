@@ -19,6 +19,7 @@ public class Creature : MonoBehaviour
 	protected UnityEvent<float> OnAddHp = new UnityEvent<float>();
 	protected UnityEvent OnHpChange = new UnityEvent();
 	protected UnityEvent OnDie = new UnityEvent();
+	private Tween hurtEffectTween;
 
 	protected virtual void Awake()
 	{
@@ -110,7 +111,9 @@ public class Creature : MonoBehaviour
 	{
 		if (Hp <= 0) return;
 
-		DOTween.To(
+		hurtEffectTween?.Kill();
+		GetComponent<SpriteRenderer>().color = Color.white;
+		hurtEffectTween = DOTween.To(
 			delegate ()
 			{
 				return GetComponent<SpriteRenderer>().color;
@@ -119,7 +122,7 @@ public class Creature : MonoBehaviour
 			{
 				GetComponent<SpriteRenderer>().color = color;
 			},
-			new Vector4(1f, 0.5f, 0.5f, 1),
+			new Color(1f, 0.5f, 0.5f, 1),
 			hurtDuration/2
 		).SetLoops(2, LoopType.Yoyo);
 	}

@@ -13,6 +13,7 @@ public class PanelLevelHUD : Panel
 	public static PanelLevelHUD Instance { get; private set; }
 	private Tween goldImageScaleTween;
 	private Tween goldCountTextUpdateTween;
+	private Tween hpSliderUpdateTween;
 	private int realGoldCount = 0;
 	private int nominalGoldCount = 0;
 
@@ -25,14 +26,29 @@ public class PanelLevelHUD : Panel
 		Instance = null;
 
 		goldImageScaleTween?.Kill();
+		goldCountTextUpdateTween?.Kill();
+		hpSliderUpdateTween?.Kill();
+
 	}
 
 	public static void OnHeroHpChange(float hpRate)
 	{
 		if (Instance == null) return;
 
+		Instance.hpSliderUpdateTween?.Kill();
 		Transform sliderHp = Instance.transform.Find("TopLeft/ImageAvatar/SliderHp");
-		sliderHp.GetComponent<Slider>().value = hpRate;
+		Instance.hpSliderUpdateTween = DOTween.To(
+			delegate ()
+			{
+				return sliderHp.GetComponent<Slider>().value;
+			},
+			delegate (float value)
+			{
+				sliderHp.GetComponent<Slider>().value = value;
+			},
+			hpRate,
+			1f
+		);
 	}
 
 	public static Vector2 GetGoldIconScreenPos()

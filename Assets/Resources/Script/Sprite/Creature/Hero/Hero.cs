@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using CommonEnum;
 using System.Collections;
+using Cinemachine;
 
 public class Hero : Creature
 {
@@ -208,7 +209,7 @@ public class Hero : Creature
 
 	private void OnHeroSubHp(float value)
 	{
-		//todo shake
+		GetComponent<CinemachineImpulseSource>().GenerateImpulse();
 	}
 
 	private void OnHeroHpChange()

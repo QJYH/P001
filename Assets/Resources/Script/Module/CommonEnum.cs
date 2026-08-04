@@ -25,7 +25,8 @@ namespace CommonEnum
 	public enum EnemyStatus
 	{
 		None,
-		Patrol,
+		PatrolRun,
+		PatrolWatch,
 		Rest,
 		Chase,
 		Attack,

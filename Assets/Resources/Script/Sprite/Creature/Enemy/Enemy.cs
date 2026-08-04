@@ -16,13 +16,12 @@ public class Enemy : Creature
 	private const float maxBaseMoveAcceleration = 50f;
 
 	public EnemyStatus CurrentStatus { get; set; }
+	public Vector3 CurrentPatrolPos { set; get; }
 	protected List<GameObject> AttackList { get; private set; } = new List<GameObject>();
 
 	private GameObject runningAttack;
 	private GameObject enemyHpBar;
 	private Hero target;
-	private LinkedList<Vector2> patrolPosList = new LinkedList<Vector2>();
-	private LinkedListNode<Vector2> currentPatrolPos;
 	private Selector behaviorTree;
 
 	protected override void Awake()
@@ -30,7 +29,6 @@ public class Enemy : Creature
 		base.Awake();
 		InitHpBar();
 		InitAttackList();
-		InitPatrolPosList();
 		AddBehaviorTree();
 		AddBaseMoveVelocity();
 	}
@@ -62,16 +60,6 @@ public class Enemy : Creature
 	protected virtual void InitAttackList()
 	{
 		throw new NotImplementedException();
-	}
-
-	private void InitPatrolPosList()
-	{
-		Vector2 currentPos = transform.position;
-		Vector2 patrolPos1 = new Vector2(currentPos.x - 2, currentPos.y);
-		Vector2 patrolPos2 = new Vector2(currentPos.x + 2, currentPos.y);
-		patrolPosList.AddLast(patrolPos1);
-		patrolPosList.AddLast(patrolPos2);
-		currentPatrolPos = patrolPosList.First;
 	}
 
 	private void InitHpBar()
@@ -106,7 +94,8 @@ public class Enemy : Creature
 
 		Sequence patrolSeq = new Sequence();
 		patrolSeq.AddChild(new PatrolCondition(this));
-		patrolSeq.AddChild(new Patrol(this));
+		patrolSeq.AddChild(new PatrolRun(this));
+		patrolSeq.AddChild(new PatrolWatch(this));
 		behaviorTree.AddChild(patrolSeq);
 
 		behaviorTree.Tick();
@@ -145,17 +134,9 @@ public class Enemy : Creature
 		BoxCollider2D creatureBlock = transform.Find("CreatureBlock").GetComponent<BoxCollider2D>();
 		Vector2 collisionOffset = creatureBlock.offset;
 		Vector2 collisionSize = creatureBlock.size;
-		if (CurrentStatus == EnemyStatus.Patrol)
+		if (CurrentStatus == EnemyStatus.PatrolRun)
 		{
-			if (CommonFunc.IsNear(transform.position, currentPatrolPos.Value, null))
-			{
-				currentPatrolPos = currentPatrolPos.Next;
-				if (currentPatrolPos == null)
-				{
-					currentPatrolPos = patrolPosList.First;
-				}
-			}
-			targetPos = currentPatrolPos.Value;
+			targetPos = CurrentPatrolPos;
 		}
 		else if (CurrentStatus == EnemyStatus.Chase)
 		{

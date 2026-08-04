@@ -40,8 +40,15 @@ public class SceneDirector : MonoBehaviour
 	private void InitCamera()
 	{
 		MainCamera = GameObject.FindAnyObjectByType<Camera>().gameObject;
-		VirtualCamera = Instantiate(Resources.Load<GameObject>("Prefab/Module/VirtualCamera"));
 		MainCamera.AddComponent<CinemachineBrain>();
+		VirtualCamera = Instantiate(Resources.Load<GameObject>("Prefab/Module/Camera/VirtualCamera"));
+		GameObject cameraEdge = GameObject.Find("CameraArea");
+		if (cameraEdge != null)
+		{
+			CinemachineConfiner2D cinemachineConfiner2D = VirtualCamera.GetComponent<CinemachineConfiner2D>();
+			cinemachineConfiner2D.m_BoundingShape2D = cameraEdge.GetComponent<PolygonCollider2D>();
+			cinemachineConfiner2D.InvalidateCache();
+		}
 	}
 
 	private void InitCanvas()
