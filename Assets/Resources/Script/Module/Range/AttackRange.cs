@@ -31,6 +31,13 @@ private void Start()
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
+		if (collision.GetComponent<Projectile>())
+		{
+			Projectile projectile = collision.GetComponent<Projectile>();
+			TryStrikeProjectileBack(projectile);
+			return;
+		}
+
 		Creature receiver = null;
 		if (TargetType == TargetType.Hero)
 		{
@@ -43,6 +50,14 @@ private void Start()
 			if (receiver == null) return;
 		}
 		Creature.HandleAttack(Attacker, receiver, HarmInfo);
+	}
+
+	private void TryStrikeProjectileBack(Projectile projectile)
+	{
+		if ((Attacker is Hero) && (TargetType == TargetType.Enemy) && (projectile.Owner is Enemy))
+		{
+			projectile.OnHeroStrikeBack(Attacker);
+		}
 	}
 
 	public static GameObject CreateAttackRangeObject(string attackRangeDirName, Creature attacker, HarmInfo harmInfo, TargetType targetType, float durationTime)

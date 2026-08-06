@@ -1,32 +1,44 @@
 using CommonEnum;
+using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-	private const float destoryDelayTime = 0.1f;
+	private const float collisionDestroyDelayTime = 0.3f;
+	private const float maxExistTime = 5f;
 	private enum Status
 	{
 		Running,
 		ToBeDestory
 	}
-	
-	public Vector2 Direction { get; set; }
+
+	public Creature Owner { get; set; }
 	public GameObject Target { get; set; }
 	public TargetType TargetType { get; set; }
-	public Creature Owner { get; set; }
 	public HarmInfo HarmInfo { get; set; }
+	public Vector2 Direction { get; set; }
 	protected virtual float MaxSpeed { get; set; } = 0;
 	protected virtual float MaxAcceleration { get; set; } = 0;
-	protected virtual float MaxExistTime { get; set; } = 5f;
 	private Status currentStatus;
+	private Sequence delayDestorySequence;
 
 	private void Start()
 	{
 		currentStatus = Status.Running;
 		AddBaseMoveVelocity();
-		StartCoroutine(DelayDestory(MaxExistTime));
+		DelayDestory(maxExistTime);
+	}
+
+	private void OnDestroy()
+	{
+		delayDestorySequence?.Kill();
+	}
+
+	private void FixedUpdate()
+	{
+		TryFollowTarget();
 	}
 
 	private void AddBaseMoveVelocity()
@@ -34,11 +46,6 @@ public class Projectile : MonoBehaviour
 		Vector2 targetVelocity = Direction * MaxSpeed;
 		Velocity velocity = new Velocity(Vector2.zero, targetVelocity, MaxAcceleration);
 		GetComponent<MoveManager>().AddVelocity("_BaseMove", velocity);
-	}
-
-	private void FixedUpdate()
-	{
-		TryFollowTarget();
 	}
 
 	private void TryFollowTarget()
@@ -54,8 +61,8 @@ public class Projectile : MonoBehaviour
 		if (LayerMask.LayerToName(collision.gameObject.layer) == "EnvironmentBlock")
 		{
 			currentStatus = Status.ToBeDestory;
-			GetComponent<MoveManager>().RemoveAllVelocity();
-			StartCoroutine(DelayDestory(destoryDelayTime));
+			GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", Vector2.zero);
+			DelayDestory(collisionDestroyDelayTime);
 			return;
 		}
 
@@ -72,8 +79,8 @@ public class Projectile : MonoBehaviour
 		}
 		CreateProjectileAttackRange();
 		currentStatus = Status.ToBeDestory;
-		GetComponent<MoveManager>().RemoveAllVelocity();
-		StartCoroutine(DelayDestory(destoryDelayTime));
+		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", Vector2.zero);
+		DelayDestory(collisionDestroyDelayTime);
 	}
 
 	protected virtual void CreateProjectileAttackRange()
@@ -81,10 +88,30 @@ public class Projectile : MonoBehaviour
 		throw new NotImplementedException();
 	}
 
-	private IEnumerator DelayDestory(float durationTime)
+	private void DelayDestory(float delayTime)
 	{
-		yield return new WaitForSeconds(durationTime);
+		delayDestorySequence?.Kill();
 
-		GameObject.Destroy(gameObject);
+		delayDestorySequence = DOTween.Sequence();
+		delayDestorySequence.AppendInterval(delayTime);
+		delayDestorySequence.AppendCallback(() => { GameObject.Destroy(gameObject); });
+	}
+
+	public void OnHeroStrikeBack(Creature attacker)
+	{
+		if (Target)
+		{
+			Target = Owner.gameObject;
+		}
+
+		Direction = new Vector2(-Direction.x, -Direction.y);
+		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", Direction * MaxSpeed);
+		TargetType = TargetType.Enemy;
+		Owner = attacker;
+		currentStatus = Status.Running;
+		DelayDestory(maxExistTime);
+		
+		
+		
 	}
 }
