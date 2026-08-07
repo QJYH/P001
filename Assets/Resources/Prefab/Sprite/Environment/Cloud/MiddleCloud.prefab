@@ -21,6 +21,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: ed913e18216254ce6a098078c02ef683, type: 3}
     - target: {fileID: 3047567518365807276, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
+      propertyPath: m_SortingLayer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047567518365807276, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1155353215
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047567518365807276, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
@@ -70,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8337730439191987302, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
       propertyPath: m_Name
-      value: MiddleCloud Variant
+      value: MiddleCloud
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
