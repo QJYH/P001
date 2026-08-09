@@ -17,6 +17,7 @@ public class LevelDirector : SceneDirector
 		LevelInstance = this;
 		AddModule();
 		AddHero();
+		AddBlockRecordRange();
 		CreateHUD();
 	}
 
@@ -32,7 +33,11 @@ public class LevelDirector : SceneDirector
 		CurrentHero = Instantiate(Resources.Load<GameObject>("Prefab/Sprite/Creature/Hero/Warrior/Warrior"));
 		CurrentHero.transform.position = entrancePos;
 		VirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = CurrentHero.transform;
+	}
 
+	private void AddBlockRecordRange()
+	{
+		Instantiate(Resources.Load<GameObject>("Prefab/Module/Range/BlockRecordRange"));
 	}
 
 	protected override Vector2 GetRevealCenter()

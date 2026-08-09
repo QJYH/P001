@@ -16,6 +16,6 @@ public class OrderInLayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		spriteRenderer.sortingOrder = (int)-(transform.position.y * 64 + verticalOffset);
+		spriteRenderer.sortingOrder = (int)-(transform.position.y * CommonConst.PixelPerUnit + verticalOffset);
 	}
 }

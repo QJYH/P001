@@ -34,8 +34,13 @@ public class CircleRevealMask : MonoBehaviour
 
 	private void Scale()
 	{
+		Camera mainCamera = SceneDirector.SceneInstance.MainCamera.GetComponent<Camera>();
+		Vector3 bottomLeftWorldPos = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0));
+		Vector3 topRightWorldPos = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
 		Vector2 spriteSize = GetComponent<SpriteRenderer>().sprite.rect.size;
-		transform.localScale = new Vector2(Screen.width / spriteSize.x, Screen.height / spriteSize.y);
+		float screenWidth = (topRightWorldPos.x - bottomLeftWorldPos.x) * CommonConst.PixelPerUnit;
+		float screenHeight = (topRightWorldPos.y - bottomLeftWorldPos.y) * CommonConst.PixelPerUnit;
+		transform.localScale = new Vector2(screenWidth / spriteSize.x, screenHeight / spriteSize.y);
 	}
 
 	// Update is called once per frame

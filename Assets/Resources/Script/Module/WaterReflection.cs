@@ -15,7 +15,7 @@ public class WaterReflection : MonoBehaviour
 		spriteRenderer.color = new Color(0.6f, 0.8f, 1f, 0.4f);
 
 		float verticalOffset = transform.parent.GetComponent<OrderInLayerManager>().verticalOffset;
-		transform.localPosition = new Vector3(transform.localPosition.x, (2 * verticalOffset - 10) / 64, 0);
+		transform.localPosition = new Vector3(transform.localPosition.x, (2 * verticalOffset - 10) / CommonConst.PixelPerUnit, 0);
 
 	}
 
