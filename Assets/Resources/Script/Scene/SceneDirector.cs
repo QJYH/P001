@@ -18,7 +18,7 @@ public class SceneDirector : MonoBehaviour
 	protected virtual void Awake()
 	{
 		SceneInstance = this;
-		Application.targetFrameRate = 75;
+		Application.targetFrameRate = 60;
 		InitCamera();
 		InitCanvas();
 	}

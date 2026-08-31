@@ -1,22 +1,17 @@
-using System;
-using System.CodeDom.Compiler;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class BlockRecordRange : Range
 {
 	private const int blockTextureBlurTimes = 8;
-	private const float updateBlockTextureInterval = 0.1f;
+	private const float updateBlockTextureInterval = 0.05f;
 
 
 	private Dictionary<int, GameObject> colliderDict = new Dictionary<int, GameObject>();
 	private Texture2D blockTexture;
 	private Camera mainCamera;
 	private float lastUpdateBlockTextureTime = 0;
-	private int savedTimes = 0;
 
 	// Start is called before the first frame update
 	void Start()
@@ -82,15 +77,18 @@ public class BlockRecordRange : Range
 			}
 		}
 		blockTexture.Apply();
+		Material enemy = Resources.Load<Material>("Material/Enemy");
+		enemy.SetTexture("_BlockTexture2D", blockTexture);
 
-		//if (savedTimes < 0)
-		//{
-		//	savedTimes += 1;
-		//	string desktopPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
-		//	string fullPath = Path.Combine(desktopPath, "blocktexture.png");
-		//	byte[] bytes = ImageConversion.EncodeToPNG(blockTexture);
-		//	File.WriteAllBytes(fullPath, bytes);
-		//}
+		//SaveTexture(blockTexture);
+	}
+
+	private void SaveTexture(Texture2D blockTexture)
+	{
+		string desktopPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
+		string fullPath = Path.Combine(desktopPath, "blocktexture.png");
+		byte[] bytes = ImageConversion.EncodeToPNG(blockTexture);
+		File.WriteAllBytes(fullPath, bytes);
 	}
 
 	private void FollowCamera()

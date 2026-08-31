@@ -1,15 +1,32 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
 public class FogTileMap : MonoBehaviour
 {
 	private const float disappearDuration = 5f;
 
+	private HeroTriggerRange heroTriggerRange;
 	private TilemapRenderer tilemapRenderer;
 	private MaterialPropertyBlock propertyBlock;
 	private float disappearThreshold;
 	private Tween disappearTween;
+
+	private void Awake()
+	{
+		heroTriggerRange = GetComponentInChildren<HeroTriggerRange>();
+	}
+
+	private void OnEnable()
+	{
+		heroTriggerRange.OnHeroEnter.AddListener(OnHeroEnter);
+	}
+
+	private void OnDisable()
+	{
+		heroTriggerRange.OnHeroEnter.RemoveListener(OnHeroEnter);
+	}
 
 	private void Start()
 	{
@@ -18,7 +35,6 @@ public class FogTileMap : MonoBehaviour
 		tilemapRenderer.GetPropertyBlock(propertyBlock);
 		SetDisappearThreshold(0);
 		SetTileMapData();
-		StartDisappear();
 	}
 
 	private void SetTileMapData()
@@ -40,9 +56,9 @@ public class FogTileMap : MonoBehaviour
 		tilemapRenderer.SetPropertyBlock(propertyBlock);
 	}
 
-	public void StartDisappear()
+	public void OnHeroEnter()
 	{
-		DOTween.To(
+		disappearTween = DOTween.To(
 			delegate ()
 			{
 				return disappearThreshold;

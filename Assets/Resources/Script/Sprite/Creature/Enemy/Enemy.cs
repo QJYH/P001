@@ -49,7 +49,7 @@ public class Enemy : Creature
 	{
 		UpdateTarget();
 		UpdateBehaviorTree();
-
+		UpdateVisual();
 	}
 
 	private void FixedUpdate()
@@ -104,6 +104,15 @@ public class Enemy : Creature
 	private void UpdateBehaviorTree()
 	{
 		behaviorTree.Tick();
+	}
+
+	private void UpdateVisual()
+	{
+		LayerMask obstacleLayer = LayerMask.GetMask("EnvironmentBlock");
+		Vector3 heroPos = LevelDirector.LevelInstance.CurrentHero.transform.position;
+		bool haveBlock = Physics2D.Linecast(transform.position, heroPos, obstacleLayer);
+		GetComponent<SpriteRenderer>().enabled = !haveBlock;
+		enemyHpBar.SetActive(!haveBlock);
 	}
 
 	private void UpdateTarget()
@@ -186,7 +195,7 @@ public class Enemy : Creature
 	{
 		List<Vector3> path = AStar.FindPath(beginWorldPos, endWorldPos, collisionOffset, collisionSize);
 
-		bool canReach = (TileMapManager.CanReachDirectly(beginWorldPos, path[1], collisionOffset, collisionSize));
+		bool canReach = TileMapManager.CanReachDirectly(beginWorldPos, path[1], collisionOffset, collisionSize);
 		return canReach ? path[1] : path[0];
 	}
 
@@ -233,7 +242,7 @@ public class Enemy : Creature
 
 	private void OnEnemyDie()
 	{
-		enemyHpBar.SetActive(false);
+		Destroy(enemyHpBar);
 	}
 
 	private void OnEnemyHpChange()
