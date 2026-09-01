@@ -1,11 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using Unity.Collections;
 using UnityEngine;
 
 public class BlockRecordRange : Range
 {
-	private const int blockTextureBlurTimes = 8;
-	private const float updateBlockTextureInterval = 0.05f;
+	private const int textureBlurTimes = 4;
+	private const float updateBlockTextureInterval = 0f;
 
 
 	private Dictionary<int, GameObject> colliderDict = new Dictionary<int, GameObject>();
@@ -23,7 +25,7 @@ public class BlockRecordRange : Range
 
 	private void InitBlockTexture()
 	{
-		blockTexture = new Texture2D(Screen.width / blockTextureBlurTimes, Screen.height / blockTextureBlurTimes);
+		blockTexture = new Texture2D(Screen.width / textureBlurTimes, Screen.height / textureBlurTimes, TextureFormat.RGBA32, false, true);
 	}
 
 	private void SetColliderSize()
@@ -38,7 +40,17 @@ public class BlockRecordRange : Range
     {
 		FollowCamera();
 		UpdateBlockTexture();
+		UpdateHeroPosition();
     }
+
+	private void UpdateHeroPosition()
+	{
+		GameObject hero = LevelDirector.LevelInstance.CurrentHero;
+		GameObject mainCamera = SceneDirector.SceneInstance.MainCamera;
+		Vector3 screenPos = mainCamera.GetComponent<Camera>().WorldToScreenPoint(hero.transform.position);
+		Vector2 heroScreenPos = new Vector2(screenPos.x / Screen.width, screenPos.y / Screen.height);
+		Resources.Load<Material>("Material/Enemy").SetVector("_HeroScreenPos", heroScreenPos);
+	}
 
 	private void UpdateBlockTexture()
 	{  
@@ -47,13 +59,14 @@ public class BlockRecordRange : Range
 
 		int textureWidth = blockTexture.width;
 		int textureHeight = blockTexture.height;
-		for (int x = 0; x < textureWidth; x++)
+		Color32 white = new Color32(255, 255, 255, 255);
+		Color32 black = new Color32(0, 0, 0, 0);
+		var rawTextureData = blockTexture.GetRawTextureData<Color32>();
+		for (int i = 0; i < rawTextureData.Length; i++)
 		{
-			for (int y = 0; y < textureHeight; y++)
-			{
-				blockTexture.SetPixel(x, y, Color.white);
-			}
+			rawTextureData[i] = white;
 		}
+	
 		foreach (var keyValuePair in colliderDict)
 		{
 			Vector3 gameObjectPos = keyValuePair.Value.transform.position;
@@ -62,17 +75,18 @@ public class BlockRecordRange : Range
 			Vector3 topRightWorldPos = new Vector3(gameObjectPos.x + collider2D.offset.x + collider2D.size.x / 2, gameObjectPos.y + collider2D.offset.y + collider2D.size.y / 2, 0);
 			Vector3 bottomLeftScreenPos = mainCamera.WorldToScreenPoint(bottomLeftWorldPos);
 			Vector3 topRightScreenPos = mainCamera.WorldToScreenPoint(topRightWorldPos);
-			Vector2Int bottomLeftTexturePos = new Vector2Int((int)(bottomLeftScreenPos.x / blockTextureBlurTimes), (int)(bottomLeftScreenPos.y / blockTextureBlurTimes));
-			Vector2Int topRightTexturePos = new Vector2Int((int)(topRightScreenPos.x / blockTextureBlurTimes), (int)(topRightScreenPos.y / blockTextureBlurTimes));
+			Vector2Int bottomLeftTexturePos = new Vector2Int((int)(bottomLeftScreenPos.x / textureBlurTimes), (int)(bottomLeftScreenPos.y / textureBlurTimes));
+			Vector2Int topRightTexturePos = new Vector2Int((int)(topRightScreenPos.x / textureBlurTimes), (int)(topRightScreenPos.y / textureBlurTimes));
 
-			for (int x = bottomLeftTexturePos.x; x <= topRightTexturePos.x; x++)
+			int minY = Mathf.Max(bottomLeftTexturePos.y, 0);
+			int maxY = Mathf.Min(topRightTexturePos.y, textureHeight - 1);
+			int minX = Mathf.Max(bottomLeftTexturePos.x, 0);
+			int maxX = Mathf.Min(topRightTexturePos.x, textureWidth - 1);
+			for (int y = minY; y <= maxY; y++)
 			{
-				for (int y = bottomLeftTexturePos.y; y <= topRightTexturePos.y; y++)
+				for (int x = minX; x <= maxX; x++)
 				{
-					if ((x < 0) || (x >= textureWidth)) continue;
-					if ((y < 0) || (y >= textureHeight)) continue;
-
-					blockTexture.SetPixel(x, y, Color.black);
+					rawTextureData[y * textureWidth + x] = black;
 				}
 			}
 		}

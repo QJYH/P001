@@ -23,8 +23,6 @@ public class SceneDirector : MonoBehaviour
 		InitCanvas();
 	}
 
-	
-
 	// Start is called before the first frame update
 	protected virtual void Start()
     {

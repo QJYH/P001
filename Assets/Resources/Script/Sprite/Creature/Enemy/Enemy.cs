@@ -27,11 +27,14 @@ public class Enemy : Creature
 	protected override void Awake()
 	{
 		base.Awake();
+		SetMaterial();
 		InitHpBar();
 		InitAttackList();
 		AddBehaviorTree();
 		AddBaseMoveVelocity();
 	}
+
+	
 
 	private void OnEnable()
 	{
@@ -55,6 +58,11 @@ public class Enemy : Creature
 	private void FixedUpdate()
 	{
 		UpdateBaseMoveVelocity();
+	}
+
+	private void SetMaterial()
+	{
+		GetComponent<SpriteRenderer>().sharedMaterial = Resources.Load<Material>("Material/Enemy");
 	}
 
 	protected virtual void InitAttackList()
@@ -111,8 +119,7 @@ public class Enemy : Creature
 		LayerMask obstacleLayer = LayerMask.GetMask("EnvironmentBlock");
 		Vector3 heroPos = LevelDirector.LevelInstance.CurrentHero.transform.position;
 		bool haveBlock = Physics2D.Linecast(transform.position, heroPos, obstacleLayer);
-		GetComponent<SpriteRenderer>().enabled = !haveBlock;
-		enemyHpBar.SetActive(!haveBlock);
+		enemyHpBar?.SetActive(!haveBlock);
 	}
 
 	private void UpdateTarget()

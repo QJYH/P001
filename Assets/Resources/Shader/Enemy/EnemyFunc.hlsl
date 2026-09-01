@@ -4,7 +4,7 @@
 
 void CheckBlock_float(float originalAlpha, float2 selfScreenPos, float2 heroScreenPos, UnityTexture2D blockTexture2D, UnitySamplerState unitySamplerState, out float Out)
 {
-    int marchTimes = 50;
+    int marchTimes = 200;
     float2 distance = heroScreenPos - selfScreenPos;
     
     for (int i = 1; i < marchTimes; i++)

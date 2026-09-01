@@ -16,8 +16,14 @@ public class LevelDirector : SceneDirector
 		base.Awake();
 		LevelInstance = this;
 		AddModule();
+		AddBlockRecordRange();
 		AddHero();
 		CreateHUD();
+	}
+
+	private void AddBlockRecordRange()
+	{
+		Instantiate(Resources.Load<GameObject>("Prefab/Module/Range/BlockRecordRange"));
 	}
 
 	private void AddModule()
