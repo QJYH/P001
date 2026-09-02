@@ -14,4 +14,21 @@ public class CommonFunc : MonoBehaviour
 		threshold = threshold ?? 0.1f;
 		return Vector2.Distance(beginWorldPos, endWorldPos) < threshold;
 	}
+
+	public static void FollowMainCamera(GameObject gameObject)
+	{
+		Vector3 cameraPos = SceneDirector.SceneInstance.MainCamera.transform.position;
+		gameObject.transform.position = new Vector3(cameraPos.x, cameraPos.y, 0);
+	}
+
+	public static void ScaleToFillScreen(GameObject gameObject)
+	{
+		Camera mainCamera = SceneDirector.SceneInstance.MainCamera.GetComponent<Camera>();
+		Vector3 bottomLeftWorldPos = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0));
+		Vector3 topRightWorldPos = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+		Vector2 spriteSize = gameObject.GetComponent<SpriteRenderer>().sprite.rect.size;
+		float screenWidth = (topRightWorldPos.x - bottomLeftWorldPos.x) * CommonConst.PixelPerUnit;
+		float screenHeight = (topRightWorldPos.y - bottomLeftWorldPos.y) * CommonConst.PixelPerUnit;
+		gameObject.transform.localScale = new Vector2(screenWidth / spriteSize.x, screenHeight / spriteSize.y);
+	}
 }

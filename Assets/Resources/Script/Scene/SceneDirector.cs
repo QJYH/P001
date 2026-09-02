@@ -37,8 +37,7 @@ public class SceneDirector : MonoBehaviour
 
 	private void InitCamera()
 	{
-		MainCamera = GameObject.FindAnyObjectByType<Camera>().gameObject;
-		MainCamera.AddComponent<CinemachineBrain>();
+		MainCamera = GameObject.Find("MainCamera");
 		VirtualCamera = Instantiate(Resources.Load<GameObject>("Prefab/Module/Camera/VirtualCamera"));
 		GameObject cameraEdge = GameObject.Find("CameraArea");
 		if (cameraEdge != null)
@@ -56,7 +55,7 @@ public class SceneDirector : MonoBehaviour
 		MainCanvas.AddComponent<CanvasScaler>();
 		MainCanvas.AddComponent<GraphicRaycaster>();
 
-		MainEventSystem = new GameObject("EvenSystem");
+		MainEventSystem = new GameObject("EventSystem");
 		MainEventSystem.AddComponent<EventSystem>();
 		MainEventSystem.AddComponent<InputSystemUIInputModule>();
 	}

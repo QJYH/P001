@@ -24,7 +24,7 @@ public class CircleRevealMask : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-		Scale();
+		CommonFunc.ScaleToFillScreen(gameObject);
 		minRadius = 0;
 		maxRadius = MathF.Sqrt(Screen.width * Screen.width + Screen.height * Screen.height);
 		GetComponent<SpriteRenderer>().material.SetFloat("_ScreenWidth", Screen.width);
@@ -32,21 +32,10 @@ public class CircleRevealMask : MonoBehaviour
 		GetComponent<SpriteRenderer>().material.SetFloat("_Radius", 0);
     }
 
-	private void Scale()
-	{
-		Camera mainCamera = SceneDirector.SceneInstance.MainCamera.GetComponent<Camera>();
-		Vector3 bottomLeftWorldPos = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0));
-		Vector3 topRightWorldPos = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
-		Vector2 spriteSize = GetComponent<SpriteRenderer>().sprite.rect.size;
-		float screenWidth = (topRightWorldPos.x - bottomLeftWorldPos.x) * CommonConst.PixelPerUnit;
-		float screenHeight = (topRightWorldPos.y - bottomLeftWorldPos.y) * CommonConst.PixelPerUnit;
-		transform.localScale = new Vector2(screenWidth / spriteSize.x, screenHeight / spriteSize.y);
-	}
-
 	// Update is called once per frame
 	void Update()
     {
-		FollowCamera();
+		CommonFunc.FollowMainCamera(gameObject);
 		UpdateRadius();
 	}
 
@@ -66,12 +55,6 @@ public class CircleRevealMask : MonoBehaviour
 			float currentRadius = Mathf.Lerp(startRadius, endRadius, currentTime / duration);
 			GetComponent<SpriteRenderer>().material.SetFloat("_Radius", currentRadius);
 		}
-	}
-
-	private void FollowCamera()
-	{
-		Vector3 cameraPos = SceneDirector.SceneInstance.MainCamera.transform.position;
-		transform.position = new Vector3(cameraPos.x, cameraPos.y, 0);
 	}
 
 	public void Expand(Vector2 centerPos)

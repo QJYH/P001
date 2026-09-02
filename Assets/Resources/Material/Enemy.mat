@@ -45,7 +45,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _CheckBlockCustomFunction_bb75a9283c3c490a860c7ddabcbcebe3_BlockTexture2D_4_Texture2D:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 8400000, guid: 201df5c105e2abc4a81c0047c7618671, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HideInShadowCustomFunction_bb75a9283c3c490a860c7ddabcbcebe3_ShadowTexture2D_4_Texture2D:
+        m_Texture: {fileID: 8400000, guid: 201df5c105e2abc4a81c0047c7618671, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
