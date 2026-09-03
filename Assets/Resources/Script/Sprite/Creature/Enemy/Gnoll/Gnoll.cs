@@ -8,8 +8,8 @@ public class Gnoll : Enemy
 
 	protected override void InitAttackList()
 	{
-		GameObject spearAttack = transform.Find("ThrowBone").gameObject;
-		AttackList.Add(spearAttack);
+		GameObject throwBone = transform.Find("ThrowBone").gameObject;
+		AttackList.Add(throwBone);
 	}
 	protected override void AdjustHpBarPos(RectTransform rectTransform)
 	{

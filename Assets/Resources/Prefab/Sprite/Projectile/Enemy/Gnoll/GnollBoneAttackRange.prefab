@@ -53,10 +53,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8637026117164280723, guid: 4edcbe2985f701541825c44f8166c630, type: 3}
-      propertyPath: m_Offset.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8637026117164280723, guid: 4edcbe2985f701541825c44f8166c630, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].x
       value: -0.35
       objectReference: {fileID: 0}

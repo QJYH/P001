@@ -19,8 +19,9 @@ public class Projectile : MonoBehaviour
 	public TargetType TargetType { get; set; }
 	public HarmInfo HarmInfo { get; set; }
 	public Vector2 Direction { get; set; }
-	protected virtual float MaxSpeed { get; set; } = 0;
-	protected virtual float MaxAcceleration { get; set; } = 0;
+	protected virtual float MaxSpeed { get; set; }
+	protected virtual float MaxAcceleration { get; set; }
+	protected virtual float AngleSpeed { get; set; }
 	private Status currentStatus;
 	private Sequence delayDestorySequence;
 
@@ -36,7 +37,7 @@ public class Projectile : MonoBehaviour
 		delayDestorySequence?.Kill();
 	}
 
-	private void FixedUpdate()
+	protected virtual void FixedUpdate()
 	{
 		TryFollowTarget();
 	}
@@ -53,7 +54,12 @@ public class Projectile : MonoBehaviour
 		if (currentStatus == Status.ToBeDestory) return;
 		if (Target == null) return;
 
-		//todo
+		Vector2 targetDirection = (Target.transform.position - transform.position).normalized;
+		Direction = Vector3.RotateTowards(Direction, targetDirection, Time.deltaTime * AngleSpeed * Mathf.Deg2Rad, 0);
+		Velocity baseMove = GetComponent<MoveManager>().GetVelocity("_BaseMove");
+		GetComponent<MoveManager>().ChangeCurrentVelocity("_BaseMove", baseMove.CurrentVelocity.magnitude * Direction);
+		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", MaxSpeed * Direction);
+
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)

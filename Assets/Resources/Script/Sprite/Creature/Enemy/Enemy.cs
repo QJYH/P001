@@ -17,11 +17,11 @@ public class Enemy : Creature
 
 	public EnemyStatus CurrentStatus { get; set; }
 	public Vector3 CurrentPatrolPos { set; get; }
+	public Hero Target { private set; get; }
 	protected List<GameObject> AttackList { get; private set; } = new List<GameObject>();
 
 	private GameObject runningAttack;
 	private GameObject enemyHpBar;
-	private Hero target;
 	private Selector behaviorTree;
 
 	protected override void Awake()
@@ -124,18 +124,18 @@ public class Enemy : Creature
 
 	private void UpdateTarget()
 	{
-		if (target == null) return;
+		if (Target == null) return;
 
-		if (target.IsDead())
+		if (Target.IsDead())
 		{
-			target = null;
+			Target = null;
 		}
 	}
 	public void SeeHero(Hero hero)
 	{
 		if (hero.IsDead()) return;
 
-		target = hero;
+		Target = hero;
 	}
 
 	private void AddBaseMoveVelocity()
@@ -156,8 +156,8 @@ public class Enemy : Creature
 		}
 		else if (CurrentStatus == EnemyStatus.Chase)
 		{
-			Vector3 heroPos = target.transform.position;
-			BoxCollider2D heroCollider = target.GetComponent<BoxCollider2D>();
+			Vector3 heroPos = Target.transform.position;
+			BoxCollider2D heroCollider = Target.GetComponent<BoxCollider2D>();
 			heroPos.x += heroCollider.offset.x;
 			heroPos.y += heroCollider.offset.y;
 			GameObject detectRangeObject = runningAttack.transform.Find("DetectRange").gameObject;
@@ -244,7 +244,7 @@ public class Enemy : Creature
 
 	public bool HaveTarget()
 	{
-		return (target != null);
+		return (Target != null);
 	}
 
 	private void OnEnemyDie()

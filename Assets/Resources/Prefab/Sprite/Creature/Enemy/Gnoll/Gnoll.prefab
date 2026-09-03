@@ -185,10 +185,6 @@ PrefabInstance:
       propertyPath: verticalOffset
       value: -33
       objectReference: {fileID: 0}
-    - target: {fileID: 5821165208045178634, guid: 526f736743137b644ab27bb354579090, type: 3}
-      propertyPath: m_Offset.x
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 8090322034794990203, guid: 526f736743137b644ab27bb354579090, type: 3}
       propertyPath: m_Size.x
       value: 3

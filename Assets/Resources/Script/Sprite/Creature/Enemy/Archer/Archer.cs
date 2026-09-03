@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Collections;
+using UnityEngine;
+
+public class Archer : Enemy
+{
+	protected override float MaxHp { get; } = 5f;
+
+	protected override void InitAttackList()
+	{
+		GameObject shootArrow = transform.Find("ShootArrow").gameObject;
+		AttackList.Add(shootArrow);
+	}
+
+	protected override void AdjustHpBarPos(RectTransform rectTransform)
+	{
+		rectTransform.anchoredPosition = new Vector2(0, -1f);
+	}
+}
