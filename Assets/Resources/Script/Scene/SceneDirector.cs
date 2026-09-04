@@ -1,8 +1,10 @@
 using Cinemachine;
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
@@ -14,6 +16,7 @@ public class SceneDirector : MonoBehaviour
 	public GameObject MainEventSystem { get; private set; }
 	public GameObject MainCamera { get; private set; }
 	public GameObject VirtualCamera { get; private set; }
+	protected UnityEvent OnOpenAnimationFinish = new UnityEvent();
 
 	protected virtual void Awake()
 	{
@@ -26,7 +29,7 @@ public class SceneDirector : MonoBehaviour
 	// Start is called before the first frame update
 	protected virtual void Start()
     {
-		ShowMask();
+		PlayOpenAnimation();
 	}
 
 	// Update is called once per frame
@@ -60,11 +63,16 @@ public class SceneDirector : MonoBehaviour
 		MainEventSystem.AddComponent<InputSystemUIInputModule>();
 	}
 
-	private void ShowMask()
+	private void PlayOpenAnimation()
 	{
-		GameObject mask = Instantiate(Resources.Load<GameObject>("Prefab/Module/CircleRevealMask"));
+		GameObject maskObject = Instantiate(Resources.Load<GameObject>("Prefab/Module/CircleRevealMask"));
 		Vector2 centerScreenPos = GetRevealCenter();
-		mask.GetComponent<CircleRevealMask>().Expand(centerScreenPos);
+		CircleRevealMask mask = maskObject.GetComponent<CircleRevealMask>();
+		mask.Expand(centerScreenPos);
+
+		Sequence sequence = DOTween.Sequence();
+		sequence.AppendInterval(mask.Duration);
+		sequence.AppendCallback(() => { OnOpenAnimationFinish.Invoke(); });
 	}
 
 	protected virtual Vector2 GetRevealCenter()

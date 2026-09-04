@@ -20,6 +20,21 @@ public class LevelDirector : SceneDirector
 		CreateHUD();
 	}
 
+	private void OnEnable()
+	{
+		OnOpenAnimationFinish.AddListener(OnSceneOpenAnimationFinish);
+	}
+
+	private void OnDisable()
+	{
+		OnOpenAnimationFinish.RemoveListener(OnSceneOpenAnimationFinish);
+	}
+
+	private void OnSceneOpenAnimationFinish()
+	{
+		UICommonFunc.CreatePanel("PanelLevelHUD", null);
+	}
+
 	private void AddModule()
 	{
 		gameObject.AddComponent<TileMapManager>();
@@ -43,6 +58,6 @@ public class LevelDirector : SceneDirector
 
 	private void CreateHUD()
 	{
-		UICommonFunc.CreatePanel("PanelLevelHUD", null);
+		
 	}	
 }

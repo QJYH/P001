@@ -12,14 +12,12 @@ public class CircleRevealMask : MonoBehaviour
 		None,
 		Expand,
 		Contract
-	}
-	private float duration = 1f;
+	}	
 	private float minRadius;
 	private float maxRadius;
 	private float currentTime = 0f;
 	private Mode currentMode = Mode.None;
-
-	
+	public float Duration { get; set; } = 1f;
 
 	// Start is called before the first frame update
 	void Start()
@@ -43,7 +41,7 @@ public class CircleRevealMask : MonoBehaviour
 	{
 		if (currentMode != Mode.None)
 		{
-			if (currentTime >= duration)
+			if (currentTime >= Duration)
 			{
 				Destroy(gameObject);
 				return;
@@ -52,7 +50,7 @@ public class CircleRevealMask : MonoBehaviour
 			currentTime += Time.deltaTime;
 			float startRadius = (currentMode == Mode.Expand) ? minRadius : maxRadius;
 			float endRadius = (currentMode == Mode.Expand) ? maxRadius : minRadius;
-			float currentRadius = Mathf.Lerp(startRadius, endRadius, currentTime / duration);
+			float currentRadius = Mathf.Lerp(startRadius, endRadius, currentTime / Duration);
 			GetComponent<SpriteRenderer>().material.SetFloat("_Radius", currentRadius);
 		}
 	}
