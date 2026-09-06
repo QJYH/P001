@@ -15,7 +15,7 @@ public class PanelHeroDie : Panel
 	}
 	private void OnDestroy()
 	{
-		Instance = null;
+		Instance = (Instance == this) ? null : Instance;
 	}
 
 	private Texture2D screenshot;

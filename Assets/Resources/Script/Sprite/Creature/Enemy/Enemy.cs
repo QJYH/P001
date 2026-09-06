@@ -34,8 +34,6 @@ public class Enemy : Creature
 		AddBaseMoveVelocity();
 	}
 
-	
-
 	private void OnEnable()
 	{
 		OnDie.AddListener(OnEnemyDie);

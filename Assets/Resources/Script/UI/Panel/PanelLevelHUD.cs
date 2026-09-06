@@ -18,7 +18,7 @@ public class PanelLevelHUD : Panel
 	}
 	private void OnDestroy()
 	{
-		Instance = null;
+		Instance = (Instance == this) ? null : Instance;
 
 		goldImageScaleTween?.Kill();
 		goldCountTextUpdateTween?.Kill();

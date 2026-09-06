@@ -1,47 +1,82 @@
 using DG.Tweening;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PanelBegin : Panel
 {
 	public static PanelBegin Instance { get; private set; }
 
+	private GameObject buttonList;
 	private GameObject buttonNewGame;
 	private GameObject buttonQuitGame;
-	private Tween buttonNewGameTextTween;
-	private Tween buttonQuitGameTextTween;
+	private Sequence showButtonSequence;
 
 	private void Awake()
 	{
 		Instance = this;
 
+		buttonList = transform.Find("MiddleLeft/ButtonList").gameObject;
 		buttonNewGame = transform.Find("MiddleLeft/ButtonList/ButtonNewGame").gameObject;
 		buttonQuitGame = transform.Find("MiddleLeft/ButtonList/ButtonQuitGame").gameObject;
 	}
 	private void OnDestroy()
 	{
-		Instance = null;
+		Instance = (Instance == this) ? null : Instance;
+		showButtonSequence?.Kill();
+	}
+
+	private void OnEnable()
+	{
+		buttonNewGame.GetComponent<Button>().onClick.AddListener(OnButtonNewGameClick);
+		buttonQuitGame.GetComponent<Button>().onClick.AddListener(OnButtonQuitGameClick);
+	}
+
+	private void OnDisable()
+	{
+		buttonNewGame.GetComponent<Button>().onClick.RemoveListener(OnButtonNewGameClick);
+		buttonQuitGame.GetComponent<Button>().onClick.RemoveListener(OnButtonQuitGameClick);
 	}
 
 	private void Start()
 	{
-		SetBtnTextAlphaTween(buttonNewGame, buttonNewGameTextTween, 0, 1);
-		SetBtnTextAlphaTween(buttonQuitGame, buttonQuitGameTextTween, 0, 1);
+		ShowButton();
 	}
 
-	private void SetBtnTextAlphaTween(GameObject button, Tween buttonTextTween, float beginAlpha, float endAlpha)
+	private void OnButtonNewGameClick()
+	{
+		Destroy(gameObject);
+		SceneDirector.SceneInstance.SwitchScene("SceneLevel1");
+	}
+
+	private void OnButtonQuitGameClick()
+	{
+		Application.Quit();
+	}
+
+	private void ShowButton()
+	{
+		buttonNewGame.GetComponentInChildren<TextMeshProUGUI>().alpha = 0;
+		buttonQuitGame.GetComponentInChildren<TextMeshProUGUI>().alpha = 0;
+		float originalPosY = buttonList.GetComponent<RectTransform>().anchoredPosition.y;
+
+		Sequence subSequence = DOTween.Sequence();
+		subSequence.AppendInterval(0.5f).Append(SetBtnTextAlphaTween(buttonQuitGame));
+		showButtonSequence = DOTween.Sequence();
+		showButtonSequence.Append(buttonList.transform.DOLocalMoveY(originalPosY - 100, 0))
+		.Append(buttonList.transform.DOLocalMoveY(originalPosY, 1.5f))
+		.Join(SetBtnTextAlphaTween(buttonNewGame))
+		.Join(subSequence);
+	}
+
+	
+
+	private Tween SetBtnTextAlphaTween(GameObject button)
 	{
 		TextMeshProUGUI text = button.GetComponentInChildren<TextMeshProUGUI>();
-		text.alpha = beginAlpha;
 
-		buttonTextTween?.Kill();
-		buttonTextTween = DOTween.To(
+		return DOTween.To(
 			delegate ()
 			{
 				return text.alpha;
@@ -50,8 +85,8 @@ public class PanelBegin : Panel
 			{
 				text.alpha = value;
 			},
-			endAlpha,
-			2f
+			1f,
+			1f
 		);
 	}
 }

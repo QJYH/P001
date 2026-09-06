@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SceneDirector : MonoBehaviour
@@ -17,6 +18,7 @@ public class SceneDirector : MonoBehaviour
 	public GameObject MainCamera { get; private set; }
 	public GameObject VirtualCamera { get; private set; }
 	protected UnityEvent OnOpenAnimationFinish = new UnityEvent();
+	protected UnityEvent OnCloseAnimationFinish = new UnityEvent();
 
 	protected virtual void Awake()
 	{
@@ -24,19 +26,25 @@ public class SceneDirector : MonoBehaviour
 		Application.targetFrameRate = 60;
 		InitCamera();
 		InitCanvas();
-	}
-
-	// Start is called before the first frame update
-	protected virtual void Start()
-    {
+		AddModule();
+		AddHero();
 		PlayOpenAnimation();
 	}
 
-	// Update is called once per frame
-	void Update()
-    {
-        
-    }
+	protected virtual void OnDestroy()
+	{
+		SceneInstance = (SceneInstance == this) ? null : SceneInstance;
+	}
+
+	protected virtual void AddModule()
+	{
+		
+	}
+
+	protected virtual void AddHero()
+	{
+		
+	}
 
 	private void InitCamera()
 	{
@@ -66,7 +74,8 @@ public class SceneDirector : MonoBehaviour
 	private void PlayOpenAnimation()
 	{
 		GameObject maskObject = Instantiate(Resources.Load<GameObject>("Prefab/Module/CircleRevealMask"));
-		Vector2 centerScreenPos = GetRevealCenter();
+		maskObject.transform.position = MainCamera.transform.position;
+		Vector2 centerScreenPos = GetOpenAnimationRevealCenter();
 		CircleRevealMask mask = maskObject.GetComponent<CircleRevealMask>();
 		mask.Expand(centerScreenPos);
 
@@ -75,7 +84,31 @@ public class SceneDirector : MonoBehaviour
 		sequence.AppendCallback(() => { OnOpenAnimationFinish.Invoke(); });
 	}
 
-	protected virtual Vector2 GetRevealCenter()
+	protected virtual Vector2 GetOpenAnimationRevealCenter()
+	{
+		return new Vector2(Screen.width / 2, Screen.height / 2);
+	}
+
+	public void SwitchScene(string newSceneName)
+	{
+		PlayCloseAnimation();
+		OnCloseAnimationFinish.AddListener(() => { SceneManager.LoadScene(newSceneName); });
+	}
+
+	private void PlayCloseAnimation()
+	{
+		GameObject maskObject = Instantiate(Resources.Load<GameObject>("Prefab/Module/CircleRevealMask"));
+		maskObject.transform.position = MainCamera.transform.position;
+		Vector2 centerScreenPos = GetCloseAnimationRevealCenter();
+		CircleRevealMask mask = maskObject.GetComponent<CircleRevealMask>();
+		mask.Contract(centerScreenPos);
+
+		Sequence sequence = DOTween.Sequence();
+		sequence.AppendInterval(mask.Duration);
+		sequence.AppendCallback(() => { OnCloseAnimationFinish.Invoke(); });
+	}
+
+	private Vector2 GetCloseAnimationRevealCenter()
 	{
 		return new Vector2(Screen.width / 2, Screen.height / 2);
 	}

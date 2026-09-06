@@ -9,15 +9,17 @@ public class LevelDirector : SceneDirector
 {
 	public static LevelDirector LevelInstance { get; private set; }
 	public GameObject CurrentHero { get; private set; }
-	
 
 	protected override void Awake()
 	{
 		base.Awake();
 		LevelInstance = this;
-		AddModule();
-		AddHero();
-		CreateHUD();
+	}
+
+	protected override void OnDestroy()
+	{
+		base.OnDestroy();
+		LevelInstance = (LevelInstance == this) ? null : LevelInstance;
 	}
 
 	private void OnEnable()
@@ -35,13 +37,14 @@ public class LevelDirector : SceneDirector
 		UICommonFunc.CreatePanel("PanelLevelHUD", null);
 	}
 
-	private void AddModule()
+	protected override void AddModule()
 	{
+		base.AddModule();
 		gameObject.AddComponent<TileMapManager>();
 		gameObject.AddComponent<ShadowTextureGenerator>();
 	}
 
-	private void AddHero()
+	protected override void AddHero()
 	{
 		GameObject entrance = GameObject.Find("Entrance");
 		Vector3 entrancePos = entrance.transform.position;
@@ -50,14 +53,9 @@ public class LevelDirector : SceneDirector
 		VirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = CurrentHero.transform;
 	}
 
-	protected override Vector2 GetRevealCenter()
+	protected override Vector2 GetOpenAnimationRevealCenter()
 	{
 		Vector3 heroScreenPos = MainCamera.GetComponent<Camera>().WorldToScreenPoint(CurrentHero.transform.position);
 		return new Vector2(heroScreenPos.x, heroScreenPos.y);
 	}
-
-	private void CreateHUD()
-	{
-		
-	}	
 }

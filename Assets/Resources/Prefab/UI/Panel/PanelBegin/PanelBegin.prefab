@@ -157,10 +157,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5001463913910824508}
     m_Modifications:
-    - target: {fileID: 341546233423116206, guid: 312632578c3c08d4d985d8db69b8ed61, type: 3}
-      propertyPath: m_text
-      value: "\u9000\u51FA\u6E38\u620F"
-      objectReference: {fileID: 0}
     - target: {fileID: 1734824264839737847, guid: a025476339cbca742b23314d6bfa4d3e, type: 3}
       propertyPath: m_text
       value: "\u9000\u51FA\u6E38\u620F"
@@ -253,6 +249,10 @@ PrefabInstance:
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 9220658834932429911}
+    - target: {fileID: 341546233423116206, guid: 312632578c3c08d4d985d8db69b8ed61, type: 3}
+      propertyPath: m_text
+      value: "\u9000\u51FA\u6E38\u620F"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -282,14 +282,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5001463913910824508}
     m_Modifications:
-    - target: {fileID: 341546233423116206, guid: 312632578c3c08d4d985d8db69b8ed61, type: 3}
-      propertyPath: m_text
-      value: "\u65B0\u6E38\u620F"
-      objectReference: {fileID: 0}
-    - target: {fileID: 7360928559985093192, guid: 312632578c3c08d4d985d8db69b8ed61, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1734824264839737847, guid: a025476339cbca742b23314d6bfa4d3e, type: 3}
       propertyPath: m_text
       value: "\u5F00\u59CB\u6E38\u620F"
@@ -386,6 +378,14 @@ PrefabInstance:
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 1610093645127107789}
+    - target: {fileID: 341546233423116206, guid: 312632578c3c08d4d985d8db69b8ed61, type: 3}
+      propertyPath: m_text
+      value: "\u65B0\u6E38\u620F"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7360928559985093192, guid: 312632578c3c08d4d985d8db69b8ed61, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -43,7 +43,10 @@ public class CircleRevealMask : MonoBehaviour
 		{
 			if (currentTime >= Duration)
 			{
-				Destroy(gameObject);
+				if (currentMode == Mode.Expand)
+				{
+					Destroy(gameObject);
+				}
 				return;
 			}
 
