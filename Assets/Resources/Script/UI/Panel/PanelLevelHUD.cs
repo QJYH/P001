@@ -11,6 +11,8 @@ public class PanelLevelHUD : Panel
 	private Tween hpSliderUpdateTween;
 	private int realGoldCount = 0;
 	private int nominalGoldCount = 0;
+	private int realAttackValue = 0;
+	private int realDefendValue = 0;
 
 	private void Awake()
 	{
@@ -54,6 +56,22 @@ public class PanelLevelHUD : Panel
 		return imageGold.position;
 	}
 
+	public static Vector2 GetAttackIconScreenPos()
+	{
+		if (Instance == null) return Vector2.zero;
+
+		Transform imageAttack = Instance.transform.Find("TopLeft/ImageAvatar/ImageAttack");
+		return imageAttack.position;
+	}
+
+	public static Vector2 GetDefendIconScreenPos()
+	{
+		if (Instance == null) return Vector2.zero;
+
+		Transform imageDefend = Instance.transform.Find("TopLeft/ImageAvatar/ImageDefend");
+		return imageDefend.position;
+	}
+
 	public static void OnPickUpGold(int goldValue)
 	{
 		if (Instance == null) return;
@@ -80,5 +98,31 @@ public class PanelLevelHUD : Panel
 			Instance.realGoldCount,
 			1f
 		);
+	}
+
+	public static void OnPickUpAttackTreasure(int attackValue)
+	{
+		if (Instance == null) return;
+
+		Instance.realAttackValue += attackValue;
+		Transform imageAttack = Instance.transform.Find("TopLeft/ImageAvatar/ImageAttack");
+		imageAttack.localScale = new Vector3(1, 1, 1);
+		imageAttack.DOScale(1.5f, 0.5f).SetLoops(2, LoopType.Yoyo);
+
+		TextMeshProUGUI textAttackValue = imageAttack.Find("TextAttackValue").GetComponent<TextMeshProUGUI>();
+		textAttackValue.text = Instance.realAttackValue.ToString();
+	}
+
+	public static void OnPickUpDefendTreasure(int defendValue)
+	{
+		if (Instance == null) return;
+
+		Instance.realDefendValue += defendValue;
+		Transform imageDefend = Instance.transform.Find("TopLeft/ImageAvatar/ImageDefend");
+		imageDefend.localScale = new Vector3(1, 1, 1);
+		imageDefend.DOScale(1.5f, 0.5f).SetLoops(2, LoopType.Yoyo);
+
+		TextMeshProUGUI textDefendValue = imageDefend.Find("TextDefendValue").GetComponent<TextMeshProUGUI>();
+		textDefendValue.text = Instance.realDefendValue.ToString();
 	}
 }

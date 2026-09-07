@@ -8,7 +8,7 @@ public class ThrowBone : EnemyAttack
 	private const string gnollBoneDirName = "Prefab/Sprite/Projectile/Enemy/Gnoll/GnollBone";
 
 	protected override float AttackCoolDownMaxTime { get; } = 2f;
-	protected override float AttackHarmValue { get; } = 1f;
+	protected override float AttackHarmValue { get; } = 2f;
 
 	public override void CreateRangedProjectile()
 	{

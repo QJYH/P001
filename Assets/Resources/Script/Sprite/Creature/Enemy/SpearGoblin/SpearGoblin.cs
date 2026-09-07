@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpearGoblin : Enemy
 {
-	protected override float MaxHp { get; } = 5f;
+	public override float MaxHp { get; } = 5f;
 
 	protected override void InitAttackList()
 	{

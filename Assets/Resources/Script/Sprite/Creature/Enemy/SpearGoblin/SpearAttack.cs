@@ -9,7 +9,7 @@ public class SpearAttack : EnemyAttack
 	private const string spearAttackRangeDirName = "Prefab/Sprite/Creature/Enemy/SpearGoblin/SpearAttackRange";
 
 	protected override float AttackCoolDownMaxTime { get; } = 2f;
-	protected override float AttackHarmValue { get; } = 1f;
+	protected override float AttackHarmValue { get; } = 2f;
 
 	public override void CreateMeleeAttackRange()
 	{

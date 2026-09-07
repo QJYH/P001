@@ -17,8 +17,6 @@ public class SceneDirector : MonoBehaviour
 	public GameObject MainEventSystem { get; private set; }
 	public GameObject MainCamera { get; private set; }
 	public GameObject VirtualCamera { get; private set; }
-	protected UnityEvent OnOpenAnimationFinish = new UnityEvent();
-	protected UnityEvent OnCloseAnimationFinish = new UnityEvent();
 
 	protected virtual void Awake()
 	{
@@ -27,8 +25,6 @@ public class SceneDirector : MonoBehaviour
 		InitCamera();
 		InitCanvas();
 		AddModule();
-		AddHero();
-		PlayOpenAnimation();
 	}
 
 	protected virtual void OnDestroy()
@@ -38,12 +34,16 @@ public class SceneDirector : MonoBehaviour
 
 	protected virtual void AddModule()
 	{
-		
+		AddSwitchSceneAnimation();
 	}
 
-	protected virtual void AddHero()
+	private void AddSwitchSceneAnimation()
 	{
-		
+		Instantiate(Resources.Load<GameObject>("Prefab/Module/SwitchSceneAnimation"));
+		DOVirtual.DelayedCall(0.2f, () =>
+		{
+			SwitchSceneAnimation.Instance.PlayOpenAnimation(GetOpenAnimationCenter());
+		});
 	}
 
 	private void InitCamera()
@@ -71,44 +71,18 @@ public class SceneDirector : MonoBehaviour
 		MainEventSystem.AddComponent<InputSystemUIInputModule>();
 	}
 
-	private void PlayOpenAnimation()
+	public void SwitchScene(string newSceneName)
 	{
-		GameObject maskObject = Instantiate(Resources.Load<GameObject>("Prefab/Module/CircleRevealMask"));
-		maskObject.transform.position = MainCamera.transform.position;
-		Vector2 centerScreenPos = GetOpenAnimationRevealCenter();
-		CircleRevealMask mask = maskObject.GetComponent<CircleRevealMask>();
-		mask.Expand(centerScreenPos);
-
-		Sequence sequence = DOTween.Sequence();
-		sequence.AppendInterval(mask.Duration);
-		sequence.AppendCallback(() => { OnOpenAnimationFinish.Invoke(); });
+		SwitchSceneAnimation.Instance.PlayCloseAnimation(GetCloseAnimationCenter());
+		SwitchSceneAnimation.Instance.OnCloseAnimationFinish.AddListener(() => { SceneManager.LoadScene(newSceneName); });
 	}
 
-	protected virtual Vector2 GetOpenAnimationRevealCenter()
+	protected virtual Vector2 GetOpenAnimationCenter()
 	{
 		return new Vector2(Screen.width / 2, Screen.height / 2);
 	}
 
-	public void SwitchScene(string newSceneName)
-	{
-		PlayCloseAnimation();
-		OnCloseAnimationFinish.AddListener(() => { SceneManager.LoadScene(newSceneName); });
-	}
-
-	private void PlayCloseAnimation()
-	{
-		GameObject maskObject = Instantiate(Resources.Load<GameObject>("Prefab/Module/CircleRevealMask"));
-		maskObject.transform.position = MainCamera.transform.position;
-		Vector2 centerScreenPos = GetCloseAnimationRevealCenter();
-		CircleRevealMask mask = maskObject.GetComponent<CircleRevealMask>();
-		mask.Contract(centerScreenPos);
-
-		Sequence sequence = DOTween.Sequence();
-		sequence.AppendInterval(mask.Duration);
-		sequence.AppendCallback(() => { OnCloseAnimationFinish.Invoke(); });
-	}
-
-	private Vector2 GetCloseAnimationRevealCenter()
+	private Vector2 GetCloseAnimationCenter()
 	{
 		return new Vector2(Screen.width / 2, Screen.height / 2);
 	}

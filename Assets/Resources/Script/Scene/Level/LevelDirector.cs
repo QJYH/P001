@@ -24,12 +24,12 @@ public class LevelDirector : SceneDirector
 
 	private void OnEnable()
 	{
-		OnOpenAnimationFinish.AddListener(OnSceneOpenAnimationFinish);
+		SwitchSceneAnimation.Instance.OnOpenAnimationFinish.AddListener(OnSceneOpenAnimationFinish);
 	}
 
 	private void OnDisable()
 	{
-		OnOpenAnimationFinish.RemoveListener(OnSceneOpenAnimationFinish);
+		//SwitchSceneAnimation.Instance.OnOpenAnimationFinish.RemoveListener(OnSceneOpenAnimationFinish);
 	}
 
 	private void OnSceneOpenAnimationFinish()
@@ -40,11 +40,12 @@ public class LevelDirector : SceneDirector
 	protected override void AddModule()
 	{
 		base.AddModule();
+		AddHero();
 		gameObject.AddComponent<TileMapManager>();
 		gameObject.AddComponent<ShadowTextureGenerator>();
 	}
 
-	protected override void AddHero()
+	private void AddHero()
 	{
 		GameObject entrance = GameObject.Find("Entrance");
 		Vector3 entrancePos = entrance.transform.position;
@@ -53,7 +54,7 @@ public class LevelDirector : SceneDirector
 		VirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = CurrentHero.transform;
 	}
 
-	protected override Vector2 GetOpenAnimationRevealCenter()
+	protected override Vector2 GetOpenAnimationCenter()
 	{
 		Vector3 heroScreenPos = MainCamera.GetComponent<Camera>().WorldToScreenPoint(CurrentHero.transform.position);
 		return new Vector2(heroScreenPos.x, heroScreenPos.y);

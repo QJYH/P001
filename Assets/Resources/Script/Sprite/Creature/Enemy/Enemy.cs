@@ -194,6 +194,7 @@ public class Enemy : Creature
 		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", targetVelocity);
 		GetComponent<Animator>().SetBool("IsMoving", (targetVelocity != Vector3.zero));
 		TryFlipX(targetVelocity);
+		CreatureCanvas.GetComponent<RectTransform>().localScale = transform.localScale;
 	}
 
 	private Vector3 GetTargetPosByPathfinding(Vector3 beginWorldPos, Vector3 endWorldPos, Vector2 collisionOffset, Vector2 collisionSize)

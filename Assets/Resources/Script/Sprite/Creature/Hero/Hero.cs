@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using CommonEnum;
 using System.Collections;
 using Cinemachine;
+using DG.Tweening;
 
 public class Hero : Creature
 {
@@ -199,12 +200,10 @@ public class Hero : Creature
 
 	private void OnHeroDie()
 	{
-		StartCoroutine(DelayCreatePanelHeroDie());
-	}
-	private IEnumerator DelayCreatePanelHeroDie()
-	{
-		yield return new WaitForSeconds(1.1f);
-		UICommonFunc.CreatePanel("PanelHeroDie", null);
+		DOVirtual.DelayedCall(1.1f, () =>
+		{
+			UICommonFunc.CreatePanel("PanelHeroDie", null);
+		});
 	}
 
 	private void OnHeroSubHp(float value)
@@ -215,6 +214,16 @@ public class Hero : Creature
 	private void OnHeroHpChange()
 	{
 		PanelLevelHUD.OnHeroHpChange(Hp / MaxHp);
+	}
+
+	public void PickUpDefendTreasure(int defendValue)
+	{
+		ExtraDefend += defendValue;
+	}
+
+	public void PickUpAttackTreasure(int attackValue)
+	{
+		ExtraAttack += attackValue;
 	}
 
 	public void CreateMeleeAttackRange()
@@ -252,5 +261,4 @@ public class Hero : Creature
 		heroPhantom.GetComponent<SpriteRenderer>().sprite = GetComponent<SpriteRenderer>().sprite;
 		heroPhantom.GetComponent<OrderInLayerManager>().verticalOffset = GetComponent<OrderInLayerManager>().verticalOffset;
 	}
-
 }

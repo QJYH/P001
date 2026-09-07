@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Archer : Enemy
 {
-	protected override float MaxHp { get; } = 5f;
+	public override float MaxHp { get; } = 5f;
 
 	protected override void InitAttackList()
 	{

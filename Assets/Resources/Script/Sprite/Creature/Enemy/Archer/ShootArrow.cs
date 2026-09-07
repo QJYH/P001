@@ -8,7 +8,7 @@ public class ShootArrow : EnemyAttack
 	private const string archerArrowDirName = "Prefab/Sprite/Projectile/Enemy/Archer/ArcherArrow";
 
 	protected override float AttackCoolDownMaxTime { get; } = 2f;
-	protected override float AttackHarmValue { get; } = 1f;
+	protected override float AttackHarmValue { get; } = 2f;
 
 	public override void CreateRangedProjectile()
 	{

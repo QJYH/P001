@@ -12,7 +12,7 @@ public class Gold : Pickup
 	[SerializeField] private int goldValue;
 	private Vector2 goldIconScreenPos;
 
-	protected override void OnPickUp()
+	protected override void OnPickUp(Hero hero)
 	{
 		goldIconScreenPos = PanelLevelHUD.GetGoldIconScreenPos();
 		GetComponent<SpriteRenderer>().sortingLayerName = "UI";

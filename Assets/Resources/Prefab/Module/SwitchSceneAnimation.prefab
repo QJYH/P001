@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1813412732969424179}
   - component: {fileID: 2943928637656745357}
   m_Layer: 0
-  m_Name: CircleRevealMask
+  m_Name: SwitchSceneAnimation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

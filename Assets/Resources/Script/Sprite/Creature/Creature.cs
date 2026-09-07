@@ -11,9 +11,12 @@ public class Creature : MonoBehaviour
 {
 	private const float hurtDuration = 0.4f;
 
-	protected virtual float MaxHp { get; } = 0;
+	public virtual float MaxHp { get; } = 0;
+	public float Hp { get; private set; }
+	public float ExtraAttack { get; protected set; } = 0;
+	public float ExtraDefend { get; protected set; } = 0;
 	protected GameObject CreatureCanvas { get; private set; }
-	protected float Hp { get; private set; }
+	
 	protected Vector2 Facing { get; set; } = Vector2.right;
 	protected UnityEvent<float> OnSubHp = new UnityEvent<float>();
 	protected UnityEvent<float> OnAddHp = new UnityEvent<float>();
@@ -62,7 +65,7 @@ public class Creature : MonoBehaviour
 	{
 		if (receiver.IsDead()) return;
 
-		float finalHarm = harmInfo.CalFinalHarm();
+		float finalHarm = harmInfo.CalFinalHarm(attacker, receiver);
 		receiver.ReceiveHarm(finalHarm);
 	}
 

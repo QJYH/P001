@@ -47,7 +47,7 @@ public class HarmInfo : Object
 		extraHarmList.Add(value);
 	}
 
-	public float CalFinalHarm()
+	public float CalFinalHarm(Creature attacker, Creature receiver)
 	{
 		float finalHarm = BaseHarm;
 		foreach (float value in harmRateList)
@@ -58,6 +58,8 @@ public class HarmInfo : Object
 		{
 			finalHarm += value;
 		}
+		finalHarm += attacker.ExtraAttack;
+		finalHarm -= receiver.ExtraDefend;
 		return finalHarm;
 	}
 

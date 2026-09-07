@@ -8,12 +8,12 @@ public class DirectorSceneBegin : SceneDirector
 {
 	private void OnEnable()
 	{
-		OnOpenAnimationFinish.AddListener(OnSceneOpenAnimationFinish);
+		SwitchSceneAnimation.Instance.OnOpenAnimationFinish.AddListener(OnSceneOpenAnimationFinish);
 	}
 
 	private void OnDisable()
 	{
-		OnOpenAnimationFinish.RemoveListener(OnSceneOpenAnimationFinish);
+		//SwitchSceneAnimation.Instance.OnOpenAnimationFinish.RemoveListener(OnSceneOpenAnimationFinish);
 	}
 
 	private void OnSceneOpenAnimationFinish()

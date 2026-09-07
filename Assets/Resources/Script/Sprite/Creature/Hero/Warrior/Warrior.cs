@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Warrior : Hero
 {
-	protected override float MaxHp { get; } = 5f;
+	public override float MaxHp { get; } = 10f;
 
 	public bool StrikeBackEnable { get; set; } = false;
 	public bool DefendEnable { get; set; } = false;

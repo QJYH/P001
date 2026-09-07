@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Environment Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6717649561161305979, guid: 9c18ed345225692448dfa69c14fb2c48, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 9085971590297548143, guid: 9c18ed345225692448dfa69c14fb2c48, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

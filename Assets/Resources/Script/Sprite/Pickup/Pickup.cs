@@ -6,7 +6,7 @@ using UnityEngine;
 public class Pickup : MonoBehaviour
 {
 	protected bool isPickedUp { get; private set; }
-	protected virtual void OnPickUp()
+	protected virtual void OnPickUp(Hero hero)
 	{
 		throw new NotImplementedException();
 	}
@@ -18,6 +18,6 @@ public class Pickup : MonoBehaviour
 
 		GetComponent<BoxCollider2D>().enabled = false;
 		isPickedUp = true;
-		OnPickUp();
+		OnPickUp(hero);
 	}
 }
