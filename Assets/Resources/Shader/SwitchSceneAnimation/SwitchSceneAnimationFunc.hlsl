@@ -1,5 +1,5 @@
-#ifndef CircleRevealMaskFunc
-#define CircleRevealMaskFunc
+#ifndef SwitchSceneAnimationFunc
+#define SwitchSceneAnimationFunc
 
 void GetAlpha_float(float distance, float radius, out float Out)
 {

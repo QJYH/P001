@@ -8,6 +8,7 @@ public class SwitchSceneAnimation : MonoBehaviour
 	public static SwitchSceneAnimation Instance { get; private set; }
 
 	private const float duration = 1f;
+	private const float transitionDistance = 255;
 	private float minRadius;
 	private float maxRadius;
 	private float currentRadius;
@@ -38,10 +39,21 @@ public class SwitchSceneAnimation : MonoBehaviour
 	private void SetParamas()
 	{
 		SetRadius(0);
-		minRadius = 0;
-		maxRadius = MathF.Sqrt(Screen.width * Screen.width + Screen.height * Screen.height);
 		GetComponent<SpriteRenderer>().material.SetFloat("_ScreenWidth", Screen.width);
 		GetComponent<SpriteRenderer>().material.SetFloat("_ScreenHeight", Screen.height);
+	}
+
+	private void SetMinMaxRadius(Vector2 centerPos)
+	{
+		minRadius = 0;
+
+		float distance1 = Vector2.Distance(centerPos, new Vector2(0, 0));
+		float distance2 = Vector2.Distance(centerPos, new Vector2(Screen.width, 0));
+		float distance3 = Vector2.Distance(centerPos, new Vector2(0, Screen.height));
+		float distance4 = Vector2.Distance(centerPos, new Vector2(Screen.width, Screen.height));
+		float maxDistance1 = Mathf.Max(distance1, distance2);
+		float maxDistance2 = Mathf.Max(distance3, distance4);
+		maxRadius = Mathf.Max(maxDistance1, maxDistance2) + transitionDistance;
 	}
 
 	private void SetRadius(float value)
@@ -53,6 +65,7 @@ public class SwitchSceneAnimation : MonoBehaviour
 	public void PlayOpenAnimation(Vector2 centerPos)
 	{
 		GetComponent<SpriteRenderer>().material.SetVector("_Center", centerPos);
+		SetMinMaxRadius(centerPos);
 		SetRadius(minRadius);
 		DOTween.To(
 			delegate ()
@@ -65,12 +78,22 @@ public class SwitchSceneAnimation : MonoBehaviour
 			},
 			maxRadius,
 			duration
-		).OnComplete(() => { OnOpenAnimationFinish.Invoke(); });
+		).OnComplete(
+			delegate ()
+			{
+				OnOpenAnimationFinish.Invoke();
+				GetComponent<SpriteRenderer>().enabled = false;
+			}
+		);
+		
+		
 	}
 
 	public void PlayCloseAnimation(Vector2 centerPos)
 	{
+		GetComponent<SpriteRenderer>().enabled = true;
 		GetComponent<SpriteRenderer>().material.SetVector("_Center", centerPos);
+		SetMinMaxRadius(centerPos);
 		SetRadius(maxRadius);
 		DOTween.To(
 			delegate ()

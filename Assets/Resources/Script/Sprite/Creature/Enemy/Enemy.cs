@@ -1,13 +1,10 @@
 using AStarPathFinding;
 using BehaviorTree;
 using CommonEnum;
+using DG.Tweening;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Enemy : Creature
@@ -90,7 +87,7 @@ public class Enemy : Creature
 		foreach (GameObject attackObject in AttackList)
 		{
 			EnemyAttack enemyAttack = attackObject.GetComponent<EnemyAttack>();
-			Sequence attackSeq = new Sequence();
+			BehaviorTree.Sequence attackSeq = new BehaviorTree.Sequence();
 			attackSeq.AddChild(new AttackCondition(this, enemyAttack));
 			attackSeq.AddChild(new Chase(this, enemyAttack));
 			attackSeq.AddChild(new Attack(this, enemyAttack));
@@ -98,7 +95,7 @@ public class Enemy : Creature
 			behaviorTree.AddChild(attackSeq);
 		}
 
-		Sequence patrolSeq = new Sequence();
+		BehaviorTree.Sequence patrolSeq = new BehaviorTree.Sequence();
 		patrolSeq.AddChild(new PatrolCondition(this));
 		patrolSeq.AddChild(new PatrolRun(this));
 		patrolSeq.AddChild(new PatrolWatch(this));
@@ -239,6 +236,24 @@ public class Enemy : Creature
 	public void OnDieAnimationEnd()
 	{
 		CurrentStatus = EnemyStatus.None;
+		Disappear();
+	}
+
+	private void Disappear()
+	{
+		DOTween.To(
+			delegate ()
+			{
+				return GetComponent<SpriteRenderer>().color.a;
+			},
+			delegate (float value)
+			{
+				Color color = GetComponent<SpriteRenderer>().color;
+				GetComponent<SpriteRenderer>().color = new Color(color.r, color.g, color.b, value);
+			},
+			0,
+			1f
+		).OnComplete(() => {Destroy(gameObject); });
 	}
 
 	public bool HaveTarget()

@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 156715680114909590}
   - component: {fileID: 8989803116443979807}
   m_Layer: 5
-  m_Name: TextAttackValue
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -245,7 +245,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 48, y: 0}
+  m_AnchoredPosition: {x: 68, y: 0}
   m_SizeDelta: {x: 48, y: 48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1184040662847389516
@@ -690,7 +690,7 @@ GameObject:
   - component: {fileID: 640520304764355334}
   - component: {fileID: 4685789004450286938}
   m_Layer: 5
-  m_Name: TextDefendValue
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -948,7 +948,7 @@ GameObject:
   - component: {fileID: 7589611389741943605}
   - component: {fileID: 3832731890690211366}
   m_Layer: 5
-  m_Name: TextGoldCount
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
