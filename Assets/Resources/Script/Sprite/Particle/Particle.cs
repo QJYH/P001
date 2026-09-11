@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class Particle : MonoBehaviour
 {
-   
+   public void OnAnimationEnd()
+	{
+		Destroy(gameObject);
+	}
 }

@@ -25,11 +25,18 @@ public class SceneDirector : MonoBehaviour
 		InitCamera();
 		InitCanvas();
 		AddModule();
+
+		DOVirtual.DelayedCall(0.1f, () => { SceneStart(); });
 	}
 
 	protected virtual void OnDestroy()
 	{
 		SceneInstance = (SceneInstance == this) ? null : SceneInstance;
+	}
+
+	protected virtual void SceneStart()
+	{
+		SwitchSceneAnimation.Instance.PlayOpenAnimation(GetOpenAnimationCenter());
 	}
 
 	protected virtual void AddModule()
@@ -40,10 +47,6 @@ public class SceneDirector : MonoBehaviour
 	private void AddSwitchSceneAnimation()
 	{
 		Instantiate(Resources.Load<GameObject>("Prefab/Module/SwitchSceneAnimation"));
-		DOVirtual.DelayedCall(0.2f, () =>
-		{
-			SwitchSceneAnimation.Instance.PlayOpenAnimation(GetOpenAnimationCenter());
-		});
 	}
 
 	private void InitCamera()

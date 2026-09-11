@@ -18,7 +18,7 @@ public class HeroPhantom : MonoBehaviour
 				GetComponent<SpriteRenderer>().color = value;
 			},
 			0,
-			0.2f
+			0.3f
 		).OnComplete(
 			delegate ()
 			{

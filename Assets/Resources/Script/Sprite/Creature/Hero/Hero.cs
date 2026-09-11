@@ -15,6 +15,7 @@ public class Hero : Creature
 	private const float healValue = 1f;
 
 	public HeroStatus CurrentStatus { get; set; }
+	public bool InputResponse { get; set; } = true;
 	protected GameObject LightAttack { get; set; }
 	protected GameObject HeavyAttack { get; set; }
 
@@ -29,8 +30,7 @@ public class Hero : Creature
 
 	private void OnEnable()
 	{
-		PlayerInput heroInput = GetComponent<PlayerInput>();
-		heroInput.onActionTriggered += OnActionTriggered;
+		GetComponent<PlayerInput>().onActionTriggered += OnActionTriggered;
 		OnDie.AddListener(OnHeroDie);
 		OnSubHp.AddListener(OnHeroSubHp);
 		OnHpChange.AddListener(OnHeroHpChange);
@@ -38,8 +38,7 @@ public class Hero : Creature
 
 	private void OnDisable()
 	{
-		PlayerInput heroInput = GetComponent<PlayerInput>();
-		heroInput.onActionTriggered -= OnActionTriggered;
+		GetComponent<PlayerInput>().onActionTriggered -= OnActionTriggered;
 		OnDie.RemoveListener(OnHeroDie);
 		OnSubHp.RemoveListener(OnHeroSubHp);
 		OnHpChange.RemoveListener(OnHeroHpChange);
@@ -57,6 +56,8 @@ public class Hero : Creature
 
 	private void OnActionTriggered(InputAction.CallbackContext context)
 	{
+		if (!InputResponse) return;
+
 		switch (context.action.name)
 		{
 			case "Move":

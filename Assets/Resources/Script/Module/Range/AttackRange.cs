@@ -5,12 +5,12 @@ using CommonEnum;
 
 public class AttackRange : Range
 {
-	private Creature Attacker { get; set; }
+	public Creature Attacker { get; private set; }
+	public TargetType TargetType { get; private set; }
 	private HarmInfo HarmInfo { get; set; }
-	private TargetType TargetType { get; set; }
 	private float DurationTime { get; set; } = 0;
 
-private void Start()
+	private void Start()
 	{
 		TryDestory();
 	}
@@ -31,13 +31,6 @@ private void Start()
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.GetComponent<Projectile>())
-		{
-			Projectile projectile = collision.GetComponent<Projectile>();
-			TryStrikeProjectileBack(projectile);
-			return;
-		}
-
 		Creature receiver = null;
 		if (TargetType == TargetType.Hero)
 		{
@@ -50,14 +43,6 @@ private void Start()
 			if (receiver == null) return;
 		}
 		Creature.HandleAttack(Attacker, receiver, HarmInfo);
-	}
-
-	private void TryStrikeProjectileBack(Projectile projectile)
-	{
-		if ((Attacker is Hero) && (TargetType == TargetType.Enemy) && (projectile.Owner is Enemy))
-		{
-			projectile.OnHeroStrikeBack(Attacker);
-		}
 	}
 
 	public static GameObject CreateAttackRangeObject(string attackRangeDirName, Creature attacker, HarmInfo harmInfo, TargetType targetType, float durationTime)

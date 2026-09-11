@@ -15,6 +15,13 @@ public class HarmInfo : Object
 		extraHarmList = new List<float>();
 	}
 
+	public HarmInfo(float baseHarm)
+	{
+		BaseHarm = baseHarm;
+		harmRateList = new List<float>();
+		extraHarmList = new List<float>();
+	}
+
 	public HarmInfo(HarmInfo original)
 	{
 		BaseHarm = original.BaseHarm;
@@ -58,7 +65,11 @@ public class HarmInfo : Object
 		{
 			finalHarm += value;
 		}
-		finalHarm += attacker.ExtraAttack;
+
+		if (attacker)
+		{
+			finalHarm += attacker.ExtraAttack;
+		}
 		finalHarm -= receiver.ExtraDefend;
 		return finalHarm;
 	}

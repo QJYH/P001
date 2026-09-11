@@ -19,9 +19,9 @@ public class Projectile : MonoBehaviour
 	public TargetType TargetType { get; set; }
 	public HarmInfo HarmInfo { get; set; }
 	public Vector2 Direction { get; set; }
-	protected virtual float MaxSpeed { get; set; }
-	protected virtual float MaxAcceleration { get; set; }
-	protected virtual float AngleSpeed { get; set; }
+	protected virtual float MaxSpeed { get; set; } = 0;
+	protected virtual float MaxAcceleration { get; set; } = 0;
+	protected virtual float AngleSpeed { get; set; } = 0;
 	private Status currentStatus;
 	private Sequence delayDestorySequence;
 
@@ -64,6 +64,16 @@ public class Projectile : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
+		AttackRange attackRange = collision.GetComponent<AttackRange>();
+		if (attackRange)
+		{
+			if ((attackRange.Attacker is Hero) && (attackRange.TargetType == TargetType.Enemy) && (Owner is Enemy))
+			{
+				OnHeroStrikeBack(attackRange.Attacker);
+			}
+			return;
+		}
+
 		if (LayerMask.LayerToName(collision.gameObject.layer) == "EnvironmentBlock")
 		{
 			currentStatus = Status.ToBeDestory;
@@ -75,14 +85,13 @@ public class Projectile : MonoBehaviour
 		Creature receiver = null;
 		if (TargetType == TargetType.Hero)
 		{
-			receiver = collision.GetComponent<Hero>();
-			if (receiver == null) return;
+			receiver = collision.GetComponent<Hero>();			
 		}
 		else if (TargetType == TargetType.Enemy)
 		{
 			receiver = collision.GetComponent<Enemy>();
-			if (receiver == null) return;
 		}
+		if (receiver == null) return;
 		CreateProjectileAttackRange();
 		currentStatus = Status.ToBeDestory;
 		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", Vector2.zero);
@@ -103,7 +112,7 @@ public class Projectile : MonoBehaviour
 		delayDestorySequence.AppendCallback(() => { GameObject.Destroy(gameObject); });
 	}
 
-	public void OnHeroStrikeBack(Creature attacker)
+	private void OnHeroStrikeBack(Creature attacker)
 	{
 		if (Target)
 		{
