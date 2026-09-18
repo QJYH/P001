@@ -8,8 +8,6 @@ using DG.Tweening;
 
 public class Hero : Creature
 {
-	private const float maxInputMoveSpeed = 5f;
-	private const float maxInputMoveAcceleration = 50f;
 	private const float maxRushSpeed = 20f;
 	private const float maxRushAcceleration = 200f;
 	private const float healValue = 1f;
@@ -103,7 +101,7 @@ public class Hero : Creature
 
 	private void AddInputMoveVelocity()
 	{
-		Velocity velocity = new Velocity(Vector2.zero, Vector2.zero, maxInputMoveAcceleration);
+		Velocity velocity = new Velocity(Vector2.zero, Vector2.zero, MaxRunAcceleration);
 		GetComponent<MoveManager>().AddVelocity("_InputMove", velocity);
 	}
 
@@ -112,7 +110,7 @@ public class Hero : Creature
 		Vector2 currentInputMoveDirection = new Vector2(moveInput.x, moveInput.y);
 		currentInputMoveDirection = IsDoingAction() ? Vector2.zero : currentInputMoveDirection;
 		currentInputMoveDirection = currentInputMoveDirection.normalized;
-		Vector2 targetVelocity = currentInputMoveDirection * maxInputMoveSpeed;
+		Vector2 targetVelocity = currentInputMoveDirection * MaxRunSpeed;
 		GetComponent<MoveManager>().ChangeTargetVelocity("_InputMove", targetVelocity);
 		GetComponent<Animator>().SetBool("IsMoving", (targetVelocity != Vector2.zero));
 		TryFlipX(targetVelocity);

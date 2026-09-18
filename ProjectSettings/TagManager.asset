@@ -17,12 +17,12 @@ TagManager:
   - Particle
   - Pickup
   - Projectile
+  - Trap
   - Range
   - Edge
   - Light
   - Camera
   - Shadow
-  - 
   - 
   - 
   - 

@@ -2,7 +2,9 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class CommonFunc : MonoBehaviour
 {
@@ -32,5 +34,26 @@ public class CommonFunc : MonoBehaviour
 		float screenWidth = (topRightWorldPos.x - bottomLeftWorldPos.x) * CommonConst.PixelPerUnit;
 		float screenHeight = (topRightWorldPos.y - bottomLeftWorldPos.y) * CommonConst.PixelPerUnit;
 		gameObject.transform.localScale = new Vector2(screenWidth / spriteSize.x, screenHeight / spriteSize.y);
+	}
+
+	public static Tween FadeSprite(SpriteRenderer spriteRenderer , float beginAlpha, float endAlpha, float duration, Action callBackFunc)
+	{
+		Color color = spriteRenderer.color;
+		spriteRenderer.color = new Color(color.r, color.g, color.b, beginAlpha);
+		return DOTween.To(
+			delegate ()
+			{
+				return spriteRenderer.color.a;
+			},
+			delegate (float value)
+			{
+				Color color = spriteRenderer.color;
+				spriteRenderer.color = new Color(color.r, color.g, color.b, value);
+			},
+			endAlpha,
+			duration
+		).OnComplete(() => {
+			callBackFunc.Invoke();
+		});
 	}
 }

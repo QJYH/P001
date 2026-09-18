@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 938180403083856417}
   - component: {fileID: 421802344700697080}
   - component: {fileID: 5539338498668379772}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: HeroTriggerRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,3 +90,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15b45e9550006c645a3af3491fce0090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnHeroEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHeroExit:
+    m_PersistentCalls:
+      m_Calls: []

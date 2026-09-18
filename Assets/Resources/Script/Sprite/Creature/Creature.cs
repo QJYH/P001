@@ -15,13 +15,15 @@ public class Creature : MonoBehaviour
 	public float Hp { get; private set; }
 	public float ExtraAttack { get; protected set; } = 0;
 	public float ExtraDefend { get; protected set; } = 0;
+	protected virtual float MaxRunSpeed { get; } = 0;
+	protected virtual float MaxRunAcceleration { get; } = 0;
 	protected GameObject CreatureCanvas { get; private set; }
 	
 	protected Vector2 Facing { get; set; } = Vector2.right;
 	protected UnityEvent<float> OnSubHp = new UnityEvent<float>();
 	protected UnityEvent<float> OnAddHp = new UnityEvent<float>();
 	protected UnityEvent OnHpChange = new UnityEvent();
-	protected UnityEvent OnDie = new UnityEvent();
+	public UnityEvent OnDie = new UnityEvent();
 	private Tween hurtEffectTween;
 
 	protected virtual void Awake()

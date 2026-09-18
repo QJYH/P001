@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7321802441362840812}
   - component: {fileID: 6722039984811077369}
   - component: {fileID: 3448231167736696824}
-  m_Layer: 15
+  m_Layer: 16
   m_Name: ShadowCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 114688
+    m_Bits: 229376
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 201df5c105e2abc4a81c0047c7618671, type: 2}
   m_TargetDisplay: 1

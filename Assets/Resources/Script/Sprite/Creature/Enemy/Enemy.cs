@@ -9,9 +9,6 @@ using UnityEngine.UI;
 
 public class Enemy : Creature
 {
-	private const float maxBaseMoveSpeed = 5f;
-	private const float maxBaseMoveAcceleration = 50f;
-
 	public EnemyStatus CurrentStatus { get; set; }
 	public Vector3 CurrentPatrolPos { set; get; }
 	public Hero Target { private set; get; }
@@ -135,7 +132,7 @@ public class Enemy : Creature
 
 	private void AddBaseMoveVelocity()
 	{
-		Velocity velocity = new Velocity(Vector2.zero, Vector2.zero, maxBaseMoveAcceleration);
+		Velocity velocity = new Velocity(Vector2.zero, Vector2.zero, MaxRunAcceleration);
 		GetComponent<MoveManager>().AddVelocity("_BaseMove", velocity);
 	}
 
@@ -187,7 +184,7 @@ public class Enemy : Creature
 			targetPos = GetTargetPosByPathfinding(transform.position, targetPos, collisionOffset, collisionSize);
 		}
 
-		Vector3 targetVelocity = (targetPos - transform.position).normalized * maxBaseMoveSpeed;
+		Vector3 targetVelocity = (targetPos - transform.position).normalized * MaxRunSpeed;
 		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", targetVelocity);
 		GetComponent<Animator>().SetBool("IsMoving", (targetVelocity != Vector3.zero));
 		TryFlipX(targetVelocity);
@@ -241,19 +238,10 @@ public class Enemy : Creature
 
 	private void Disappear()
 	{
-		DOTween.To(
-			delegate ()
-			{
-				return GetComponent<SpriteRenderer>().color.a;
-			},
-			delegate (float value)
-			{
-				Color color = GetComponent<SpriteRenderer>().color;
-				GetComponent<SpriteRenderer>().color = new Color(color.r, color.g, color.b, value);
-			},
-			0,
-			1f
-		).OnComplete(() => {Destroy(gameObject); });
+		CommonFunc.FadeSprite(GetComponent<SpriteRenderer>(), 1, 0, 1, () =>
+		{
+			Destroy(gameObject);
+		});
 	}
 
 	public bool HaveTarget()

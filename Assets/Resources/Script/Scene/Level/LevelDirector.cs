@@ -63,7 +63,6 @@ public class LevelDirector : SceneDirector
 	private void AddDustParticle()
 	{
 		GameObject dust = Instantiate(Resources.Load<GameObject>("Prefab/Sprite/Particle/Dust/Dust"));
-		dust.transform.localScale = new Vector3(2, 2, 1);
 		dust.transform.position = CurrentHero.transform.position;
 	}
 

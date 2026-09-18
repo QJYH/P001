@@ -27,13 +27,11 @@ public class CameraAnchor : MonoBehaviour
 
 	private void OnHeroExit()
 	{
-		GameObject hero = LevelDirector.LevelInstance.CurrentHero;
-		SceneDirector.SceneInstance.VirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = hero.transform;
+		transform.Find("VirtualCamera").gameObject.SetActive(false);
 	}
 
 	private void OnHeroEnter()
 	{
-		SceneDirector.SceneInstance.VirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = transform;
-
+		transform.Find("VirtualCamera").gameObject.SetActive(true);
 	}
 }

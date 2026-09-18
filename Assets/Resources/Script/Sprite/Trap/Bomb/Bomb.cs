@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Bomb : MonoBehaviour
+public class Bomb : Trap
 {
 	private const float maxExistTime = 5f;
 

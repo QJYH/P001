@@ -21,6 +21,14 @@ PrefabInstance:
       value: Dust
       objectReference: {fileID: 0}
     - target: {fileID: 7707584819354770682, guid: 610aa7f9408e1184e98c15177303bf60, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7707584819354770682, guid: 610aa7f9408e1184e98c15177303bf60, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7707584819354770682, guid: 610aa7f9408e1184e98c15177303bf60, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}

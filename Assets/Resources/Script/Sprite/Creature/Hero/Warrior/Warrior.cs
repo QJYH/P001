@@ -3,6 +3,8 @@ using UnityEngine;
 public class Warrior : Hero
 {
 	public override float MaxHp { get; } = 10f;
+	protected override float MaxRunSpeed { get; } = 5f;
+	protected override float MaxRunAcceleration { get; } = 50f;
 
 	public bool StrikeBackEnable { get; set; } = false;
 	public bool DefendEnable { get; set; } = false;

@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class FogTileMap : MonoBehaviour
 {
-	private const float disappearDuration = 5f;
+	private const float disappearDuration = 3f;
 
 	private HeroTriggerRange heroTriggerRange;
 	private TilemapRenderer tilemapRenderer;
