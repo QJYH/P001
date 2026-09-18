@@ -9,12 +9,10 @@ using UnityEngine.UI;
 
 public class Enemy : Creature
 {
-	public EnemyStatus CurrentStatus { get; set; }
-	public Vector3 CurrentPatrolPos { set; get; }
 	public Hero Target { private set; get; }
 	protected List<GameObject> AttackList { get; private set; } = new List<GameObject>();
 
-	private GameObject runningAttack;
+	public GameObject RunningAttack { get; set; }
 	private GameObject enemyHpBar;
 	private Selector behaviorTree;
 
@@ -43,13 +41,12 @@ public class Enemy : Creature
 	private void Update()
 	{
 		UpdateTarget();
-		UpdateBehaviorTree();
 		UpdateVisual();
 	}
 
 	private void FixedUpdate()
 	{
-		UpdateBaseMoveVelocity();
+		UpdateBehaviorTree();
 	}
 
 	private void SetMaterial()
@@ -97,8 +94,6 @@ public class Enemy : Creature
 		patrolSeq.AddChild(new PatrolRun(this));
 		patrolSeq.AddChild(new PatrolWatch(this));
 		behaviorTree.AddChild(patrolSeq);
-
-		behaviorTree.Tick();
 	}
 
 	private void UpdateBehaviorTree()
@@ -136,49 +131,11 @@ public class Enemy : Creature
 		GetComponent<MoveManager>().AddVelocity("_BaseMove", velocity);
 	}
 
-	private void UpdateBaseMoveVelocity()
+	public void UpdateBaseMoveVelocity(Vector3 targetPos)
 	{
-		Vector3 targetPos;
 		BoxCollider2D creatureBlock = transform.Find("CreatureBlock").GetComponent<BoxCollider2D>();
 		Vector2 collisionOffset = creatureBlock.offset;
 		Vector2 collisionSize = creatureBlock.size;
-		if (CurrentStatus == EnemyStatus.PatrolRun)
-		{
-			targetPos = CurrentPatrolPos;
-		}
-		else if (CurrentStatus == EnemyStatus.Chase)
-		{
-			Vector3 heroPos = Target.transform.position;
-			BoxCollider2D heroCollider = Target.GetComponent<BoxCollider2D>();
-			heroPos.x += heroCollider.offset.x;
-			heroPos.y += heroCollider.offset.y;
-			GameObject detectRangeObject = runningAttack.transform.Find("DetectRange").gameObject;
-			PolygonCollider2D detectRange = detectRangeObject.GetComponent<PolygonCollider2D>();
-			Vector3 potentialTargetPos1 = new Vector3(heroPos.x - detectRange.offset.x, heroPos.y - detectRange.offset.y);
-			Vector3 potentialTargetPos2 = new Vector3(heroPos.x + detectRange.offset.x, heroPos.y - detectRange.offset.y);
-
-			bool canStandOnPos1 = TileMapManager.CanStandOnPosition(potentialTargetPos1, collisionOffset, collisionSize);
-			bool canStandOnPos2 = TileMapManager.CanStandOnPosition(potentialTargetPos2, collisionOffset, collisionSize);
-			if ( canStandOnPos1 && canStandOnPos2)
-			{
-				float distance1 = Vector2.Distance(transform.position, potentialTargetPos1);
-				float distance2 = Vector2.Distance(transform.position, potentialTargetPos2);
-				targetPos = (distance1 < distance2) ? potentialTargetPos1 : potentialTargetPos2;
-			}
-			else if (canStandOnPos1 || canStandOnPos2)
-			{
-				targetPos = canStandOnPos1 ? potentialTargetPos1 : potentialTargetPos2;
-			}
-			else
-			{
-				targetPos = heroPos;
-			}
-		}
-		else
-		{
-			targetPos = transform.position;
-		}
-
 		if (!TileMapManager.CanReachDirectly(transform.position, targetPos, collisionOffset, collisionSize))
 		{
 			targetPos = GetTargetPosByPathfinding(transform.position, targetPos, collisionOffset, collisionSize);
@@ -217,22 +174,19 @@ public class Enemy : Creature
 	}
 	public void OnAttackAnimationBegin()
 	{
-		runningAttack.GetComponent<EnemyAttack>().OnAttackBegin();
+		RunningAttack.GetComponent<EnemyAttack>().OnAttackBegin();
 	}
 	public void OnAttackAnimationEnd()
 	{
-		runningAttack.GetComponent<EnemyAttack>().OnAttackEnd();
-		CurrentStatus = EnemyStatus.None;
-		runningAttack = null;
+		RunningAttack.GetComponent<EnemyAttack>().OnAttackEnd();
+		RunningAttack = null;
 	}
 	public void OnDieAnimationBegin()
 	{
-		CurrentStatus = EnemyStatus.Die;
-	}
 
+	}
 	public void OnDieAnimationEnd()
 	{
-		CurrentStatus = EnemyStatus.None;
 		Disappear();
 	}
 
@@ -261,24 +215,18 @@ public class Enemy : Creature
 
 	public void Attack()
 	{
-		CurrentStatus = EnemyStatus.Attack;
 		GetComponent<Animator>().SetTrigger("Attack");
 	}
 
 	public void CreateMeleeAttackRange()
 	{
 		//动画事件调用
-		runningAttack.GetComponent<EnemyAttack>().CreateMeleeAttackRange();
+		RunningAttack.GetComponent<EnemyAttack>().CreateMeleeAttackRange();
 	}
 
 	public void CreateRangedProjectile()
 	{
 		//动画事件调用
-		runningAttack.GetComponent<EnemyAttack>().CreateRangedProjectile();
-	}
-
-	public void SetRunningAttack(GameObject gameObject)
-	{
-		runningAttack = gameObject;
+		RunningAttack.GetComponent<EnemyAttack>().CreateRangedProjectile();
 	}
 }

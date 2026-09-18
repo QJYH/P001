@@ -20,10 +20,12 @@ namespace BehaviorTree
 
 		protected override void OnInit()
 		{
-			enemy.CurrentStatus = EnemyStatus.PatrolRun;
+
 		}
 		protected override BehaviorStatus OnUpdate()
 		{
+			enemy.UpdateBaseMoveVelocity(currentPatrolPos.Value);
+
 			if (enemy.HaveTarget()) return BehaviorStatus.Failure;
 			if (ReachTargetPartolPos()) return BehaviorStatus.Success;		
 			return BehaviorStatus.Running;
@@ -36,21 +38,14 @@ namespace BehaviorTree
 			Vector2 patrolPos2 = new Vector2(currentPos.x + 2, currentPos.y);
 			patrolPosList.AddLast(patrolPos1);
 			patrolPosList.AddLast(patrolPos2);
-			SetCurrentPatrolPosition(patrolPosList.First);
-			
-		}
-
-		private void SetCurrentPatrolPosition(LinkedListNode<Vector2> node)
-		{
-			currentPatrolPos = node;
-			enemy.CurrentPatrolPos = currentPatrolPos.Value;
+			currentPatrolPos = patrolPosList.First;
 		}
 
 		private bool ReachTargetPartolPos()
 		{
 			if (CommonFunc.IsNear(enemy.transform.position, currentPatrolPos.Value, null))
 			{
-				SetCurrentPatrolPosition(currentPatrolPos.Next ?? patrolPosList.First);
+				currentPatrolPos = currentPatrolPos.Next ?? patrolPosList.First;
 				return true;
 			}
 			else

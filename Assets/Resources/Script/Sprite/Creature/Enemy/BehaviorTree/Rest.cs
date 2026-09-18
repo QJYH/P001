@@ -19,7 +19,7 @@ namespace BehaviorTree
 
 		protected override void OnInit()
 		{
-			enemy.CurrentStatus = EnemyStatus.Rest;
+			enemy.UpdateBaseMoveVelocity(enemy.transform.position);
 		}
 		protected override BehaviorStatus OnUpdate()
 		{

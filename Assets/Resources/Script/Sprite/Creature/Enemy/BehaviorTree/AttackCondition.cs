@@ -21,7 +21,7 @@ namespace BehaviorTree
 			if (!enemy.HaveTarget()) return BehaviorStatus.Failure;
 			if (enemyAttack.IsAttackInCoolDown()) return BehaviorStatus.Failure;
 
-			enemy.SetRunningAttack(enemyAttack.gameObject);
+			enemy.RunningAttack = enemyAttack.gameObject;
 			return BehaviorStatus.Success;
 		}
 	}

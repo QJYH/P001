@@ -18,11 +18,12 @@ namespace BehaviorTree
 
 		protected override void OnInit()
 		{
+			enemy.UpdateBaseMoveVelocity(enemy.transform.position);
 			enemyAttack.Attack();
 		}
 		protected override BehaviorStatus OnUpdate()
 		{
-			if (!(enemy.CurrentStatus == EnemyStatus.Attack)) return BehaviorStatus.Success;
+			if (!enemy.RunningAttack) return BehaviorStatus.Success;
 
 			return BehaviorStatus.Running;
 		}

@@ -19,7 +19,7 @@ namespace BehaviorTree
 
 		protected override void OnInit()
 		{
-			enemy.CurrentStatus = EnemyStatus.PatrolWatch;
+			enemy.UpdateBaseMoveVelocity(enemy.transform.position);
 			watchTime = 0f;
 		}
 		protected override BehaviorStatus OnUpdate()
