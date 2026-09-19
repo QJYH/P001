@@ -12,13 +12,17 @@ public class ThrowBone : EnemyAttack
 
 	public override void CreateRangedProjectile()
 	{
-		GameObject gnollBone = Instantiate(Resources.Load<GameObject>(gnollBoneDirName));
-		gnollBone.transform.position = transform.Find("ProjectilePosition").position;
-		gnollBone.GetComponent<GnollBone>().Owner = Owner;
-		gnollBone.GetComponent<GnollBone>().TargetType = TargetType.Hero;
-		gnollBone.GetComponent<GnollBone>().HarmInfo = new HarmInfo(CurrentHarmInfo);
-		Vector2 direction = (transform.Find("ProjectilePosition").position - transform.position).normalized;
-		gnollBone.GetComponent<GnollBone>().Direction = direction;
+		Vector2 originalDirection = (transform.Find("ProjectilePosition").position - transform.position).normalized;
+		List<float> angleOffsetList = new List<float>{ -25, 0, 25 };
+		foreach (float agnleOffset in angleOffsetList)
+		{
+			GameObject gnollBone = Instantiate(Resources.Load<GameObject>(gnollBoneDirName));
+			gnollBone.transform.position = transform.Find("ProjectilePosition").position;
+			gnollBone.GetComponent<GnollBone>().Owner = Owner;
+			gnollBone.GetComponent<GnollBone>().TargetType = TargetType.Hero;
+			gnollBone.GetComponent<GnollBone>().HarmInfo = new HarmInfo(CurrentHarmInfo);
+			gnollBone.GetComponent<GnollBone>().Direction = Vector3.RotateTowards(originalDirection, Vector2.up, agnleOffset * Mathf.Deg2Rad, 0).normalized;
+		}
 	}
 
 }
