@@ -6,35 +6,32 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-	private const float collisionDestroyDelayTime = 0.3f;
-	private const float maxExistTime = 5f;
-	private enum Status
-	{
-		Running,
-		ToBeDestory
-	}
+	protected virtual float MaxSpeed { get; } = 0;
+	protected virtual float MaxAcceleration { get; } = 0;
+	protected virtual float AngleSpeed { get; } = 0;
+	protected virtual float MaxExistTime { get; } = 5;
+	protected virtual float CollisionDestroyDelayTime { get; } = 0.3f;
+	protected virtual bool CanBeStruckBack { get; } = true;
+	protected virtual string AttackRangeDirName { get; } = "";
+	protected virtual float AttackRangeDurationTime { get; } = 0.1f;
+
 
 	public Creature Owner { get; set; }
 	public GameObject Target { get; set; }
 	public TargetType TargetType { get; set; }
 	public HarmInfo HarmInfo { get; set; }
 	public Vector2 Direction { get; set; }
-	protected virtual float MaxSpeed { get; set; } = 0;
-	protected virtual float MaxAcceleration { get; set; } = 0;
-	protected virtual float AngleSpeed { get; set; } = 0;
-	private Status currentStatus;
-	private Sequence delayDestorySequence;
+	protected Tween DelayDestoryTween { get; set; }
 
 	private void Start()
 	{
-		currentStatus = Status.Running;
 		AddBaseMoveVelocity();
-		DelayDestory(maxExistTime);
+		DelayDestory(MaxExistTime);
 	}
 
 	private void OnDestroy()
 	{
-		delayDestorySequence?.Kill();
+		DelayDestoryTween?.Kill();
 	}
 
 	protected virtual void FixedUpdate()
@@ -51,7 +48,6 @@ public class Projectile : MonoBehaviour
 
 	private void TryFollowTarget()
 	{
-		if (currentStatus == Status.ToBeDestory) return;
 		if (Target == null) return;
 
 		Vector2 targetDirection = (Target.transform.position - transform.position).normalized;
@@ -67,18 +63,13 @@ public class Projectile : MonoBehaviour
 		AttackRange attackRange = collision.GetComponent<AttackRange>();
 		if (attackRange)
 		{
-			if ((attackRange.Attacker is Hero) && (attackRange.TargetType == TargetType.Enemy) && (Owner is Enemy))
-			{
-				OnHeroStrikeBack(attackRange.Attacker);
-			}
+			HitAttackRange(attackRange);
 			return;
 		}
 
 		if (LayerMask.LayerToName(collision.gameObject.layer) == "EnvironmentBlock")
 		{
-			currentStatus = Status.ToBeDestory;
-			GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", Vector2.zero);
-			DelayDestory(collisionDestroyDelayTime);
+			HitEnvironmentBlock();
 			return;
 		}
 
@@ -91,42 +82,58 @@ public class Projectile : MonoBehaviour
 		{
 			receiver = collision.GetComponent<Enemy>();
 		}
-		if (receiver == null) return;
-		CreateProjectileAttackRange();
-		currentStatus = Status.ToBeDestory;
-		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", Vector2.zero);
-		DelayDestory(collisionDestroyDelayTime);
-	}
-
-	protected virtual void CreateProjectileAttackRange()
-	{
-		throw new NotImplementedException();
-	}
-
-	private void DelayDestory(float delayTime)
-	{
-		delayDestorySequence?.Kill();
-
-		delayDestorySequence = DOTween.Sequence();
-		delayDestorySequence.AppendInterval(delayTime);
-		delayDestorySequence.AppendCallback(() => { GameObject.Destroy(gameObject); });
-	}
-
-	private void OnHeroStrikeBack(Creature attacker)
-	{
-		if (Target)
+		if (receiver)
 		{
-			Target = Owner.gameObject;
-		}
+			HitTarget();
+			return;
+		}		
+	}
 
-		Direction = new Vector2(-Direction.x, -Direction.y);
+	protected virtual void HitTarget()
+	{
+		CreateProjectileAttackRange();
+		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", Vector2.zero);
+		DelayDestory(CollisionDestroyDelayTime);
+		Target = null;
+	}
+
+	protected virtual void HitEnvironmentBlock()
+	{
+		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", Vector2.zero);
+		DelayDestory(CollisionDestroyDelayTime);
+		Target = null;
+	}
+
+	private void HitAttackRange(AttackRange attackRange)
+	{
+		TryHeroStrikeBack(attackRange);
+	}
+
+	private void TryHeroStrikeBack(AttackRange attackRange)
+	{
+		if (attackRange.Attacker is not Hero) return;
+		if (attackRange.TargetType != TargetType.Enemy) return;
+		if (Owner is not Enemy) return;
+		if (!CanBeStruckBack) return;
+
+		Direction = new Vector2(-Direction.x, 0);
 		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", Direction * MaxSpeed);
 		TargetType = TargetType.Enemy;
-		Owner = attacker;
-		currentStatus = Status.Running;
-		DelayDestory(maxExistTime);
-		
-		
-		
+		Owner = attackRange.Attacker;
+		DelayDestory(MaxExistTime);
+		Target = null;
 	}
+
+	private void CreateProjectileAttackRange()
+	{
+		GameObject attackRangeObject = AttackRange.CreateAttackRangeObject(AttackRangeDirName, Owner, HarmInfo, TargetType, AttackRangeDurationTime);
+		attackRangeObject.transform.position = transform.position;
+	}
+
+	protected void DelayDestory(float delayTime)
+	{
+		DelayDestoryTween?.Kill();
+
+		DelayDestoryTween = DOVirtual.DelayedCall(delayTime, ()=> { Destroy(gameObject); });
+	}	
 }

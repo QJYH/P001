@@ -6,20 +6,7 @@ using CommonEnum;
 
 public class GnollBone : Projectile
 {
-	private const string gnollBoneAttackRangeDirName = "Prefab/Sprite/Projectile/Enemy/Gnoll/GnollBoneAttackRange";
-	private const float gnollBoneAttackRangeDurationTime = 0.1f;
-
-	protected override float MaxSpeed { get; set; } = 12f;
-	protected override float MaxAcceleration { get; set; } = 120f;
-
-	protected override void CreateProjectileAttackRange()
-	{
-		string attackRangeDirName = gnollBoneAttackRangeDirName;
-		Creature attacker = Owner;
-		TargetType targetType = TargetType;
-		float attackRangeDurationTime = gnollBoneAttackRangeDurationTime;
-
-		GameObject attackRangeObject = AttackRange.CreateAttackRangeObject(attackRangeDirName, attacker, HarmInfo, targetType, attackRangeDurationTime);
-		attackRangeObject.transform.position = transform.position;
-	}
+	protected override float MaxSpeed { get; } = 12f;
+	protected override float MaxAcceleration { get; } = 120f;
+	protected override string AttackRangeDirName { get; } = "Prefab/Sprite/Projectile/Enemy/Gnoll/GnollBoneAttackRange";
 }

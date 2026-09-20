@@ -24,7 +24,7 @@ public class Bomb : Trap
 		{
 			Vector3 heroPos = attackRange.Attacker.transform.position;
 			Vector2 direction = new Vector2(transform.position.x - heroPos.x, 0);
-			BombHit bombHit = gameObject.AddComponent<BombHit>();
+			FlyingBomb bombHit = gameObject.AddComponent<FlyingBomb>();
 			bombHit.Owner = attackRange.Attacker;
 			bombHit.TargetType = TargetType.Enemy;
 			bombHit.HarmInfo = null;

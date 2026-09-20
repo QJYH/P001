@@ -3,14 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BombHit : Projectile
+public class FlyingBomb : Projectile
 {
-	protected override float MaxSpeed { get; set; } = 10f;
-	protected override float MaxAcceleration { get; set; } = 100f;
+	protected override float MaxSpeed { get; } = 10f;
+	protected override float MaxAcceleration { get; } = 100f;
 
-	protected override void CreateProjectileAttackRange()
+	protected override void HitTarget()
 	{
 		CreateExplosion();
+		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", Vector2.zero);
+		DelayDestory(CollisionDestroyDelayTime);
+		Target = null;
 	}
 
 	private void CreateExplosion()
