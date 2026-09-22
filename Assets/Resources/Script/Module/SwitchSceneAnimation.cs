@@ -12,6 +12,8 @@ public class SwitchSceneAnimation : MonoBehaviour
 	private float minRadius;
 	private float maxRadius;
 	private float currentRadius;
+	public UnityEvent OnOpenAnimationBegin = new UnityEvent();
+	public UnityEvent OnCloseAnimationBegin = new UnityEvent();
 	public UnityEvent OnOpenAnimationFinish = new UnityEvent();
 	public UnityEvent OnCloseAnimationFinish = new UnityEvent();
 	
@@ -67,6 +69,7 @@ public class SwitchSceneAnimation : MonoBehaviour
 		GetComponent<SpriteRenderer>().material.SetVector("_Center", centerPos);
 		SetMinMaxRadius(centerPos);
 		SetRadius(minRadius);
+		OnOpenAnimationBegin.Invoke();
 		DOTween.To(
 			delegate ()
 			{
@@ -95,6 +98,7 @@ public class SwitchSceneAnimation : MonoBehaviour
 		GetComponent<SpriteRenderer>().material.SetVector("_Center", centerPos);
 		SetMinMaxRadius(centerPos);
 		SetRadius(maxRadius);
+		OnCloseAnimationBegin.Invoke();
 		DOTween.To(
 			delegate ()
 			{

@@ -18,10 +18,7 @@ public class TileMapManager : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		if (Instance == this)
-		{
-			Instance = null;
-		}
+		Instance = (Instance == this) ? null : Instance;
 	}
 
 	private void OnEnable()

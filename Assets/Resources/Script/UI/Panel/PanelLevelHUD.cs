@@ -42,14 +42,11 @@ public class PanelLevelHUD : Panel
 
 	private Tween ShowAvatar()
 	{
-		RectTransform imageAvatar = transform.Find("TopLeft/ImageAvatar").GetComponent<RectTransform>();
-		Vector2 originalPos = imageAvatar.anchoredPosition;
-		imageAvatar.anchoredPosition = new Vector2(originalPos.x, originalPos.y + 192);
+		RectTransform imageAvatarRect = transform.Find("TopLeft/ImageAvatar").GetComponent<RectTransform>();
 
-		Sequence sequence = DOTween.Sequence();
-		sequence.Append(imageAvatar.transform.DOLocalMoveY(originalPos.y, 0.5f));
-
-		return sequence;
+		return DOTween.Sequence()
+		.Append(imageAvatarRect.DOLocalMoveY(imageAvatarRect.anchoredPosition.y + 102, 0))
+		.Append(imageAvatarRect.DOLocalMoveY(imageAvatarRect.anchoredPosition.y, 0.5f));
 	}
 
 	private Tween ShowHp()

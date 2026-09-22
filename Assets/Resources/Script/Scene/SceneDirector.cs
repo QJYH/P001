@@ -21,7 +21,7 @@ public class SceneDirector : MonoBehaviour
 	protected virtual void Awake()
 	{
 		SceneInstance = this;
-		Application.targetFrameRate = 60;
+		
 		InitCamera();
 		InitCanvas();
 		AddModule();
@@ -76,8 +76,17 @@ public class SceneDirector : MonoBehaviour
 
 	public void SwitchScene(string newSceneName)
 	{
+		ReleaseAllPanel();
 		SwitchSceneAnimation.Instance.PlayCloseAnimation(GetCloseAnimationCenter());
 		SwitchSceneAnimation.Instance.OnCloseAnimationFinish.AddListener(() => { SceneManager.LoadScene(newSceneName); });
+	}
+
+	private void ReleaseAllPanel()
+	{
+		foreach (Transform transform in MainCanvas.transform)
+		{
+			Destroy(transform.gameObject);
+		}
 	}
 
 	protected virtual Vector2 GetOpenAnimationCenter()
@@ -85,7 +94,7 @@ public class SceneDirector : MonoBehaviour
 		return new Vector2(Screen.width / 2, Screen.height / 2);
 	}
 
-	private Vector2 GetCloseAnimationCenter()
+	protected virtual Vector2 GetCloseAnimationCenter()
 	{
 		return new Vector2(Screen.width / 2, Screen.height / 2);
 	}

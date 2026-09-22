@@ -95,4 +95,10 @@ public class LevelDirector : SceneDirector
 		Vector3 heroScreenPos = MainCamera.GetComponent<Camera>().WorldToScreenPoint(CurrentHero.transform.position);
 		return new Vector2(heroScreenPos.x, heroScreenPos.y);
 	}
+
+	protected override Vector2 GetCloseAnimationCenter()
+	{
+		Vector3 heroScreenPos = MainCamera.GetComponent<Camera>().WorldToScreenPoint(CurrentHero.transform.position);
+		return new Vector2(heroScreenPos.x, heroScreenPos.y);
+	}
 }

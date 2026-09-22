@@ -53,7 +53,7 @@ public class CommonFunc : MonoBehaviour
 			endAlpha,
 			duration
 		).OnComplete(() => {
-			callBackFunc.Invoke();
+			callBackFunc?.Invoke();
 		});
 	}
 }

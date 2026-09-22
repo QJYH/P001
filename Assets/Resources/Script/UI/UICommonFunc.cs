@@ -1,6 +1,11 @@
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class UICommonFunc
 {
@@ -16,9 +21,48 @@ public static class UICommonFunc
 	{
 		string panelDir = string.Format("Prefab/UI/Panel/{0}/{1}", panelName, panelName);
 		Transform parentTransform = (parent != null) ? parent : SceneDirector.SceneInstance.MainCanvas.transform;
-		GameObject panel = Object.Instantiate(Resources.Load<GameObject>(panelDir));
+		GameObject panel = UnityEngine.Object.Instantiate(Resources.Load<GameObject>(panelDir));
 		panel.transform.SetParent(parentTransform, false);
 
 		return panel;
+	}
+
+	public static Tween FadeImage(Image image, float beginAlpha, float endAlpha, float duration, Action callBackFunc)
+	{
+		Color color = image.color;
+		image.color = new Color(color.r, color.g, color.b, beginAlpha);
+		return DOTween.To(
+			delegate ()
+			{
+				return image.color.a;
+			},
+			delegate (float value)
+			{
+				Color color = image.color;
+				image.color = new Color(color.r, color.g, color.b, value);
+			},
+			endAlpha,
+			duration
+		).OnComplete(() => {
+			callBackFunc?.Invoke();
+		});
+	}
+	public static Tween FadeText(TextMeshProUGUI text, float beginAlpha, float endAlpha, float duration, Action callBackFunc)
+	{
+		text.alpha = beginAlpha;
+		return DOTween.To(
+			delegate ()
+			{
+				return text.alpha;
+			},
+			delegate (float value)
+			{
+				text.alpha = value;
+			},
+			endAlpha,
+			duration
+		).OnComplete(() => {
+			callBackFunc?.Invoke();
+		});
 	}
 }

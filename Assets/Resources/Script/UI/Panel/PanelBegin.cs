@@ -11,7 +11,6 @@ public class PanelBegin : Panel
 	private GameObject buttonList;
 	private GameObject buttonNewGame;
 	private GameObject buttonQuitGame;
-	private Sequence showButtonSequence;
 
 	private void Awake()
 	{
@@ -24,7 +23,6 @@ public class PanelBegin : Panel
 	private void OnDestroy()
 	{
 		Instance = (Instance == this) ? null : Instance;
-		showButtonSequence?.Kill();
 	}
 
 	private void OnEnable()
@@ -46,7 +44,6 @@ public class PanelBegin : Panel
 
 	private void OnButtonNewGameClick()
 	{
-		Destroy(gameObject);
 		SceneDirector.SceneInstance.SwitchScene("SceneLevel1");
 	}
 
@@ -57,36 +54,15 @@ public class PanelBegin : Panel
 
 	private void ShowButton()
 	{
-		buttonNewGame.GetComponentInChildren<TextMeshProUGUI>().alpha = 0;
-		buttonQuitGame.GetComponentInChildren<TextMeshProUGUI>().alpha = 0;
-		float originalPosY = buttonList.GetComponent<RectTransform>().anchoredPosition.y;
+		RectTransform buttonListRect = buttonList.GetComponent<RectTransform>();
+		DOTween.Sequence()
+		.Append(buttonListRect.DOLocalMoveY(buttonListRect.anchoredPosition.y - 100, 0))
+		.Append(buttonListRect.DOLocalMoveY(buttonListRect.anchoredPosition.y, 1));
 
-		Sequence subSequence = DOTween.Sequence();
-		subSequence.AppendInterval(0.5f).Append(SetBtnTextAlphaTween(buttonQuitGame));
-		showButtonSequence = DOTween.Sequence();
-		showButtonSequence.Append(buttonList.transform.DOLocalMoveY(originalPosY - 100, 0))
-		.Append(buttonList.transform.DOLocalMoveY(originalPosY, 1.5f))
-		.Join(SetBtnTextAlphaTween(buttonNewGame))
-		.Join(subSequence);
-	}
+		DOTween.Sequence()
+		.Append(UICommonFunc.FadeText(buttonNewGame.GetComponentInChildren<TextMeshProUGUI>(), 0, 1, 0.7f, null));
 
-	
-
-	private Tween SetBtnTextAlphaTween(GameObject button)
-	{
-		TextMeshProUGUI text = button.GetComponentInChildren<TextMeshProUGUI>();
-
-		return DOTween.To(
-			delegate ()
-			{
-				return text.alpha;
-			},
-			delegate (float value)
-			{
-				text.alpha = value;
-			},
-			1f,
-			1f
-		);
+		DOTween.Sequence().AppendInterval(0.3f)
+		.Append(UICommonFunc.FadeText(buttonQuitGame.GetComponentInChildren<TextMeshProUGUI>(), 0, 1, 0.7f, null));
 	}
 }
