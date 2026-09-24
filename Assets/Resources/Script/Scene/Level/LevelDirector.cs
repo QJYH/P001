@@ -34,30 +34,16 @@ public class LevelDirector : SceneDirector
 		//SwitchSceneAnimation.Instance.OnOpenAnimationFinish.RemoveListener(OnSceneOpenAnimationFinish);
 	}
 
-	protected override void SceneStart()
+	protected override void Start()
 	{
-		base.SceneStart();
+		base.Start();
 		AddDustParticle();
 		ShowHero();
 	}
 
 	private void ShowHero()
 	{
-		Color color = CurrentHero.GetComponent<SpriteRenderer>().color;
-		CurrentHero.GetComponent<SpriteRenderer>().color = new Color(color.r, color.g, color.b, 0);
-		DOTween.To(
-			delegate ()
-			{
-				return CurrentHero.GetComponent<SpriteRenderer>().color.a;
-			},
-			delegate (float value)
-			{
-				Color color = CurrentHero.GetComponent<SpriteRenderer>().color;
-				CurrentHero.GetComponent<SpriteRenderer>().color = new Color(color.r, color.g, color.b, value);
-			},
-			1f,
-			1f
-		);
+		CommonFunc.FadeSprite(CurrentHero.GetComponent<SpriteRenderer>(), 0, 1, 1, null);
 	}
 
 	private void AddDustParticle()

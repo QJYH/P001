@@ -46,7 +46,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9098064411468574213, guid: c319ca54e2b0c22459be6c063f6196f1, type: 3}
       propertyPath: m_Name
-      value: NewButton Variant
+      value: PanelBeginButton
       objectReference: {fileID: 0}
     - target: {fileID: 9155840822359560457, guid: c319ca54e2b0c22459be6c063f6196f1, type: 3}
       propertyPath: m_Pivot.x
@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9155840822359560457, guid: c319ca54e2b0c22459be6c063f6196f1, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 480
+      value: 360
       objectReference: {fileID: 0}
     - target: {fileID: 9155840822359560457, guid: c319ca54e2b0c22459be6c063f6196f1, type: 3}
       propertyPath: m_SizeDelta.y

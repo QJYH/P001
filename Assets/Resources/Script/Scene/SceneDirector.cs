@@ -25,8 +25,6 @@ public class SceneDirector : MonoBehaviour
 		InitCamera();
 		InitCanvas();
 		AddModule();
-
-		DOVirtual.DelayedCall(0.1f, () => { SceneStart(); });
 	}
 
 	protected virtual void OnDestroy()
@@ -34,9 +32,9 @@ public class SceneDirector : MonoBehaviour
 		SceneInstance = (SceneInstance == this) ? null : SceneInstance;
 	}
 
-	protected virtual void SceneStart()
+	protected virtual void Start()
 	{
-		SwitchSceneAnimation.Instance.PlayOpenAnimation(GetOpenAnimationCenter());
+		DOVirtual.DelayedCall(0.2f, () => { SwitchSceneAnimation.Instance.PlayOpenAnimation(GetOpenAnimationCenter()); });
 	}
 
 	protected virtual void AddModule()

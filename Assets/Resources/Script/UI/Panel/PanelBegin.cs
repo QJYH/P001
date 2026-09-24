@@ -56,13 +56,13 @@ public class PanelBegin : Panel
 	{
 		RectTransform buttonListRect = buttonList.GetComponent<RectTransform>();
 		DOTween.Sequence()
-		.Append(buttonListRect.DOLocalMoveY(buttonListRect.anchoredPosition.y - 100, 0))
-		.Append(buttonListRect.DOLocalMoveY(buttonListRect.anchoredPosition.y, 1));
+		.Append(UICommonFunc.MoveY(buttonListRect, -100, 0, 1));
 
 		DOTween.Sequence()
 		.Append(UICommonFunc.FadeText(buttonNewGame.GetComponentInChildren<TextMeshProUGUI>(), 0, 1, 0.7f, null));
 
-		DOTween.Sequence().AppendInterval(0.3f)
+		DOTween.Sequence()
+		.AppendInterval(0.3f)
 		.Append(UICommonFunc.FadeText(buttonQuitGame.GetComponentInChildren<TextMeshProUGUI>(), 0, 1, 0.7f, null));
 	}
 }

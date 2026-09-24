@@ -107,6 +107,8 @@ public class Hero : Creature
 
 	private void UpdateInputMoveVelocity()
 	{
+		if (!InputResponse) return;
+
 		Vector2 currentInputMoveDirection = new Vector2(moveInput.x, moveInput.y);
 		currentInputMoveDirection = IsDoingAction() ? Vector2.zero : currentInputMoveDirection;
 		currentInputMoveDirection = currentInputMoveDirection.normalized;
@@ -259,5 +261,12 @@ public class Hero : Creature
 		heroPhantom.transform.localScale = transform.localScale;
 		heroPhantom.GetComponent<SpriteRenderer>().sprite = GetComponent<SpriteRenderer>().sprite;
 		heroPhantom.GetComponent<OrderInLayerManager>().verticalOffset = GetComponent<OrderInLayerManager>().verticalOffset;
+	}
+
+	public void AutoRunTo(Vector3 position, float duration)
+	{
+		GetComponent<MoveManager>().ChangeCurrentVelocity("_InputMove", Vector2.zero);
+		GetComponent<MoveManager>().ChangeTargetVelocity("_InputMove", Vector2.zero);
+		transform.DOMove(position, duration);
 	}
 }

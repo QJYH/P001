@@ -45,8 +45,7 @@ public class PanelLevelHUD : Panel
 		RectTransform imageAvatarRect = transform.Find("TopLeft/ImageAvatar").GetComponent<RectTransform>();
 
 		return DOTween.Sequence()
-		.Append(imageAvatarRect.DOLocalMoveY(imageAvatarRect.anchoredPosition.y + 102, 0))
-		.Append(imageAvatarRect.DOLocalMoveY(imageAvatarRect.anchoredPosition.y, 0.5f));
+		.Append(UICommonFunc.MoveY(imageAvatarRect, 102, 0, 0.5f));
 	}
 
 	private Tween ShowHp()

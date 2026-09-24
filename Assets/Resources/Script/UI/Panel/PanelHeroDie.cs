@@ -108,8 +108,7 @@ public class PanelHeroDie : Panel
 	{
 		RectTransform imageBackground = transform.Find("ImageBackground").GetComponent<RectTransform>();
 		DOTween.Sequence()
-		.Append(imageBackground.DOLocalMoveY(imageBackground.anchoredPosition.y - 100, 0))
-		.Append(imageBackground.DOLocalMoveY(imageBackground.anchoredPosition.y, 1))
+		.Append(UICommonFunc.MoveY(imageBackground, -100, 0, 1))
 		.Join(UICommonFunc.FadeImage(imageBackground.GetComponent<Image>(), 0, 1, 1, null));
 
 		DOTween.Sequence()

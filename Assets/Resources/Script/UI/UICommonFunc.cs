@@ -47,6 +47,7 @@ public static class UICommonFunc
 			callBackFunc?.Invoke();
 		});
 	}
+
 	public static Tween FadeText(TextMeshProUGUI text, float beginAlpha, float endAlpha, float duration, Action callBackFunc)
 	{
 		text.alpha = beginAlpha;
@@ -64,5 +65,22 @@ public static class UICommonFunc
 		).OnComplete(() => {
 			callBackFunc?.Invoke();
 		});
+	}
+
+	public static Tween Move(RectTransform rectTransform, Vector2 beginOffset, Vector2 endOffset, float duration)
+	{
+		Vector2 originalPosition = rectTransform.anchoredPosition;
+		rectTransform.anchoredPosition = new Vector2(originalPosition.x + beginOffset.x, originalPosition.y + beginOffset.y);
+		return rectTransform.DOLocalMove(new Vector2(originalPosition.x + endOffset.x, originalPosition.y + endOffset.y), duration);
+	}
+
+	public static Tween MoveX(RectTransform rectTransform, float beginOffset, float endOffset, float duration)
+	{
+		return Move(rectTransform, new Vector2(beginOffset, 0), new Vector2(endOffset, 0), duration);
+	}
+
+	public static Tween MoveY(RectTransform rectTransform, float beginOffset, float endOffset, float duration)
+	{
+		return Move(rectTransform, new Vector2(0, beginOffset), new Vector2(0, endOffset), duration);
 	}
 }

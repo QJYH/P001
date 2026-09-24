@@ -7,7 +7,7 @@ public class SwitchSceneAnimation : MonoBehaviour
 {
 	public static SwitchSceneAnimation Instance { get; private set; }
 
-	private const float duration = 0.5f;
+	private const float duration = 0.8f;
 	private const float transitionDistance = 255;
 	private float minRadius;
 	private float maxRadius;

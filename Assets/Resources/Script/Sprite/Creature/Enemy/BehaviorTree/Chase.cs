@@ -24,11 +24,10 @@ namespace BehaviorTree
 		}
 		protected override BehaviorStatus OnUpdate()
 		{
-			enemy.UpdateBaseMoveVelocity(GetChaseTargetPos());
-
 			if (!enemy.HaveTarget()) return BehaviorStatus.Failure;
 			if (enemyAttack.CanLaunchAttack()) return BehaviorStatus.Success;
 
+			enemy.UpdateBaseMoveVelocity(GetChaseTargetPos());
 			return BehaviorStatus.Running;
 		}
 
