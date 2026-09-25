@@ -2,6 +2,7 @@ using CommonEnum;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 namespace BehaviorTree
@@ -20,14 +21,14 @@ namespace BehaviorTree
 
 		protected override void OnInit()
 		{
-
+			enemy.GetComponent<NavMeshAgent>().SetDestination(currentPatrolPos.Value);
+			enemy.GetComponent<Animator>().SetBool("IsMoving", true);
 		}
 		protected override BehaviorStatus OnUpdate()
 		{
-			enemy.UpdateBaseMoveVelocity(currentPatrolPos.Value);
-
 			if (enemy.HaveTarget()) return BehaviorStatus.Failure;
-			if (ReachTargetPartolPos()) return BehaviorStatus.Success;		
+			if (ReachTargetPartolPos()) return BehaviorStatus.Success;
+			
 			return BehaviorStatus.Running;
 		}
 

@@ -2,6 +2,7 @@ using CommonEnum;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace BehaviorTree
 {
@@ -18,7 +19,8 @@ namespace BehaviorTree
 
 		protected override void OnInit()
 		{
-			enemy.UpdateBaseMoveVelocity(enemy.transform.position);
+			enemy.GetComponent<NavMeshAgent>().SetDestination(enemy.transform.position);
+			enemy.GetComponent<Animator>().SetBool("IsMoving", false);
 			enemyAttack.Attack();
 		}
 		protected override BehaviorStatus OnUpdate()

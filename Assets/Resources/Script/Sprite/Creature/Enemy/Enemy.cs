@@ -5,6 +5,7 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class Enemy : Creature
@@ -20,10 +21,10 @@ public class Enemy : Creature
 	{
 		base.Awake();
 		SetMaterial();
+		SetNavigationAgent();
 		InitHpBar();
 		InitAttackList();
 		AddBehaviorTree();
-		AddBaseMoveVelocity();
 	}
 
 	private void OnEnable()
@@ -42,6 +43,7 @@ public class Enemy : Creature
 	{
 		UpdateTarget();
 		UpdateVisual();
+		UpdateFacing();
 	}
 
 	private void FixedUpdate()
@@ -52,6 +54,15 @@ public class Enemy : Creature
 	private void SetMaterial()
 	{
 		GetComponent<SpriteRenderer>().sharedMaterial = Resources.Load<Material>("Material/Enemy");
+	}
+
+	private void SetNavigationAgent()
+	{
+		NavMeshAgent navMeshAgent = GetComponent<NavMeshAgent>();
+		navMeshAgent.updateRotation = false;
+		navMeshAgent.updateUpAxis = false;
+		navMeshAgent.speed = MaxRunSpeed;
+		navMeshAgent.acceleration = MaxRunAcceleration;
 	}
 
 	protected virtual void InitAttackList()
@@ -109,6 +120,13 @@ public class Enemy : Creature
 		enemyHpBar?.SetActive(!haveBlock);
 	}
 
+	private void UpdateFacing()
+	{
+		Vector3 firstTargetPos = GetComponent<NavMeshAgent>().steeringTarget;
+		TryFlipX(firstTargetPos - transform.position);
+		CreatureCanvas.GetComponent<RectTransform>().localScale = transform.localScale;
+	}
+
 	private void UpdateTarget()
 	{
 		if (Target == null) return;
@@ -118,42 +136,12 @@ public class Enemy : Creature
 			Target = null;
 		}
 	}
+
 	public void SeeHero(Hero hero)
 	{
 		if (hero.IsDead()) return;
 
 		Target = hero;
-	}
-
-	private void AddBaseMoveVelocity()
-	{
-		Velocity velocity = new Velocity(Vector2.zero, Vector2.zero, MaxRunAcceleration);
-		GetComponent<MoveManager>().AddVelocity("_BaseMove", velocity);
-	}
-
-	public void UpdateBaseMoveVelocity(Vector3 targetPos)
-	{
-		BoxCollider2D creatureBlock = transform.Find("CreatureBlock").GetComponent<BoxCollider2D>();
-		Vector2 collisionOffset = creatureBlock.offset;
-		Vector2 collisionSize = creatureBlock.size;
-		if (!TileMapManager.CanReachDirectly(transform.position, targetPos, collisionOffset, collisionSize))
-		{
-			targetPos = GetTargetPosByPathfinding(transform.position, targetPos, collisionOffset, collisionSize);
-		}
-
-		Vector3 targetVelocity = (targetPos - transform.position).normalized * MaxRunSpeed;
-		GetComponent<MoveManager>().ChangeTargetVelocity("_BaseMove", targetVelocity);
-		GetComponent<Animator>().SetBool("IsMoving", (targetVelocity != Vector3.zero));
-		TryFlipX(targetVelocity);
-		CreatureCanvas.GetComponent<RectTransform>().localScale = transform.localScale;
-	}
-
-	private Vector3 GetTargetPosByPathfinding(Vector3 beginWorldPos, Vector3 endWorldPos, Vector2 collisionOffset, Vector2 collisionSize)
-	{
-		List<Vector3> path = AStar.FindPath(beginWorldPos, endWorldPos, collisionOffset, collisionSize);
-
-		bool canReach = TileMapManager.CanReachDirectly(beginWorldPos, path[1], collisionOffset, collisionSize);
-		return canReach ? path[1] : path[0];
 	}
 
 	public void OnIdleAnimationBegin()

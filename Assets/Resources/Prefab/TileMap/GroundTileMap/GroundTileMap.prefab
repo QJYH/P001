@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1985708145909580857, guid: 35ad7ce9269c93e42a0d53d22dbe6d6d, type: 3}
       propertyPath: m_Name
-      value: GroundTileMap Variant
+      value: GroundTileMap
       objectReference: {fileID: 0}
     - target: {fileID: 3232287286255774369, guid: 35ad7ce9269c93e42a0d53d22dbe6d6d, type: 3}
       propertyPath: m_SortingLayer

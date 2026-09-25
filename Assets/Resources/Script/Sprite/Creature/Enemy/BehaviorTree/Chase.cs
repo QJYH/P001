@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 namespace BehaviorTree
@@ -20,14 +21,14 @@ namespace BehaviorTree
 
 		protected override void OnInit()
 		{
-
+			enemy.GetComponent<Animator>().SetBool("IsMoving", true);
 		}
 		protected override BehaviorStatus OnUpdate()
 		{
 			if (!enemy.HaveTarget()) return BehaviorStatus.Failure;
 			if (enemyAttack.CanLaunchAttack()) return BehaviorStatus.Success;
 
-			enemy.UpdateBaseMoveVelocity(GetChaseTargetPos());
+			enemy.GetComponent<NavMeshAgent>().SetDestination(GetChaseTargetPos());
 			return BehaviorStatus.Running;
 		}
 
