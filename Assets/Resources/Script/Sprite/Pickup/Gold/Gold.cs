@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Gold : Pickup
 {
-	private const float maxSpeed = 20f;
+	private const float maxSpeed = 15f;
 	private const float maxAcceleration = 100f;
 	private const float destoryDistance = 0.5f;
 

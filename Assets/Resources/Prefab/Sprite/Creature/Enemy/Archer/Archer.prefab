@@ -127,7 +127,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1390716215908029006, guid: aa95b0d236230884f8cd5065e2b920f8, type: 3}
       propertyPath: m_Offset.x
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5963981171923324108, guid: aa95b0d236230884f8cd5065e2b920f8, type: 3}
       propertyPath: m_Name
@@ -303,6 +303,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0814c6636b6d39b4cbd0be08bff459a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &8407237180436967330 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 762818653705143973, guid: 526f736743137b644ab27bb354579090, type: 3}

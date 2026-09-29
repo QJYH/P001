@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Boat_0
+      name: BoatIdle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e782d05cb74840849a66b38d9fcc6278
-      internalID: 1829567977
+      spriteID: 0ca292a35db80dc40983fa0ad75d1307
+      internalID: 2068589808
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boat_1
+      name: BoatIdle_1
       rect:
         serializedVersion: 2
         x: 256
@@ -132,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 688480bc673d4994ba5603f7ab6d6d02
-      internalID: -547771795
+      spriteID: 26461580f0a19da4b9ae0f51ff81958a
+      internalID: 521508509
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boat_2
+      name: BoatIdle_2
       rect:
         serializedVersion: 2
         x: 512
@@ -153,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 09402c53a11bbb34ba48db4dd25794fc
-      internalID: -1746411528
+      spriteID: d926c5bc57dfd9c4fa39cdcd3e37a203
+      internalID: 592904180
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boat_3
+      name: BoatIdle_3
       rect:
         serializedVersion: 2
         x: 768
@@ -174,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7de3d2efb6440a64599f9a29583f1c9d
-      internalID: -180682092
+      spriteID: 211c2f9dd4972b14f9241bbed4531e05
+      internalID: -353787559
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boat_4
+      name: BoatIdle_4
       rect:
         serializedVersion: 2
         x: 1024
@@ -195,14 +195,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12ea86fd426e2214d829bb350832ced6
-      internalID: -1672325224
+      spriteID: 4fd7c41a96a913c41a906c8d516ed5e9
+      internalID: -2086374147
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boat_5
+      name: BoatIdle_5
       rect:
         serializedVersion: 2
         x: 1280
@@ -216,14 +216,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 207b741765d22424a9055dd5a0b4c1ff
-      internalID: -2143427708
+      spriteID: c001f53c35cf6b94992cbb65c2ef4536
+      internalID: 485183998
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boat_6
+      name: BoatIdle_6
       rect:
         serializedVersion: 2
         x: 1536
@@ -237,14 +237,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d35c72cebca60b44dbc5293adf0ee1b7
-      internalID: -380795178
+      spriteID: c30d15002fba6d64c8517f796d95c6cb
+      internalID: -1628706892
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boat_7
+      name: BoatIdle_7
       rect:
         serializedVersion: 2
         x: 1792
@@ -258,8 +258,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 08f2ea0939312024a9fefffb4811f605
-      internalID: -1775542771
+      spriteID: a320a6a94eca4c94e9ff1c74fe08a419
+      internalID: 417450095
       vertices: []
       indices: 
       edges: []
@@ -275,14 +275,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Boat_0: 1829567977
-      Boat_1: -547771795
-      Boat_2: -1746411528
-      Boat_3: -180682092
-      Boat_4: -1672325224
-      Boat_5: -2143427708
-      Boat_6: -380795178
-      Boat_7: -1775542771
+      BoatIdle_0: 2068589808
+      BoatIdle_1: 521508509
+      BoatIdle_2: 592904180
+      BoatIdle_3: -353787559
+      BoatIdle_4: -2086374147
+      BoatIdle_5: 485183998
+      BoatIdle_6: -1628706892
+      BoatIdle_7: 417450095
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

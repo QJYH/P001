@@ -8,6 +8,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1695376663908867291, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1695376663908867291, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1695376663908867291, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1695376663908867291, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1695376663908867291, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1695376663908867291, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1695376663908867291, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1695376663908867291, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
+      propertyPath: m_SpriteTilingProperty.adaptiveTilingThreshold
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2215276663256593996, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3047567518365807276, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
       propertyPath: m_Size.x
       value: 9
@@ -31,6 +67,18 @@ PrefabInstance:
     - target: {fileID: 3047567518365807276, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3875388425011024880, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4011764114608171445, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5176010807052445672, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5808420873005039218, guid: 5d479fe0481627449a843f6b734005a7, type: 3}
       propertyPath: m_LocalPosition.x

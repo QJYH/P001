@@ -109,7 +109,10 @@ public class Enemy : Creature
 
 	private void UpdateBehaviorTree()
 	{
-		behaviorTree.Tick();
+		if (!IsDead())
+		{
+			behaviorTree.Tick();
+		}
 	}
 
 	private void UpdateVisual()
@@ -193,6 +196,7 @@ public class Enemy : Creature
 
 	private void OnEnemyDie()
 	{
+		GetComponent<NavMeshAgent>().SetDestination(transform.position);
 		Destroy(enemyHpBar);
 	}
 

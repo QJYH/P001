@@ -20,11 +20,13 @@ public class BattleAreaDirector : MonoBehaviour
 	private void SetPhaseList()
 	{
 		Transform phaseList = transform.Find("PhaseList");
-		maxPhase = phaseList.childCount;
 		for (int i = 1; i <= phaseList.childCount; i++)
 		{
 			string phaseName = string.Format("Phase{0}", i);
 			Transform phase = phaseList.transform.Find(phaseName);
+			if (!phase.gameObject.activeInHierarchy) continue;
+
+			maxPhase++;
 			foreach (Transform enemy in phase.Find("EnemyList"))
 			{
 
@@ -65,7 +67,7 @@ public class BattleAreaDirector : MonoBehaviour
 
 			enemy.gameObject.SetActive(true);
 			enemy.GetComponent<Enemy>().enabled = false;
-			CommonFunc.FadeSprite(enemy.GetComponent<SpriteRenderer>(), 0, 1, 1, () =>
+			CommonFunc.FadeSprite(enemy.GetComponent<SpriteRenderer>(), 0, 1, 0.6f, () =>
 			{
 				enemy.GetComponent<Enemy>().enabled = true;
 				enemy.GetComponent<Enemy>().OnDie.AddListener(OnEnemyDie);
@@ -80,7 +82,7 @@ public class BattleAreaDirector : MonoBehaviour
 
 			trap.gameObject.SetActive(true);
 			trap.GetComponent<Trap>().enabled = false;
-			CommonFunc.FadeSprite(trap.GetComponent<SpriteRenderer>(), 0, 1, 1, () =>
+			CommonFunc.FadeSprite(trap.GetComponent<SpriteRenderer>(), 0, 1, 0.6f, () =>
 			{
 				trap.GetComponent<Trap>().enabled = true;
 			});

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DefendTreasure : Pickup
 {
-	private const float maxSpeed = 20f;
+	private const float maxSpeed = 15f;
 	private const float maxAcceleration = 100f;
 	private const float destoryDistance = 0.5f;
 	private const int defendValue = 1;

@@ -148,7 +148,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WaterRock_0
+      name: WaterRockIdle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -162,14 +162,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 186c244608cb7494aae99365fd2ca416
-      internalID: 185334904
+      spriteID: dbe1f9fda9ce52d4cb6392eda985b25f
+      internalID: 1323882693
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WaterRock_1
+      name: WaterRockIdle_1
       rect:
         serializedVersion: 2
         x: 64
@@ -183,14 +183,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e5a79aa43438a24fbb48c07b7c08ede
-      internalID: -1517436594
+      spriteID: 0b716ff40e80e384c892f0dc4bb01126
+      internalID: 379016984
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WaterRock_2
+      name: WaterRockIdle_2
       rect:
         serializedVersion: 2
         x: 128
@@ -204,14 +204,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f078ed347135c1c4fa4fee20950fbda0
-      internalID: 1687255862
+      spriteID: d2a62abe373b74e4ea4b030e344bd0d5
+      internalID: -323219089
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WaterRock_3
+      name: WaterRockIdle_3
       rect:
         serializedVersion: 2
         x: 192
@@ -225,14 +225,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c0e0a53d696978440add8957832012a7
-      internalID: 218144386
+      spriteID: 98cd972343a41914f9601bfe2b8e57d9
+      internalID: 1983117208
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WaterRock_4
+      name: WaterRockIdle_4
       rect:
         serializedVersion: 2
         x: 256
@@ -246,14 +246,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 84d93d0f9ebeac24bb3bec1a972feeae
-      internalID: -324797305
+      spriteID: 295f3ef15953fda4d8e82750d69a2adb
+      internalID: -1855980149
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WaterRock_5
+      name: WaterRockIdle_5
       rect:
         serializedVersion: 2
         x: 320
@@ -267,14 +267,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca5b1eac463a22e46905b8d34d74bfdd
-      internalID: -1116549310
+      spriteID: 0957983feb041ec44bdf59a90c9cca79
+      internalID: 1215647482
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WaterRock_6
+      name: WaterRockIdle_6
       rect:
         serializedVersion: 2
         x: 384
@@ -288,14 +288,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a172ddd614d6ff47a09e40f25792404
-      internalID: 1931041291
+      spriteID: db8d0f79a3eb91048952cc2cd5af7213
+      internalID: -958485618
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WaterRock_7
+      name: WaterRockIdle_7
       rect:
         serializedVersion: 2
         x: 448
@@ -309,14 +309,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 07a52d2539bae49459e33a971b1358ee
-      internalID: 773244955
+      spriteID: 5cfe3d87e36567a45a34f37dd21466b4
+      internalID: 320582835
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WaterRock_8
+      name: WaterRockIdle_8
       rect:
         serializedVersion: 2
         x: 512
@@ -330,14 +330,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: efd6a44bc4f2c2d43b05b94506625c88
-      internalID: -876352451
+      spriteID: 241166edc71cb834199cfcec7c551475
+      internalID: 1821665332
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WaterRock_9
+      name: WaterRockIdle_9
       rect:
         serializedVersion: 2
         x: 576
@@ -351,14 +351,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 690af6b12dfff7d47b3820dbed48285e
-      internalID: 851167281
+      spriteID: 6a5ab180f88dfa54787dd54859388365
+      internalID: -1452053769
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WaterRock_10
+      name: WaterRockIdle_10
       rect:
         serializedVersion: 2
         x: 640
@@ -372,14 +372,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37c2340d18214b44aa3a3528a5e3bff2
-      internalID: -1857754690
+      spriteID: de07af5d96cf7154fb123b454a9c1df8
+      internalID: -1783330441
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WaterRock_11
+      name: WaterRockIdle_11
       rect:
         serializedVersion: 2
         x: 704
@@ -393,14 +393,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f9777a53a8f6847428fa9429ae5c47b0
-      internalID: 381460721
+      spriteID: adc546ea532fc024a898dfe9e0b7e965
+      internalID: 2113497523
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WaterRock_12
+      name: WaterRockIdle_12
       rect:
         serializedVersion: 2
         x: 768
@@ -414,14 +414,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1af7dc0d2cde4c749bd88d7c78218e43
-      internalID: 1582039125
+      spriteID: 9138928fd35d69b4c92daa48c9e7510b
+      internalID: 1503827624
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WaterRock_13
+      name: WaterRockIdle_13
       rect:
         serializedVersion: 2
         x: 832
@@ -435,14 +435,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 18d82f33bf9d8724c9716d5f1c133cef
-      internalID: -760120901
+      spriteID: bb72dd9dfec84c44fbc30168be8fd18a
+      internalID: -347174712
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WaterRock_14
+      name: WaterRockIdle_14
       rect:
         serializedVersion: 2
         x: 896
@@ -456,14 +456,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5ce8d9b54ee72043857c72c07d5c5d9
-      internalID: -2048061512
+      spriteID: dea9570f057a73c4aa332a592c92111c
+      internalID: 1908021281
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WaterRock_15
+      name: WaterRockIdle_15
       rect:
         serializedVersion: 2
         x: 960
@@ -477,8 +477,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 427bf5de3a45af04fa4df1b30d7bb087
-      internalID: -887183868
+      spriteID: 67b9264ee03646b459b4a6792ae0ef71
+      internalID: -951555517
       vertices: []
       indices: 
       edges: []
@@ -494,22 +494,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      WaterRock_0: 185334904
-      WaterRock_1: -1517436594
-      WaterRock_10: -1857754690
-      WaterRock_11: 381460721
-      WaterRock_12: 1582039125
-      WaterRock_13: -760120901
-      WaterRock_14: -2048061512
-      WaterRock_15: -887183868
-      WaterRock_2: 1687255862
-      WaterRock_3: 218144386
-      WaterRock_4: -324797305
-      WaterRock_5: -1116549310
-      WaterRock_6: 1931041291
-      WaterRock_7: 773244955
-      WaterRock_8: -876352451
-      WaterRock_9: 851167281
+      WaterRockIdle_0: 1323882693
+      WaterRockIdle_1: 379016984
+      WaterRockIdle_10: -1783330441
+      WaterRockIdle_11: 2113497523
+      WaterRockIdle_12: 1503827624
+      WaterRockIdle_13: -347174712
+      WaterRockIdle_14: 1908021281
+      WaterRockIdle_15: -951555517
+      WaterRockIdle_2: -323219089
+      WaterRockIdle_3: 1983117208
+      WaterRockIdle_4: -1855980149
+      WaterRockIdle_5: 1215647482
+      WaterRockIdle_6: -958485618
+      WaterRockIdle_7: 320582835
+      WaterRockIdle_8: 1821665332
+      WaterRockIdle_9: -1452053769
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

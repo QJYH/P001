@@ -5,8 +5,8 @@ using UnityEngine;
 public class Snake : Enemy
 {
 	public override float MaxHp { get; } = 5f;
-	protected override float MaxRunSpeed { get; } = 7f;
-	protected override float MaxRunAcceleration { get; } = 70f;
+	protected override float MaxRunSpeed { get; } = 6f;
+	protected override float MaxRunAcceleration { get; } = 60f;
 
 	protected override void InitAttackList()
 	{
