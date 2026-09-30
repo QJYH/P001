@@ -135,7 +135,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: c87f43b6a56f4954b8fa06bd73ee24fc, type: 2}
     - target: {fileID: 3006199122392710321, guid: 526f736743137b644ab27bb354579090, type: 3}
       propertyPath: m_Name
-      value: Spider Variant
+      value: Spider
       objectReference: {fileID: 0}
     - target: {fileID: 3591363822985811505, guid: 526f736743137b644ab27bb354579090, type: 3}
       propertyPath: m_IsActive
@@ -144,6 +144,14 @@ PrefabInstance:
     - target: {fileID: 4191879354117812590, guid: 526f736743137b644ab27bb354579090, type: 3}
       propertyPath: verticalOffset
       value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5821165208045178634, guid: 526f736743137b644ab27bb354579090, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[2].x
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5821165208045178634, guid: 526f736743137b644ab27bb354579090, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[3].x
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8090322034794990203, guid: 526f736743137b644ab27bb354579090, type: 3}
       propertyPath: m_Size.x
