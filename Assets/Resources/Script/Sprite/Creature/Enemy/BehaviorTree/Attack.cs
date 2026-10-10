@@ -19,8 +19,9 @@ namespace BehaviorTree
 
 		protected override void OnInit()
 		{
-			enemy.GetComponent<NavMeshAgent>().SetDestination(enemy.transform.position);
+			enemy.GetComponent<NavMeshAgent>().ResetPath();
 			enemy.GetComponent<Animator>().SetBool("IsMoving", false);
+			enemy.FaceTarget();
 			enemyAttack.Attack();
 		}
 		protected override BehaviorStatus OnUpdate()

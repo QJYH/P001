@@ -130,6 +130,12 @@ public class Enemy : Creature
 		CreatureCanvas.GetComponent<RectTransform>().localScale = transform.localScale;
 	}
 
+	public void FaceTarget()
+	{
+		TryFlipX(Target.transform.position - transform.position);
+		CreatureCanvas.GetComponent<RectTransform>().localScale = transform.localScale;
+	}
+
 	private void UpdateTarget()
 	{
 		if (Target == null) return;

@@ -28,8 +28,16 @@ namespace BehaviorTree
 			if (!enemy.HaveTarget()) return BehaviorStatus.Failure;
 			if (enemyAttack.CanLaunchAttack()) return BehaviorStatus.Success;
 
-			enemy.GetComponent<NavMeshAgent>().SetDestination(GetChaseTargetPos());
-			return BehaviorStatus.Running;
+			Vector3 chaseTargetPos = GetChaseTargetPos();
+			if (CommonFunc.IsNear(enemy.transform.position, chaseTargetPos, null))
+			{
+				return BehaviorStatus.Success;
+			}
+			else
+			{
+				enemy.GetComponent<NavMeshAgent>().SetDestination(chaseTargetPos);
+				return BehaviorStatus.Running;
+			}
 		}
 
 		private Vector3 GetChaseTargetPos()
