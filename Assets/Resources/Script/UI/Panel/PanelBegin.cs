@@ -11,6 +11,7 @@ public class PanelBegin : Panel
 	private GameObject buttonList;
 	private GameObject buttonNewGame;
 	private GameObject buttonQuitGame;
+	private Sequence showButtonSequence;
 
 	private void Awake()
 	{
@@ -23,6 +24,8 @@ public class PanelBegin : Panel
 	private void OnDestroy()
 	{
 		Instance = (Instance == this) ? null : Instance;
+
+		showButtonSequence?.Kill();
 	}
 
 	private void OnEnable()
@@ -55,14 +58,17 @@ public class PanelBegin : Panel
 	private void ShowButton()
 	{
 		RectTransform buttonListRect = buttonList.GetComponent<RectTransform>();
-		DOTween.Sequence()
+		Sequence sequence1 = DOTween.Sequence()
 		.Append(UICommonFunc.MoveY(buttonListRect, -100, 0, 1));
 
-		DOTween.Sequence()
+		Sequence sequence2 = DOTween.Sequence()
 		.Append(UICommonFunc.FadeText(buttonNewGame.GetComponentInChildren<TextMeshProUGUI>(), 0, 1, 0.7f, null));
 
-		DOTween.Sequence()
+		Sequence sequence3 = DOTween.Sequence()
 		.AppendInterval(0.3f)
 		.Append(UICommonFunc.FadeText(buttonQuitGame.GetComponentInChildren<TextMeshProUGUI>(), 0, 1, 0.7f, null));
+
+		showButtonSequence = DOTween.Sequence();
+		showButtonSequence.Append(sequence1).Join(sequence2).Join(sequence3);
 	}
 }
